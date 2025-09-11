@@ -1,0 +1,15 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  prefix: 'esg-',
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Raleway', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}
