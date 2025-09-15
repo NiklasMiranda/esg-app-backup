@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { ResponsivePolarBar } from '@nivo/polar-bar';
+import CustomPolarChart from './CustomPolarChart';
+
 
 const groupTitles = {
   E1: 'Klimaforandringer',
@@ -15,21 +16,19 @@ const groupTitles = {
 };
 
 const criterionColors = {
-  E1: '#e0ac2b', // Yellow-Orange
-  E2: '#e85252', // Red
-  E3: '#9bde74', // Light Green
-  E4: '#4a90e2', // Blue
-  E5: '#a94442', // Dark Red
-  S1: '#5cb85c', // Green
-  S2: '#f0ad4e', // Orange
-  S3: '#5bc0de', // Light Blue
-  S4: '#777777', // Gray
-  G1: '#6f42c1', // Purple
+  E1: '#006400', // Yellow-Orange
+  E2: '#2e8b57', // Red
+  E3: '#228b22', // Light Green
+  E4: '#006400', // Blue
+  E5: '#004d00', // Dark Red
+  S1: '#8b0000', // Green
+  S2: '#b22222', // Orange
+  S3: '#800000', // Light Blue
+  S4: '#9b111e', // Gray
+  G1: '#1e3a5f', // Purple
 };
 
-const reversedCriterionColors = Object.fromEntries(
-  Object.entries(criterionColors).reverse()
-);
+
 
 function getESGLevel(score) {
   if (score < 35) return 'Ikke bestået';
@@ -57,40 +56,15 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores }) {
         <h2 className="esg-text-2xl esg-mb-4">Samlet ESG Score: {totalScore.toFixed(2)}</h2>
       </div>
 
-      {/* Nivo Radar Chart */}
+      {/* Custom Inverted Polar Chart */}
       <div className="esg-mb-8 esg-h-[800px] esg-w-[1200px] esg-mx-auto esg-relative">
-        <h2 className="esg-text-2xl esg-mb-4">ESG Kriterie Sammenligning</h2>
-        <ResponsivePolarBar
+        <h2 className="esg-text-2xl esg-mb-4">ESG Kriterie Sammenligning (Custom Inverted)</h2>
+        <CustomPolarChart
           data={polarBarChartData}
-          keys={['Point (Optjent)']}
-          indexBy="criterion"
-          valueSteps={5}
-          valueFormat=">-.0f"
-          margin={{ top: 30, right: 20, bottom: 70, left: 20 }}
-          innerRadius={0.25}
-          cornerRadius={2}
-          colors={({ index }) => reversedCriterionColors[index] || '#cccccc'}
-          fillOpacity={0.8}
-          borderWidth={1}
-          borderColor={{ from: 'color', modifiers: [ ['darker', 0.2] ] }}
-          arcLabelsSkipRadius={28}
-          radialAxis={{ angle: 180, ticksPosition: 'after', tickSize: 5, tickPadding: 5, tickRotation: 0 }}
-          circularAxisOuter={{ tickSize: 5, tickPadding: 15, tickRotation: 0 }}
-          legends={[
-            {
-                anchor: 'bottom',
-                direction: 'row',
-                translateY: 50,
-                itemWidth: 90,
-                itemHeight: 16,
-                symbolShape: 'circle'
-            }
-          ]}
+          totalScore={totalScore}
+          esgLevel={esgLevel}
+          criterionColors={criterionColors}
         />
-        <div className="esg-absolute esg-top-1/2 esg-left-1/2 esg-transform esg--translate-x-1/2 esg--translate-y-1/2 esg-flex esg-flex-col esg-items-center esg-justify-center esg-pointer-events-none">
-          <p className="esg-text-4xl esg-font-bold esg-text-gray-800">{totalScore.toFixed(2)}</p>
-          <p className="esg-text-xl esg-text-gray-600">{esgLevel}</p>
-        </div>
       </div>
 
       <div className="esg-mb-8">
