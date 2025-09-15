@@ -25,11 +25,11 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
 
   return (
     <div>
-      <h1 className="esg-text-3xl esg-font-bold esg-mb-4">{group}: {title}</h1>
+      <h1 className="esg-text-3xl esg-mb-4">{group}: {title}</h1>
       
       {impactQuestions.length > 0 && (
         <>
-          <h2 className="esg-text-2xl esg-font-semibold esg-mt-6 esg-mb-3">Impact</h2>
+          <h2 className="esg-text-2xl esg-mt-6 esg-mb-3">Impact</h2>
           <div>
             {impactQuestions.map(question => (
               <QuestionCard
@@ -45,7 +45,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
 
       {finansielQuestions.length > 0 && (
         <>
-          <h2 className="esg-text-2xl esg-font-semibold esg-mt-6 esg-mb-3">Finansiel</h2>
+          <h2 className="esg-text-2xl esg-mt-6 esg-mb-3">Finansiel</h2>
           <div>
             {finansielQuestions.map(question => (
               <QuestionCard

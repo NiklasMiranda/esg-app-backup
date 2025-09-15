@@ -11,14 +11,14 @@ const groupTitles = {
   E4: 'Biodiversitet og økosystemer',
   E5: 'Ressourceanvendelse og cirkulær økonomi',
   S1: 'Egen arbejdsstyrke',
-  S2: 'Arbejdere i værdikæden',
+  S2: 'Arbejder i værdikæden',
   S3: 'Påvirkede samfund',
   S4: 'Forbrugere og slutbrugere',
   G1: 'Forretningsetik',
 };
 
-function StepMatrix({ answers }) {
-  const { criteriaWeights, plottedCoordinates } = useMemo(() => {
+function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, onNext }) {
+  const { plottedCoordinates } = useMemo(() => {
     const results = {};
     [...new Set(dvaQuestions.map(q => q.label))].forEach(label => {
       results[label] = { impact: 0, finansiel: 0, label };
@@ -38,10 +38,8 @@ function StepMatrix({ answers }) {
       }
     });
 
-    const calculatedCriteriaWeights = {};
     const rawCoordinates = []; // Store raw coordinates as an array
     Object.entries(results).forEach(([label, d]) => {
-      calculatedCriteriaWeights[label] = Math.floor((d.impact + d.finansiel) / 2);
       rawCoordinates.push({
         label,
         impact: Math.min(d.impact, 5),
@@ -77,36 +75,15 @@ function StepMatrix({ answers }) {
       }
     });
 
-    return { criteriaWeights: calculatedCriteriaWeights, plottedCoordinates: finalPlottedCoordinates };
+    return { plottedCoordinates: finalPlottedCoordinates };
   }, [answers]);
 
   return (
     <div className="esg-p-4">
       <h1 className="esg-text-3xl esg-mb-6">Væsentlighedsmatrix</h1>
 
-      {/* Table Form */}
-      <div className="esg-mb-8">
-        <h2 className="esg-text-2xl esg-mb-4">Vægtning af Kriterier</h2>
-        <table className="esg-min-w-full esg-bg-white esg-border esg-border-gray-300">
-          <thead>
-            <tr>
-              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
-              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Vægtning</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(criteriaWeights).map(([label, weight]) => (
-              <tr key={label}>
-                <td className="esg-py-2 esg-px-4 esg-border-b">{label}: {groupTitles[label]}</td>
-                <td className="esg-py-2 esg-px-4 esg-border-b">{weight}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
       {/* Coordinate System (Graph) */}
-      <div className="esg-mb-8 esg-relative esg-h-96 esg-w-full"> {/* Added esg-relative and fixed height/width */}
+      <div className="esg-mb-12 esg-relative esg-h-[500px] esg-w-[500px] esg-mx-auto"> {/* Adjusted for square cells and centered */}
         <h2 className="esg-text-2xl esg-mb-4">Dobbelt Væsentlighedsmatrix (Graf)</h2>
         
         {/* Impact label (above graph) */}
@@ -151,10 +128,44 @@ function StepMatrix({ answers }) {
         </div>
         
         {/* Finansiel label (right of graph) */}
-        <div className="esg-absolute esg-right-0 esg-top-1/2 esg-transform esg-translate-x-full esg--translate-y-1/2 esg-rotate-90 esg-text-sm esg-font-semibold esg-whitespace-nowrap">Finansiel</div>
+        <div className="esg-absolute esg-right-0 esg-top-1/2 esg-transform esg-translate-x-1/2 esg--translate-y-1/2 esg-rotate-90 esg-text-sm esg-whitespace-nowrap">Finansiel</div>
+      </div>
+
+      {/* Table Form */}
+      <div className="esg-mb-8">
+        <h2 className="esg-text-2xl esg-mb-4">Vægtning af Kriterier</h2>
+        <table className="esg-min-w-full esg-bg-white esg-border esg-border-gray-300">
+          <thead>
+            <tr>
+              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
+              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Impact</th>
+              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Finansiel</th>
+              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtning</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(criteriaWeights).map(([label, weight]) => (
+              <tr key={label}>
+                <td className="esg-py-2 esg-px-4 esg-border-b">{label}: {groupTitles[label]}</td>
+                <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{impactFinansielCounts[label]?.impact || 0}</td>
+                <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{impactFinansielCounts[label]?.finansiel || 0}</td>
+                <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{weight}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="esg-flex esg-justify-end esg-mt-4">
+        <button
+          onClick={onNext}
+          className="esg-px-6 esg-py-2 esg-bg-blue-500 esg-text-white esg-rounded-lg esg-hover:bg-blue-600"
+        >
+          Gå til Del 2
+        </button>
       </div>
     </div>
   );
 }
 
-export default StepMatrix;
+export default StepResultsMatrix;
