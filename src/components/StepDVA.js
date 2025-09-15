@@ -23,6 +23,15 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
 
   const title = groupTitles[group] || 'Spørgsmål';
 
+  const handleAnswerNext5 = (answer, purpose) => {
+    const questionsToFilter = purpose === 'impact' ? impactQuestions : finansielQuestions;
+    const unansweredQuestions = questionsToFilter.filter(q => !answers.hasOwnProperty(q.id) || answers[q.id] === null);
+    const next5Questions = unansweredQuestions.slice(0, 5);
+    next5Questions.forEach(q => {
+        onAnswerChange(q.id, answer);
+    });
+  };
+
   return (
     <div>
       <h1 className="esg-text-3xl esg-mb-4">{group}: {title}</h1>
@@ -30,6 +39,20 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
       {impactQuestions.length > 0 && (
         <>
           <h2 className="esg-text-2xl esg-mt-6 esg-mb-3">Impact</h2>
+          <div className="esg-flex esg-justify-end esg-mb-4">
+              <button
+                  onClick={() => handleAnswerNext5('yes', 'impact')}
+                  className="esg-bg-green-500 esg-hover:bg-green-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded esg-mr-2"
+              >
+                  Svar ja til 5
+              </button>
+              <button
+                  onClick={() => handleAnswerNext5('no', 'impact')}
+                  className="esg-bg-red-500 esg-hover:bg-red-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded"
+              >
+                  Svar nej til 5
+              </button>
+          </div>
           <div>
             {impactQuestions.map(question => (
               <QuestionCard
@@ -46,6 +69,20 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
       {finansielQuestions.length > 0 && (
         <>
           <h2 className="esg-text-2xl esg-mt-6 esg-mb-3">Finansiel</h2>
+          <div className="esg-flex esg-justify-end esg-mb-4">
+              <button
+                  onClick={() => handleAnswerNext5('yes', 'finansiel')}
+                  className="esg-bg-green-500 esg-hover:bg-green-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded esg-mr-2"
+              >
+                  Svar ja til 5
+              </button>
+              <button
+                  onClick={() => handleAnswerNext5('no', 'finansiel')}
+                  className="esg-bg-red-500 esg-hover:bg-red-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded"
+              >
+                  Svar nej til 5
+              </button>
+          </div>
           <div>
             {finansielQuestions.map(question => (
               <QuestionCard

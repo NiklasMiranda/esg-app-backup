@@ -19,6 +19,12 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
     return acc;
   }, {});
 
+  const handleSelectAll = (questions, checked) => {
+    questions.forEach(q => {
+        onMatrixAnswerChange(q.id, checked);
+    });
+  };
+
   return (
     <div className="esg-p-4">
       <h1 className="esg-text-3xl esg-mb-6">Del 2: Matrix Spørgsmål</h1>
@@ -31,7 +37,21 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
               <h3 className="esg-text-xl esg-mb-3">{subcategory}</h3>
               {Object.entries(secondSubcategories).map(([secondSubcategory, questions]) => (
                 <div key={secondSubcategory} className="esg-mb-4 esg-ml-4">
-                  <h4 className="esg-text-lg esg-mb-2">{secondSubcategory}</h4>
+                  <div className="esg-flex esg-items-center esg-mb-2">
+                    <h4 className="esg-text-lg">{secondSubcategory}</h4>
+                    <button
+                        onClick={() => handleSelectAll(questions, true)}
+                        className="esg-ml-4 esg-px-2 esg-py-1 esg-bg-blue-500 esg-text-white esg-rounded esg-text-sm"
+                    >
+                        Vælg alle
+                    </button>
+                    <button
+                        onClick={() => handleSelectAll(questions, false)}
+                        className="esg-ml-2 esg-px-2 esg-py-1 esg-bg-gray-300 esg-text-gray-800 esg-rounded esg-text-sm"
+                    >
+                        Fravælg alle
+                    </button>
+                  </div>
                   <div className="esg-grid esg-grid-cols-1 esg-gap-4">
                     {questions.map(q => (
                       <div key={q.id} className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-flex esg-items-center esg-justify-between">

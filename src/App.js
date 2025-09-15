@@ -27,6 +27,28 @@ function App() {
   const [matrixAnswers, setMatrixAnswers] = useState({});
   const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
 
+  // Load answers from localStorage on component mount
+  useEffect(() => {
+    const savedDvaAnswers = localStorage.getItem('dvaAnswers');
+    const savedMatrixAnswers = localStorage.getItem('matrixAnswers');
+    if (savedDvaAnswers) {
+      setAnswers(JSON.parse(savedDvaAnswers));
+    }
+    if (savedMatrixAnswers) {
+      setMatrixAnswers(JSON.parse(savedMatrixAnswers));
+    }
+  }, []); // Empty dependency array means this runs once on mount
+
+  // Save DVA answers to localStorage whenever 'answers' state changes
+  useEffect(() => {
+    localStorage.setItem('dvaAnswers', JSON.stringify(answers));
+  }, [answers]);
+
+  // Save Matrix answers to localStorage whenever 'matrixAnswers' state changes
+  useEffect(() => {
+    localStorage.setItem('matrixAnswers', JSON.stringify(matrixAnswers));
+  }, [matrixAnswers]);
+
   useEffect(() => {
     const newCompletionStatus = {};
     questionGroups.forEach(groupLabel => {
