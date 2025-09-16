@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'; // Import useState
 
 const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
   const width = 800;
@@ -7,6 +7,9 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
   const centerY = height / 2;
   const outerRadius = Math.min(width, height) / 2 * 0.8; // 80% of half the smallest dimension
   const innerChartRadius = outerRadius * 0.2; // 20% of the outerRadius for the inner hole
+
+  // State for tooltip
+  const [tooltip, setTooltip] = useState(null); // { criterion: 'E1', score: 75, x: 100, y: 100 }
 
   // Calculate max possible points for scaling
   const maxPossiblePoints = 100; // Assuming max points for any criterion is 100
@@ -98,6 +101,15 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
               fill={color}
               stroke="#fff"
               strokeWidth="1"
+              onMouseEnter={(e) => {
+                setTooltip({
+                  criterion: item.criterion,
+                  score: item["Point (Optjent)"],
+                  x: e.nativeEvent.offsetX,
+                  y: e.nativeEvent.offsetY,
+                });
+              }}
+              onMouseLeave={() => setTooltip(null)}
             />
           </g>
         );
@@ -158,6 +170,29 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
       <text x={centerX} y={centerY + 20} textAnchor="middle" fontSize="18" fill="#555">
         {esgLevel}
       </text>
+
+      {/* Tooltip */}
+      {tooltip && (
+        <g>
+          <rect
+            x={tooltip.x + 10}
+            y={tooltip.y - 20}
+            width={120}
+            height={40}
+            fill="rgba(0, 0, 0, 0.7)"
+            rx="5"
+            ry="5"
+          />
+          <text
+            x={tooltip.x + 20}
+            y={tooltip.y}
+            fill="#fff"
+            fontSize="14"
+          >
+            {`${tooltip.criterion}: ${tooltip.score.toFixed(2)}`}
+          </text>
+        </g>
+      )}
     </svg>
   );
 };
