@@ -42,13 +42,13 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
           <div className="esg-flex esg-justify-end esg-mb-4">
               <button
                   onClick={() => handleAnswerNext5('yes', 'impact')}
-                  className="esg-bg-green-500 esg-hover:bg-green-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded esg-mr-2"
+                  className="btn-green mr-2"
               >
                   Svar ja til 5
               </button>
               <button
                   onClick={() => handleAnswerNext5('no', 'impact')}
-                  className="esg-bg-red-500 esg-hover:bg-red-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded"
+                  className="btn-red"
               >
                   Svar nej til 5
               </button>
@@ -72,13 +72,13 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
           <div className="esg-flex esg-justify-end esg-mb-4">
               <button
                   onClick={() => handleAnswerNext5('yes', 'finansiel')}
-                  className="esg-bg-green-500 esg-hover:bg-green-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded esg-mr-2"
+                  className="btn-green mr-2"
               >
                   Svar ja til 5
               </button>
               <button
                   onClick={() => handleAnswerNext5('no', 'finansiel')}
-                  className="esg-bg-red-500 esg-hover:bg-red-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded"
+                  className="btn-red"
               >
                   Svar nej til 5
               </button>
@@ -99,14 +99,14 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
       <div className="esg-flex esg-justify-between esg-mt-8">
         <button 
           onClick={onPrev}
-          className="esg-bg-gray-300 esg-hover:bg-gray-400 esg-text-gray-800 esg-font-bold esg-py-2 esg-px-4 esg-rounded"
+          className="btn-secondary"
         >
           Forrige
         </button>
         <button 
           onClick={onNext}
           disabled={isLast}
-          className="esg-bg-blue-500 esg-hover:bg-blue-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded disabled:esg-opacity-50 disabled:esg-cursor-not-allowed"
+          className="btn-primary"
         >
           Næste
         </button>

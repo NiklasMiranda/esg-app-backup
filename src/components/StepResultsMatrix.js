@@ -92,20 +92,20 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
         <div className="esg-relative esg-w-full esg-h-full esg-border esg-border-gray-400 esg-grid esg-grid-cols-6 esg-grid-rows-6 esg-gap-px esg-bg-gray-200">
           {/* Grid cells for background */}
           {Array.from({ length: 36 }).map((_, i) => (
-            <div key={i} className="esg-bg-white esg-border esg-border-gray-200"></div>
+            <div key={i} className="bg-white border border-gray-200"></div>
           ))}
 
           {/* Y-axis labels (Finansiel) */}
           <div className="esg-absolute esg-left-0 esg-top-0 esg-h-full esg-flex esg-flex-col esg-justify-around esg-items-center esg-transform esg--translate-x-full esg-pr-2 esg-text-sm">
             {axisLabels.slice().reverse().map((label, index) => (
-              <span key={index} className="esg-h-1/6 esg-flex esg-items-center">{label}</span>
+              <span key={index} className="h-1/6 flex items-center">{label}</span>
             ))}
           </div>
 
           {/* X-axis labels (Impact) */}
           <div className="esg-absolute esg-bottom-0 esg-left-0 esg-w-full esg-flex esg-justify-around esg-items-center esg-transform esg-translate-y-full esg-pt-2 esg-text-sm">
             {axisLabels.map((label, index) => (
-              <span key={index} className="esg-w-1/6 esg-text-center">{label}</span>
+              <span key={index} className="w-1/6 text-center">{label}</span>
             ))}
           </div>
 
@@ -159,7 +159,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
       <div className="esg-flex esg-justify-end esg-mt-4">
         <button
           onClick={onNext}
-          className="esg-px-6 esg-py-2 esg-bg-blue-500 esg-text-white esg-rounded-lg esg-hover:bg-blue-600"
+          className="btn-primary"
         >
           Gå til Del 2
         </button>

@@ -8,7 +8,7 @@ function Intro({ onStartClick }) {
       </p>
       <button
         onClick={onStartClick}
-        className="esg-bg-blue-500 esg-hover:bg-blue-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded"
+        className="btn-primary"
       >
         Start
       </button>

@@ -41,13 +41,13 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
                     <h4 className="esg-text-lg">{secondSubcategory}</h4>
                     <button
                         onClick={() => handleSelectAll(questions, true)}
-                        className="esg-ml-4 esg-px-2 esg-py-1 esg-bg-blue-500 esg-text-white esg-rounded esg-text-sm"
+                        className="btn-primary btn-sm ml-4"
                     >
                         Vælg alle
                     </button>
                     <button
                         onClick={() => handleSelectAll(questions, false)}
-                        className="esg-ml-2 esg-px-2 esg-py-1 esg-bg-gray-300 esg-text-gray-800 esg-rounded esg-text-sm"
+                        className="btn-secondary btn-sm ml-2"
                     >
                         Fravælg alle
                     </button>
@@ -76,21 +76,21 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
         <button
           onClick={onPrev}
           disabled={isFirst}
-          className="esg-bg-gray-300 esg-hover:bg-gray-400 esg-text-gray-800 esg-py-2 esg-px-4 esg-rounded disabled:esg-opacity-50 disabled:esg-cursor-not-allowed"
+          className="btn-secondary"
         >
           Forrige
         </button>
         {isLast ? (
           <button
             onClick={onShowResults}
-            className="esg-px-6 esg-py-2 esg-bg-blue-500 esg-text-white esg-rounded-lg esg-hover:bg-blue-600"
+            className="btn-primary"
           >
             Vis Resultater
           </button>
         ) : (
           <button
             onClick={onNext}
-            className="esg-px-6 esg-py-2 esg-bg-blue-500 esg-text-white esg-rounded-lg esg-hover:bg-blue-600"
+            className="btn-primary"
           >
             Næste
           </button>

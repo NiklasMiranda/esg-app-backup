@@ -21,17 +21,13 @@ function QuestionCard({ question, answer, onAnswerChange }) {
         <div className="esg-flex esg-space-x-2 esg-flex-shrink-0">
           <button
             onClick={() => onAnswerChange(question.id, answer === 'yes' ? null : 'yes')}
-            className={`esg-px-4 esg-py-2 esg-rounded-lg esg-transition-colors esg-duration-200
-              ${answer === 'yes' ? 'esg-bg-blue-500 esg-text-white' : 'esg-bg-gray-200 esg-text-gray-800 esg-hover:bg-blue-200'}
-            `}
+            className={`btn-nav ${answer === 'yes' ? 'btn-nav-active' : ''}`}
           >
             Ja
           </button>
           <button
             onClick={() => onAnswerChange(question.id, answer === 'no' ? null : 'no')}
-            className={`esg-px-4 esg-py-2 esg-rounded-lg esg-transition-colors esg-duration-200
-              ${answer === 'no' ? 'esg-bg-blue-500 esg-text-white' : 'esg-bg-gray-200 esg-text-gray-800 esg-hover:bg-blue-200'}
-            `}
+            className={`btn-nav ${answer === 'no' ? 'btn-nav-active' : ''}`}
           >
             Nej
           </button>
@@ -58,7 +54,7 @@ function QuestionCard({ question, answer, onAnswerChange }) {
       </div>
 
       <div className="esg-flex esg-justify-center esg-mt-2">
-        <button onClick={toggleExpand} className="esg-text-blue-500 esg-hover:text-blue-700">
+        <button onClick={toggleExpand} className="btn-icon">
           {isExpanded ? (
             <svg xmlns="http://www.w3.org/2000/svg" className="esg-h-5 esg-w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />

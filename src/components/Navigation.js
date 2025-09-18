@@ -58,17 +58,13 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
       <div className="esg-flex esg-justify-around esg-mb-4">
         <button
           onClick={() => onSectionChange('del1')}
-          className={`esg-px-4 esg-py-2 esg-rounded-lg esg-transition-colors esg-duration-200
-            ${activeSection === 'del1' ? 'esg-bg-blue-500 esg-text-white' : 'esg-bg-gray-200 esg-text-gray-800 esg-hover:bg-blue-200'}
-          `}
+          className={`btn-nav ${activeSection === 'del1' ? 'btn-nav-active' : ''}`}
         >
           Del 1
         </button>
         <button
           onClick={() => onSectionChange('del2')}
-          className={`esg-px-4 esg-py-2 esg-rounded-lg esg-transition-colors esg-duration-200
-            ${activeSection === 'del2' ? 'esg-bg-blue-500 esg-text-white' : 'esg-bg-gray-200 esg-text-gray-800 esg-hover:bg-blue-200'}
-          `}
+          className={`btn-nav ${activeSection === 'del2' ? 'btn-nav-active' : ''}`}
         >
           Del 2
         </button>
