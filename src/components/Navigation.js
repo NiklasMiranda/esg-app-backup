@@ -1,4 +1,3 @@
-import CircularProgress from './CircularProgress';
 const navSteps = [
   { key: 'intro', title: 'Intro' },
   { key: 'E1', title: 'E1: Klimaforandringer' },
@@ -87,9 +86,6 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
           >
             <div className="esg-flex esg-items-center esg-justify-between esg-w-full">
               <span>{step.title}</span>
-              {activeSection === 'del1' && categoryCompletionStatus[step.key] !== undefined && categoryCompletionStatus[step.key] !== null &&
-                <CircularProgress percentage={categoryCompletionStatus[step.key]} />
-              }
             </div>
           </li>
         ))}

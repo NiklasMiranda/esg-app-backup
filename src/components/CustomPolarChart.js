@@ -1,11 +1,10 @@
 import React, { useState } from 'react'; // Import useState
 
 const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
-  const width = 800;
-  const height = 800;
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const outerRadius = Math.min(width, height) / 2 * 0.8; // 80% of half the smallest dimension
+  const viewBoxSize = 800; // Fixed size for viewBox
+  const centerX = viewBoxSize / 2;
+  const centerY = viewBoxSize / 2;
+  const outerRadius = Math.min(viewBoxSize, viewBoxSize) / 2 * 0.8; // 80% of half the smallest dimension
   const innerChartRadius = outerRadius * 0.2; // 20% of the outerRadius for the inner hole
 
   // State for tooltip
@@ -31,7 +30,7 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
   const numCircularLines = 5; // e.g., 5 concentric circles
 
   return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <svg className="esg-w-full esg-h-full" viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}>
       {/* Background circle - now it's the inner hole fill */}
       <circle cx={centerX} cy={centerY} r={innerChartRadius} fill="#f0f0f0" />
 
@@ -164,10 +163,10 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
       })}
 
       {/* Central text for total score and ESG level */}
-      <text x={centerX} y={centerY - 10} textAnchor="middle" fontSize="24" fontWeight="bold">
+      <text x={centerX} y={centerY - 10} textAnchor="middle" fontSize="26" fontWeight="bold">
         {totalScore.toFixed(2)}
       </text>
-      <text x={centerX} y={centerY + 20} textAnchor="middle" fontSize="18" fill="#555">
+      <text x={centerX} y={centerY + 20} textAnchor="middle" fontSize="20" fill="#555">
         {esgLevel}
       </text>
 

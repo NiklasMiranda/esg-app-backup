@@ -57,7 +57,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores }) {
       </div>
 
       {/* Custom Inverted Polar Chart */}
-      <div className="esg-mb-8 esg-h-[800px] esg-w-[1200px] esg-mx-auto esg-relative">
+      <div className="esg-mb-8 esg-w-full md:esg-max-w-3xl esg-h-auto esg-aspect-square esg-mx-auto esg-relative">
         <h2 className="esg-text-2xl esg-mb-4">ESG Kriterie Sammenligning (Custom Inverted)</h2>
         <CustomPolarChart
           data={polarBarChartData}

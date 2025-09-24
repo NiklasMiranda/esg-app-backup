@@ -80,32 +80,31 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
 
   return (
     <div className="esg-p-4">
-      <h1 className="esg-text-3xl esg-mb-6">Væsentlighedsmatrix</h1>
+      <h1 className="esg-text-3xl esg-mb-12 esg-text-center">Væsentlighedsmatrix</h1>
 
       {/* Coordinate System (Graph) */}
-      <div className="esg-mb-12 esg-relative esg-h-[500px] esg-w-[500px] esg-mx-auto"> {/* Adjusted for square cells and centered */}
-        <h2 className="esg-text-2xl esg-mb-4">Dobbelt Væsentlighedsmatrix (Graf)</h2>
+      <div className="esg-mb-40 esg-relative esg-w-full esg-max-w-xl esg-h-auto esg-aspect-square esg-mx-auto"> {/* Adjusted for square cells and centered */}
         
         {/* Impact label (above graph) */}
-        <div className="esg-absolute esg-top-0 esg-left-1/2 esg-transform esg--translate-x-1/2 esg--translate-y-full esg-text-sm">Impact</div>
+        <div className="esg-absolute esg-top-0 esg-left-1/2 esg-transform esg--translate-x-1/2 esg--translate-y-full esg-text-xs sm:esg-text-sm">Impact</div>
 
         <div className="esg-relative esg-w-full esg-h-full esg-border esg-border-gray-400 esg-grid esg-grid-cols-6 esg-grid-rows-6 esg-gap-px esg-bg-gray-200">
           {/* Grid cells for background */}
           {Array.from({ length: 36 }).map((_, i) => (
-            <div key={i} className="bg-white border border-gray-200"></div>
+            <div key={i} className="esg-bg-white esg-border esg-border-gray-200"></div>
           ))}
 
           {/* Y-axis labels (Finansiel) */}
-          <div className="esg-absolute esg-left-0 esg-top-0 esg-h-full esg-flex esg-flex-col esg-justify-around esg-items-center esg-transform esg--translate-x-full esg-pr-2 esg-text-sm">
+          <div className="esg-absolute esg-left-0 esg-top-0 esg-h-full esg-flex esg-flex-col esg-justify-around esg-items-center esg-transform esg--translate-x-full esg-pr-2 esg-text-xs sm:esg-text-sm">
             {axisLabels.slice().reverse().map((label, index) => (
-              <span key={index} className="h-1/6 flex items-center">{label}</span>
+              <span key={index} className="esg-h-1/6 esg-flex esg-items-center">{label}</span>
             ))}
           </div>
 
           {/* X-axis labels (Impact) */}
-          <div className="esg-absolute esg-bottom-0 esg-left-0 esg-w-full esg-flex esg-justify-around esg-items-center esg-transform esg-translate-y-full esg-pt-2 esg-text-sm">
+          <div className="esg-absolute esg-bottom-0 esg-left-0 esg-w-full esg-flex esg-justify-around esg-items-center esg-transform esg-translate-y-full esg-pt-2 esg-text-xs sm:esg-text-sm">
             {axisLabels.map((label, index) => (
-              <span key={index} className="w-1/6 text-center">{label}</span>
+              <span key={index} className="esg-w-1/6 esg-text-center">{label}</span>
             ))}
           </div>
 
@@ -113,7 +112,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
           {plottedCoordinates.map((item) => (
             <div
               key={item.label}
-              className="esg-absolute esg-flex esg-items-center esg-justify-center esg-text-xs esg-bg-blue-500 esg-text-white esg-rounded-full"
+              className="esg-absolute esg-flex esg-items-center esg-justify-center esg-text-xxs sm:esg-text-xs esg-bg-blue-500 esg-text-white esg-rounded-full"
               style={{
                 left: `calc(${(item.impact + 0.5) * (100 / 6)}% - 10px)`,
                 bottom: `calc(${(item.finansiel + 0.5) * (100 / 6)}% - 10px)`,
@@ -128,11 +127,11 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
         </div>
         
         {/* Finansiel label (right of graph) */}
-        <div className="esg-absolute esg-right-0 esg-top-1/2 esg-transform esg-translate-x-1/2 esg--translate-y-1/2 esg-rotate-90 esg-text-sm esg-whitespace-nowrap">Finansiel</div>
+        <div className="esg-absolute esg-right-0 esg-top-1/2 esg-transform esg-translate-x-1/2 esg--translate-y-1/2 esg-rotate-90 esg-text-xs sm:esg-text-sm esg-whitespace-nowrap">Finansiel</div>
       </div>
 
       {/* Table Form */}
-      <div className="esg-mb-8">
+      <div className="esg-mb-8 esg-overflow-x-auto">
         <h2 className="esg-text-2xl esg-mb-4">Vægtning af Kriterier</h2>
         <table className="esg-min-w-full esg-bg-white esg-border esg-border-gray-300">
           <thead>

@@ -214,28 +214,28 @@ export const dvaQuestions = [
     category: 'E',
     label: 'E4',
     purpose: 'impact',
-    text: 'Påvirker eller ændrer virksomheden arealer direkte gennem byggeri, produktion, landbrug mv. – eller indirekte gennem indflydelse på andres arealanvendelse?'
+    text: 'Påvirker eller ændrer virksomheden arealer direkte gennem byggeri, produktion, landbrug mv. - eller indirekte gennem indflydelse på andres arealanvendelse?'
   },
   {
     id: 32,
     category: 'E',
     label: 'E4',
     purpose: 'impact',
-    text: 'Bruger, sælger eller specificerer virksomheden naturressourcer som træ, fisk, sand, jord, grus eller landbrugsprodukter – direkte eller gennem værdikæden?'
+    text: 'Bruger, sælger eller specificerer virksomheden naturressourcer som træ, fisk, sand, jord, grus eller landbrugsprodukter - direkte eller gennem værdikæden?'
   },
   {
     id: 33,
     category: 'E',
     label: 'E4',
     purpose: 'impact',
-    text: 'Er virksomheden involveret i aktiviteter med udledning eller påvirkning, som kan forringe naturen – f.eks. støj, lys, luftforurening eller udslip til jord og vand?'
+    text: 'Er virksomheden involveret i aktiviteter med udledning eller påvirkning, som kan forringe naturen - f.eks. støj, lys, luftforurening eller udslip til jord og vand?'
   },
   {
     id: 34,
     category: 'E',
     label: 'E4',
     purpose: 'impact',
-    text: 'Håndterer, forarbejder eller sælger virksomheden produkter, der stammer fra levende organismer – f.eks. træ, planter, fødevarer eller dyr?'
+    text: 'Håndterer, forarbejder eller sælger virksomheden produkter, der stammer fra levende organismer - f.eks. træ, planter, fødevarer eller dyr?'
   },
   {
     id: 35,
@@ -354,7 +354,7 @@ export const dvaQuestions = [
     category: 'S',
     label: 'S1',
     purpose: 'impact',
-    text: 'Har virksomheden én eller flere ansatte – uanset om de er fuldtid, deltid eller midlertidige?'
+    text: 'Har virksomheden én eller flere ansatte - uanset om de er fuldtid, deltid eller midlertidige?'
   },
   {
     id: 52,
@@ -382,7 +382,7 @@ export const dvaQuestions = [
     category: 'S',
     label: 'S1',
     purpose: 'impact',
-    text: 'Har virksomheden medarbejdere, der som en fast del af deres ansættelse arbejder på skæve tidspunkter – fx aften, nat, tidlig morgen eller weekender?'
+    text: 'Har virksomheden medarbejdere, der som en fast del af deres ansættelse arbejder på skæve tidspunkter - fx aften, nat, tidlig morgen eller weekender?'
   },
   {
     id: 56,
@@ -431,7 +431,7 @@ export const dvaQuestions = [
     category: 'S',
     label: 'S2',
     purpose: 'impact',
-    text: 'Benytter virksomheden andre virksomheder til regelmæssig drift – f.eks. uden fastansatte eller via outsourcing?'
+    text: 'Benytter virksomheden andre virksomheder til regelmæssig drift - f.eks. uden fastansatte eller via outsourcing?'
   },
   {
     id: 63,
@@ -445,7 +445,7 @@ export const dvaQuestions = [
     category: 'S',
     label: 'S2',
     purpose: 'impact',
-    text: 'Har virksomhedens krav – f.eks. lave priser, korte deadlines eller høj fleksibilitet – potentiel negativ indflydelse på arbejdsforhold i kæden?'
+    text: 'Har virksomhedens krav - f.eks. lave priser, korte deadlines eller høj fleksibilitet - potentiel negativ indflydelse på arbejdsforhold i kæden?'
   },
   {
     id: 65,
@@ -487,7 +487,7 @@ export const dvaQuestions = [
     category: 'S',
     label: 'S2',
     purpose: 'finansiel',
-    text: 'Kan investering i bedre arbejdsforhold hos leverandører give økonomiske fordele – f.eks. lavere risiko for fejl, bedre kvalitet eller leveringssikkerhed?'
+    text: 'Kan investering i bedre arbejdsforhold hos leverandører give økonomiske fordele - f.eks. lavere risiko for fejl, bedre kvalitet eller leveringssikkerhed?'
   },
   {
     id: 71,
@@ -557,7 +557,7 @@ export const dvaQuestions = [
     category: 'S',
     label: 'S3',
     purpose: 'finansiel',
-    text: 'Er virksomhedens aktiviteter afhængige af accept, samarbejde eller støtte fra lokale interessenter – f.eks. naboer, borgere, lokalt erhvervsliv eller kommune?'
+    text: 'Er virksomhedens aktiviteter afhængige af accept, samarbejde eller støtte fra lokale interessenter - f.eks. naboer, borgere, lokalt erhvervsliv eller kommune?'
   },
   {
     id: 81,
@@ -585,7 +585,7 @@ export const dvaQuestions = [
     category: 'S',
     label: 'S4',
     purpose: 'impact',
-    text: 'Er nogle af virksomhedens produkter eller ydelser rettet mod slutbrugere, der kan være særligt sårbare – f.eks. børn, ældre eller syge?'
+    text: 'Er nogle af virksomhedens produkter eller ydelser rettet mod slutbrugere, der kan være særligt sårbare - f.eks. børn, ældre eller syge?'
   },
   {
     id: 85,

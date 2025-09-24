@@ -105,7 +105,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
         </button>
         <button 
           onClick={onNext}
-          disabled={isLast}
+          
           className="btn-primary"
         >
           Næste

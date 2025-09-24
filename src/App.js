@@ -7,6 +7,7 @@ import StepDVA from './components/StepDVA';
 import StepResultsMatrix from './components/StepResultsMatrix';
 import StepMatrixQuestions from './components/StepMatrixQuestions';
 import Del2Results from './components/Del2Results'; // New component for Del 2 results
+import CircularProgress from './components/CircularProgress';
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const matrixQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -26,6 +27,7 @@ function App() {
   const [answers, setAnswers] = useState({});
   const [matrixAnswers, setMatrixAnswers] = useState({});
   const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
+  const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
 
   // Load answers from localStorage on component mount
   useEffect(() => {
@@ -51,14 +53,26 @@ function App() {
 
   useEffect(() => {
     const newCompletionStatus = {};
+    let totalAnsweredQuestions = 0;
+    let totalPossibleQuestions = 0;
+
     questionGroups.forEach(groupLabel => {
       const questionsInGroup = dvaQuestions.filter(q => q.label === groupLabel);
       const totalQuestions = questionsInGroup.length;
       const answeredQuestions = questionsInGroup.filter(q => answers[q.id] !== undefined && answers[q.id] !== null).length;
       const percentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
       newCompletionStatus[groupLabel] = percentage;
+
+      totalAnsweredQuestions += answeredQuestions;
+      totalPossibleQuestions += totalQuestions;
     });
     setCategoryCompletionStatus(newCompletionStatus);
+
+    if (totalPossibleQuestions > 0) {
+      setTotalCompletionPercentage((totalAnsweredQuestions / totalPossibleQuestions) * 100);
+    } else {
+      setTotalCompletionPercentage(0);
+    }
   }, [answers, questionGroups]);
 
   const { criteriaWeights, impactFinansielCounts, maxScores } = useMemo(() => {
@@ -306,13 +320,38 @@ function App() {
     activeGroup = currentDel2Step;
   }
 
+  const [isNavOpen, setIsNavOpen] = useState(false); // State for mobile navigation visibility
+
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
   return (
-    <div className="esg-flex esg-h-screen esg-bg-gray-100">
-      <div className="esg-w-1/6 esg-bg-white esg-p-4 esg-flex esg-flex-col esg-justify-center">
+    <div className="esg-flex esg-flex-col md:esg-flex-row esg-h-screen esg-bg-gray-100">
+      {/* Mobile Header with Hamburger Menu */}
+      <div className="esg-flex esg-justify-between esg-items-center esg-p-4 esg-bg-white md:esg-hidden">
+        <h1 className="esg-text-xl esg-font-bold">ESG App</h1>
+        <div className="esg-flex esg-items-center">
+          <CircularProgress percentage={totalCompletionPercentage} />
+          <button onClick={toggleNav} className="esg-text-gray-800 focus:esg-outline-none esg-ml-4">
+            <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {isNavOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Navigation - visible on md and up, or when isNavOpen is true on small screens */}
+      <div className={`esg-w-full md:esg-w-1/6 esg-bg-white esg-p-4 esg-flex esg-flex-col esg-justify-center ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
         <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} matrixQuestions={matrixQuestions} />
       </div>
 
-      <div className="esg-w-3/4 esg-p-8 esg-bg-gray-100 esg-overflow-y-auto">
+      {/* Content Area */}
+      <div className="esg-w-full md:esg-w-3/4 esg-p-8 esg-bg-gray-100 esg-overflow-y-auto">
         {renderStep()}
       </div>
     </div>
