@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import CircularProgress from './CircularProgress';
 import './Navigation.css';
 
 const navSteps = [
@@ -30,10 +31,41 @@ const groupTitles = {
 };
 
 function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeSection, onSectionChange, matrixQuestions }) {
-  const [isDVADescriptionVisible, setDVADescriptionVisible] = useState(false);
-  const [isESGDescriptionVisible, setESGDescriptionVisible] = useState(false);
+  const [indicatorTop, setIndicatorTop] = useState(0);
+  const [isDvaCollapsed, setDvaCollapsed] = useState(false);
+  const [isEsgCollapsed, setEsgCollapsed] = useState(true);
+  const listRef = useRef(null);
 
   const currentActive = activeGroup;
+
+  useEffect(() => {
+    if (listRef.current) {
+      const activeElement = listRef.current.querySelector('.nav-category-item.active');
+      if (activeElement) {
+        setIndicatorTop(activeElement.offsetTop);
+      }
+    }
+  }, [activeGroup, activeSection]);
+
+  const handleSectionToggle = (section) => {
+    if (section === 'del1') {
+      if (activeSection === 'del1') {
+        setDvaCollapsed(!isDvaCollapsed);
+      } else {
+        onSectionChange('del1');
+        setDvaCollapsed(false);
+        setEsgCollapsed(true);
+      }
+    } else if (section === 'del2') {
+      if (activeSection === 'del2') {
+        setEsgCollapsed(!isEsgCollapsed);
+      } else {
+        onSectionChange('del2');
+        setDvaCollapsed(true);
+        setEsgCollapsed(false);
+      }
+    }
+  };
 
   const del2NavSteps = [];
   const groupedMatrixQuestions = {};
@@ -55,17 +87,6 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
 
   const del1Steps = navSteps.filter(step => !['matrixQuestions', 'intro'].includes(step.key));
 
-  const handleSectionToggle = (section) => {
-    onSectionChange(section);
-    if (section === 'del1') {
-      setDVADescriptionVisible(!isDVADescriptionVisible);
-      setESGDescriptionVisible(false);
-    } else {
-      setESGDescriptionVisible(!isESGDescriptionVisible);
-      setDVADescriptionVisible(false);
-    }
-  };
-
   return (
     <div className="nav-container">
       <h1>ESG-beregneren</h1>
@@ -77,24 +98,22 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
         >
           DVA
         </h2>
-        {isDVADescriptionVisible && 
-          <div className="nav-description">
-            Her er en beskrivelse af DVA.
-          </div>
-        }
-        {activeSection === 'del1' && (
-          <ul className="nav-category-list">
-            {del1Steps.map(step => (
-              <li
-                key={step.key}
-                onClick={() => onNavigate('del1', step.key)}
-                className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
-              >
-                {step.title}
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul 
+          className={`nav-category-list ${!isDvaCollapsed ? 'nav-category-list-open' : 'nav-category-list-closed'}`}
+          ref={listRef}
+        >
+          <div className="active-indicator" style={{ transform: `translateY(${indicatorTop}px)` }} />
+          {del1Steps.map(step => (
+            <li
+              key={step.key}
+              onClick={() => onNavigate('del1', step.key)}
+              className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
+            >
+              <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={20} />
+              <span className="category-title-text">{step.title}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div>
@@ -104,24 +123,17 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
         >
           ESG-score
         </h2>
-        {isESGDescriptionVisible && 
-          <div className="nav-description">
-            Her er en beskrivelse af ESG-score.
-          </div>
-        }
-        {activeSection === 'del2' && (
-          <ul className="nav-category-list">
-            {del2NavSteps.map(step => (
-              <li
-                key={step.key}
-                onClick={() => onNavigate('del2', step.key)}
-                className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
-              >
-                {step.title}
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className={`nav-category-list ${!isEsgCollapsed ? 'nav-category-list-open' : 'nav-category-list-closed'}`}>
+          {del2NavSteps.map(step => (
+            <li
+              key={step.key}
+              onClick={() => onNavigate('del2', step.key)}
+              className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
+            >
+              {step.title}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

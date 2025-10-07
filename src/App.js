@@ -326,7 +326,7 @@ function App() {
     <div className="esg-bg-white esg-min-h-screen">
       <div className="esg-bg-[#0b3954] esg-p-2">
         <div className="esg-flex">
-          <div className={`md:esg-w-1/4 lg:esg-w-1/5 ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
+          <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
             <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} matrixQuestions={matrixQuestions} />
           </div>
 

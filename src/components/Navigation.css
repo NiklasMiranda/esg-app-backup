@@ -1,12 +1,9 @@
-
 .nav-container {
   background-color: #0b3954;
   color: white;
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 5px;
-  height: 100vh;
-  overflow-y: auto;
 }
 
 .nav-container h1 {
@@ -23,23 +20,40 @@
 }
 
 .nav-section-header.active {
-  color: #bd822e;
-}
-
-.nav-description {
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .nav-category-list {
+  position: relative;
   padding-left: 1rem;
+  transition: max-height 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.nav-category-list-closed {
+  max-height: 0;
+}
+
+.nav-category-list-open {
+  max-height: 1000px; /* Adjust as needed */
+}
+
+.active-indicator {
+  position: absolute;
+  left: 0;
+  width: 3px;
+  height: 40px;
+  background-color: #bd822e;
+  transition: transform 0.3s ease-in-out;
 }
 
 .nav-category-item {
   padding: 0.5rem 1rem;
   cursor: pointer;
-  border-left: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 40px;
 }
 
 .nav-category-item:hover {
@@ -47,6 +61,11 @@
 }
 
 .nav-category-item.active {
-  border-left-color: #bd822e;
+  background-color: #BFDBFE;
+  color: #1e3a8a;
   font-weight: bold;
+}
+
+.category-title-text {
+  flex-grow: 1;
 }

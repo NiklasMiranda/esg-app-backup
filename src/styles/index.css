@@ -17,6 +17,13 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+/* For sticky navigation */
+.navigation-wrapper {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+}
+
 @layer components {
   .btn-primary {
     @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full;

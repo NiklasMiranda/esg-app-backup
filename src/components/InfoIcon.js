@@ -15,7 +15,8 @@ function InfoIcon({ onClick }) {
         height: '30px',
         display: 'inline-flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexShrink: 0
       }}
     >
       i
