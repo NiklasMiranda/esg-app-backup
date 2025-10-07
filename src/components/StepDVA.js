@@ -1,116 +1,124 @@
+import React, { useState, useMemo } from 'react';
 import { dvaQuestions } from '../data/dvaQuestions';
+import { categoryDescriptions, questionDescriptions } from '../data/descriptions';
 import QuestionCard from './QuestionCard';
-
-// A simple map for titles, can be expanded
-const groupTitles = {
-  E1: 'Klimaforandringer',
-  E2: 'Forurening',
-  E3: 'Vand- og havressourcer',
-  E4: 'Biodiversitet og økosystemer',
-  E5: 'Ressourceanvendelse og cirkulær økonomi',
-  S1: 'Egen arbejdsstyrke',
-  S2: 'Arbejdere i værdikæden',
-  S3: 'Påvirkede samfund',
-  S4: 'Forbrugere og slutbrugere',
-  G1: 'Forretningsetik',
-};
+import Modal from './Modal';
+import InfoIcon from './InfoIcon';
+import CircularProgress from './CircularProgress';
+import './StepDVA.css';
 
 function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
-  const allQuestionsForGroup = dvaQuestions.filter(q => q.label === group);
+  const [modalContent, setModalContent] = useState(null);
+  const [modalPosition, setModalPosition] = useState('center');
 
-  const impactQuestions = allQuestionsForGroup.filter(q => q.purpose === 'impact');
-  const finansielQuestions = allQuestionsForGroup.filter(q => q.purpose === 'finansiel');
+  const allQuestionsForGroup = useMemo(() => dvaQuestions.filter(q => q.label === group), [group]);
+  const impactQuestions = useMemo(() => allQuestionsForGroup.filter(q => q.purpose === 'impact'), [allQuestionsForGroup]);
+  const finansielQuestions = useMemo(() => allQuestionsForGroup.filter(q => q.purpose === 'finansiel'), [allQuestionsForGroup]);
 
-  const title = groupTitles[group] || 'Spørgsmål';
+  const categoryInfo = categoryDescriptions[group] || {};
 
-  const handleAnswerNext5 = (answer, purpose) => {
-    const questionsToFilter = purpose === 'impact' ? impactQuestions : finansielQuestions;
-    const unansweredQuestions = questionsToFilter.filter(q => !answers.hasOwnProperty(q.id) || answers[q.id] === null);
-    const next5Questions = unansweredQuestions.slice(0, 5);
-    next5Questions.forEach(q => {
-        onAnswerChange(q.id, answer);
-    });
+  const categoryCompletion = useMemo(() => {
+    const totalQuestions = allQuestionsForGroup.length;
+    if (totalQuestions === 0) return 0;
+    const answeredQuestions = allQuestionsForGroup.filter(q => answers[q.id] !== undefined && answers[q.id] !== null).length;
+    return (answeredQuestions / totalQuestions) * 100;
+  }, [allQuestionsForGroup, answers]);
+
+  const openModal = (content, position) => {
+    setModalContent(content);
+    setModalPosition(position);
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
+  };
+
+  const handleCategoryInfoClick = () => {
+    openModal(
+      <div>
+        <h2>{categoryInfo.title}</h2>
+        <p>{categoryInfo.description}</p>
+      </div>,
+      'right'
+    );
+  };
+
+  const handleQuestionInfoClick = (questionId) => {
+    const questionInfo = questionDescriptions[questionId] || {};
+    openModal(
+      <div>
+        <h2>Spørgsmålsinformation</h2>
+        <p>{questionInfo.description}</p>
+        <h3>Typiske brancher:</h3>
+        <p>{questionInfo.typicalIndustry}</p>
+      </div>,
+      'center'
+    );
   };
 
   return (
-    <div>
-      <h1 className="esg-text-3xl esg-mb-4">{group}: {title}</h1>
-      
-      {impactQuestions.length > 0 && (
-        <>
-          <h2 className="esg-text-2xl esg-mt-6 esg-mb-3">Impact</h2>
-          <div className="esg-flex esg-justify-end esg-mb-4">
-              <button
-                  onClick={() => handleAnswerNext5('yes', 'impact')}
-                  className="btn-green mr-2"
-              >
-                  Svar ja til 5
-              </button>
-              <button
-                  onClick={() => handleAnswerNext5('no', 'impact')}
-                  className="btn-red"
-              >
-                  Svar nej til 5
-              </button>
-          </div>
-          <div>
-            {impactQuestions.map(question => (
-              <QuestionCard
-                key={question.id}
-                question={question}
-                answer={answers[question.id]}
-                onAnswerChange={onAnswerChange}
-              />
-            ))}
-          </div>
-        </>
-      )}
+    <div className="step-dva-container-flex">
+      <div className="questions-area">
+        <div className="white-box">
+          <h1 className="category-title">
+            {categoryInfo.title}
+            <InfoIcon onClick={handleCategoryInfoClick} />
+          </h1>
 
-      {finansielQuestions.length > 0 && (
-        <>
-          <h2 className="esg-text-2xl esg-mt-6 esg-mb-3">Finansiel</h2>
-          <div className="esg-flex esg-justify-end esg-mb-4">
-              <button
-                  onClick={() => handleAnswerNext5('yes', 'finansiel')}
-                  className="btn-green mr-2"
-              >
-                  Svar ja til 5
-              </button>
-              <button
-                  onClick={() => handleAnswerNext5('no', 'finansiel')}
-                  className="btn-red"
-              >
-                  Svar nej til 5
-              </button>
-          </div>
-          <div>
-            {finansielQuestions.map(question => (
-              <QuestionCard
-                key={question.id}
-                question={question}
-                answer={answers[question.id]}
-                onAnswerChange={onAnswerChange}
-              />
-            ))}
-          </div>
-        </>
-      )}
+          {impactQuestions.length > 0 && (
+            <div className="question-section">
+              <h2 className="section-title">Impact</h2>
+              <div className="question-grid">
+                {impactQuestions.map(question => (
+                  <div key={question.id} className="question-grid-item">
+                    <QuestionCard
+                      question={question}
+                      answer={answers[question.id]}
+                      onAnswerChange={onAnswerChange}
+                      onInfoClick={() => handleQuestionInfoClick(question.id)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
-      <div className="esg-flex esg-justify-between esg-mt-8">
-        <button 
-          onClick={onPrev}
-          className="btn-secondary"
-        >
-          Forrige
-        </button>
-        <button 
-          onClick={onNext}
-          
-          className="btn-primary"
-        >
-          Næste
-        </button>
+          {finansielQuestions.length > 0 && (
+            <div className="question-section">
+              <h2 className="section-title">Finansiel</h2>
+              <div className="question-grid">
+                {finansielQuestions.map(question => (
+                  <div key={question.id} className="question-grid-item">
+                    <QuestionCard
+                      question={question}
+                      answer={answers[question.id]}
+                      onAnswerChange={onAnswerChange}
+                      onInfoClick={() => handleQuestionInfoClick(question.id)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="navigation-buttons">
+          <button onClick={onPrev} className="btn-secondary">Forrige</button>
+          <button onClick={onNext} className="btn-primary">Næste</button>
+        </div>
       </div>
+
+      <div className="sticky-progress-area">
+        <div className="progress-box">
+          <CircularProgress percentage={categoryCompletion} size={150} />
+          <p className="progress-text">
+            Så langt er du nået med spørgsmålene til {categoryInfo.title}
+          </p>
+        </div>
+      </div>
+
+      <Modal isOpen={!!modalContent} onClose={closeModal} position={modalPosition}>
+        {modalContent}
+      </Modal>
     </div>
   );
 }

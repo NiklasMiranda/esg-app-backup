@@ -6,29 +6,38 @@
 
 body {
   font-family: 'Raleway', sans-serif;
+  /* For Firefox */
+  scrollbar-width: none;
+  /* For IE and Edge */
+  -ms-overflow-style: none;
+}
+
+/* For Chrome, Safari, and Opera */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 @layer components {
   .btn-primary {
-    @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed;
+    @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full;
   }
   .btn-secondary {
-    @apply esg-bg-[#ffffff] hover:esg-bg-[#f4f4f4] esg-text-black esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed;
+    @apply esg-bg-[#ffffff] hover:esg-bg-[#f4f4f4] esg-text-black esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full;
   }
   .btn-nav {
-    @apply esg-px-4 esg-py-2 esg-transition-colors esg-duration-200 esg-bg-gray-200 esg-text-gray-800 hover:esg-bg-blue-200;
+    @apply esg-px-4 esg-py-2 esg-transition-colors esg-duration-200 esg-bg-gray-200 esg-text-gray-800 hover:esg-bg-blue-200 esg-rounded-full;
   }
   .btn-nav-active {
-    @apply esg-bg-[#0b3954] esg-text-white;
+    @apply esg-bg-[#0b3954] esg-text-white esg-rounded-full;
   }
   .btn-icon {
     @apply esg-text-blue-500 hover:esg-text-blue-700;
   }
   .btn-green {
-    @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4;
+    @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4 esg-rounded-full;
   }
   .btn-red {
-    @apply esg-bg-[#ffffff] hover:esg-bg-[#f4f4f4] esg-text-black esg-py-2 esg-px-4;
+    @apply esg-bg-[#ffffff] hover:esg-bg-[#f4f4f4] esg-text-black esg-py-2 esg-px-4 esg-rounded-full;
   }
   .btn-sm {
     @apply esg-px-2 esg-py-1 esg-text-sm;

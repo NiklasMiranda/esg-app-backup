@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
+import './Navigation.css';
+
 const navSteps = [
-  { key: 'intro', title: 'Intro' },
   { key: 'E1', title: 'E1: Klimaforandringer' },
   { key: 'E2', title: 'E2: Forurening' },
   { key: 'E3', title: 'E3: Vand- og havressourcer' },
@@ -28,10 +30,11 @@ const groupTitles = {
 };
 
 function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeSection, onSectionChange, matrixQuestions }) {
-  // Set 'intro' as active if no group is active yet
-  const currentActive = activeGroup || 'intro';
+  const [isDVADescriptionVisible, setDVADescriptionVisible] = useState(false);
+  const [isESGDescriptionVisible, setESGDescriptionVisible] = useState(false);
 
-  // Dynamically generate Del 2 nav steps
+  const currentActive = activeGroup;
+
   const del2NavSteps = [];
   const groupedMatrixQuestions = {};
 
@@ -46,50 +49,80 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
   });
 
   Object.entries(groupedMatrixQuestions).forEach(([label, subcategories]) => {
-    del2NavSteps.push({ key: label, title: `${label}: ${groupTitles[label] || ''}` }); // Main category title
+    del2NavSteps.push({ key: label, title: `${label}: ${groupTitles[label] || ''}` });
   });
   del2NavSteps.push({ key: 'del2Results', title: 'Del 2 Resultater' });
 
-  const del1Steps = navSteps.filter(step => !['matrixQuestions'].includes(step.key));
+  const del1Steps = navSteps.filter(step => !['matrixQuestions', 'intro'].includes(step.key));
+
+  const handleSectionToggle = (section) => {
+    onSectionChange(section);
+    if (section === 'del1') {
+      setDVADescriptionVisible(!isDVADescriptionVisible);
+      setESGDescriptionVisible(false);
+    } else {
+      setESGDescriptionVisible(!isESGDescriptionVisible);
+      setDVADescriptionVisible(false);
+    }
+  };
 
   return (
-    <div className="esg-sticky esg-top-0 esg-z-50 esg-bg-gray-100 esg-p-4">
-      <div className="esg-flex esg-justify-around esg-mb-4">
-        <button
-          onClick={() => onSectionChange('del1')}
-          className={`btn-nav ${activeSection === 'del1' ? 'btn-nav-active' : ''}`}
+    <div className="nav-container">
+      <h1>ESG-beregneren</h1>
+      
+      <div>
+        <h2 
+          className={`nav-section-header ${activeSection === 'del1' ? 'active' : ''}`}
+          onClick={() => handleSectionToggle('del1')}
         >
-          Del 1
-        </button>
-        <button
-          onClick={() => onSectionChange('del2')}
-          className={`btn-nav ${activeSection === 'del2' ? 'btn-nav-active' : ''}`}
-        >
-          Del 2
-        </button>
+          DVA
+        </h2>
+        {isDVADescriptionVisible && 
+          <div className="nav-description">
+            Her er en beskrivelse af DVA.
+          </div>
+        }
+        {activeSection === 'del1' && (
+          <ul className="nav-category-list">
+            {del1Steps.map(step => (
+              <li
+                key={step.key}
+                onClick={() => onNavigate('del1', step.key)}
+                className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
+              >
+                {step.title}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      <ul className="esg-space-y-2">
-        {(activeSection === 'del1' ? del1Steps : del2NavSteps).map(step => (
-          <li
-            key={step.key}
-            onClick={() => onNavigate(activeSection, step.key)}
-            className={`
-              esg-p-2 esg-rounded esg-cursor-pointer
-              ${currentActive === step.key
-                ? 'esg-border-2 esg-border-blue-500 esg-text-blue-700'
-                : 'esg-hover:bg-gray-200'
-              }
-              ${step.isSubcategory ? 'esg-ml-4 esg-font-semibold' : ''}
-              ${step.isQuestion ? 'esg-ml-8 esg-text-sm' : ''}
-            `}
-          >
-            <div className="esg-flex esg-items-center esg-justify-between esg-w-full">
-              <span>{step.title}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h2 
+          className={`nav-section-header ${activeSection === 'del2' ? 'active' : ''}`}
+          onClick={() => handleSectionToggle('del2')}
+        >
+          ESG-score
+        </h2>
+        {isESGDescriptionVisible && 
+          <div className="nav-description">
+            Her er en beskrivelse af ESG-score.
+          </div>
+        }
+        {activeSection === 'del2' && (
+          <ul className="nav-category-list">
+            {del2NavSteps.map(step => (
+              <li
+                key={step.key}
+                onClick={() => onNavigate('del2', step.key)}
+                className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
+              >
+                {step.title}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
