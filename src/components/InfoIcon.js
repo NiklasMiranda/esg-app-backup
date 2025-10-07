@@ -6,7 +6,7 @@ function InfoIcon({ onClick }) {
       onClick={onClick} 
       style={{
         cursor: 'pointer', 
-        marginLeft: '8px', 
+        marginLeft: '1px', 
         fontWeight: 'bold', 
         color: '#0b3954',
         border: '2px solid #0b3954',

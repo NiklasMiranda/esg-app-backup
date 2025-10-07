@@ -50,3 +50,44 @@ body::-webkit-scrollbar {
     @apply esg-px-2 esg-py-1 esg-text-sm;
   }
 }
+
+/* Backdrop animation */
+.fixed.inset-0.bg-gray-500\/75[data-enter="true"] {
+  transition: opacity 300ms ease-out;
+}
+.fixed.inset-0.bg-gray-500\/75[data-leave="true"] {
+  transition: opacity 200ms ease-in;
+}
+.fixed.inset-0.bg-gray-500\/75[data-closed="true"] {
+  opacity: 0;
+}
+
+/* Modal content animation (general) */
+.relative.transform.overflow-hidden[data-enter="true"] {
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+.relative.transform.overflow-hidden[data-leave="true"] {
+  transition: transform 200ms ease-in, opacity 200ms ease-in;
+}
+
+/* Modal content animation (centered/question-center) */
+.relative.transform.overflow-hidden[data-closed="true"] {
+  transform: translateY(4px) scale(0.95);
+  opacity: 0;
+}
+
+/* Modal content animation (right) */
+.relative.transform.overflow-hidden.h-full.w-\[400px\][data-closed="true"] {
+  transform: translateX(100%);
+}
+
+/* Initial states for enter animations */
+.relative.transform.overflow-hidden[data-enter="true"]:not([data-closed="true"]) {
+  /* Centered/Question */
+  transform: translateY(4px) scale(0.95);
+  opacity: 0;
+}
+.relative.transform.overflow-hidden.h-full.w-\[400px\][data-enter="true"]:not([data-closed="true"]) {
+  /* Right */
+  transform: translateX(100%);
+}

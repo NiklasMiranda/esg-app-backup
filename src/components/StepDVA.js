@@ -5,11 +5,22 @@ import QuestionCard from './QuestionCard';
 import Modal from './Modal';
 import InfoIcon from './InfoIcon';
 import CircularProgress from './CircularProgress';
-import './StepDVA.css';
+import Drawer from './Drawer';
+
 
 function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
   const [modalContent, setModalContent] = useState(null);
   const [modalPosition, setModalPosition] = useState('center');
+  const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
+  const [openSections, setOpenSections] = useState({
+    impact: true,
+    finansiel: true,
+  });
+
+  const toggleSection = (section) => {
+    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
+
 
   const allQuestionsForGroup = useMemo(() => dvaQuestions.filter(q => q.label === group), [group]);
   const impactQuestions = useMemo(() => allQuestionsForGroup.filter(q => q.purpose === 'impact'), [allQuestionsForGroup]);
@@ -31,95 +42,140 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
 
   const closeModal = () => {
     setModalContent(null);
+    setIsCategoryDrawerOpen(false);
   };
 
   const handleCategoryInfoClick = () => {
-    openModal(
-      <div>
-        <h2>{categoryInfo.title}</h2>
-        <p>{categoryInfo.description}</p>
-      </div>,
-      'right'
-    );
+    setIsCategoryDrawerOpen(true);
   };
 
   const handleQuestionInfoClick = (questionId) => {
     const questionInfo = questionDescriptions[questionId] || {};
     openModal(
-      <div>
-        <h2>Spørgsmålsinformation</h2>
-        <p>{questionInfo.description}</p>
-        <h3>Typiske brancher:</h3>
-        <p>{questionInfo.typicalIndustry}</p>
+      <div className="esg-flex esg-gap-4">
+        <div className="esg-flex-1">
+          <h2>Spørgsmålsinformation</h2>
+          <p>{questionInfo.description}</p>
+        </div>
+        <div className="esg-flex-1">
+          <h3>Typiske brancher:</h3>
+          <p>{questionInfo.typicalIndustry}</p>
+        </div>
       </div>,
-      'center'
+      'question-center'
     );
   };
 
   return (
-    <div className="step-dva-container-flex">
-      <div className="questions-area">
-        <div className="white-box">
-          <h1 className="category-title">
+    <div className="esg-flex esg-gap-8">
+      <div className="esg-flex-[3]">
+        <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
+          <h1 className="esg-text-xl esg-font-bold esg-mb-6 esg-flex esg-items-center">
             {categoryInfo.title}
             <InfoIcon onClick={handleCategoryInfoClick} />
           </h1>
 
           {impactQuestions.length > 0 && (
-            <div className="question-section">
-              <h2 className="section-title">Impact</h2>
-              <div className="question-grid">
-                {impactQuestions.map(question => (
-                  <div key={question.id} className="question-grid-item">
-                    <QuestionCard
-                      question={question}
-                      answer={answers[question.id]}
-                      onAnswerChange={onAnswerChange}
-                      onInfoClick={() => handleQuestionInfoClick(question.id)}
-                    />
-                  </div>
-                ))}
+            <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg">
+              <button
+                className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-4 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg focus:esg-outline-none"
+                onClick={() => toggleSection('impact')}
+              >
+                <span>Impact</span>
+                <svg
+                  className={`esg-w-5 esg-h-5 esg-transition-transform esg-duration-300 ${
+                    openSections.impact ? 'esg-rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div
+                className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
+                  openSections.impact ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+                }`}
+              >
+                <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
+                  {impactQuestions.map(question => (
+                    <div key={question.id} className="esg-flex esg-flex-col esg-items-center">
+                      <QuestionCard
+                        question={question}
+                        answer={answers[question.id]}
+                        onAnswerChange={onAnswerChange}
+                        onInfoClick={() => handleQuestionInfoClick(question.id)}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
           {finansielQuestions.length > 0 && (
-            <div className="question-section">
-              <h2 className="section-title">Finansiel</h2>
-              <div className="question-grid">
-                {finansielQuestions.map(question => (
-                  <div key={question.id} className="question-grid-item">
-                    <QuestionCard
-                      question={question}
-                      answer={answers[question.id]}
-                      onAnswerChange={onAnswerChange}
-                      onInfoClick={() => handleQuestionInfoClick(question.id)}
-                    />
-                  </div>
-                ))}
+            <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg">
+              <button
+                className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-4 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg focus:esg-outline-none"
+                onClick={() => toggleSection('finansiel')}
+              >
+                <span>Finansiel</span>
+                <svg
+                  className={`esg-w-5 esg-h-5 esg-transition-transform esg-duration-300 ${
+                    openSections.finansiel ? 'esg-rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div
+                className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
+                  openSections.finansiel ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+                }`}
+              >
+                <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
+                  {finansielQuestions.map(question => (
+                    <div key={question.id} className="esg-flex esg-flex-col esg-items-center">
+                      <QuestionCard
+                        question={question}
+                        answer={answers[question.id]}
+                        onAnswerChange={onAnswerChange}
+                        onInfoClick={() => handleQuestionInfoClick(question.id)}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
         </div>
-        <div className="navigation-buttons">
+        <div className="esg-flex esg-justify-between esg-mt-8">
           <button onClick={onPrev} className="btn-secondary">Forrige</button>
           <button onClick={onNext} className="btn-primary">Næste</button>
         </div>
       </div>
 
-      <div className="sticky-progress-area">
-        <div className="progress-box">
-          <CircularProgress percentage={categoryCompletion} size={150} />
-          <p className="progress-text">
+      <div className="esg-flex-1 esg-sticky esg-top-8 esg-self-start">
+        <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md esg-text-center">
+          <CircularProgress percentage={categoryCompletion} size={150} className="esg-block esg-mx-auto" />
+          <p className="esg-mt-4 esg-text-sm esg-text-gray-700">
             Så langt er du nået med spørgsmålene til {categoryInfo.title}
           </p>
         </div>
       </div>
+      <Drawer isOpen={isCategoryDrawerOpen} onClose={closeModal} title={categoryInfo.title} placement="right">
+        <p>{categoryInfo.description}</p>
+      </Drawer>
 
       <Modal isOpen={!!modalContent} onClose={closeModal} position={modalPosition}>
         {modalContent}
-      </Modal>
-    </div>
+      </Modal>    </div>
   );
 }
 

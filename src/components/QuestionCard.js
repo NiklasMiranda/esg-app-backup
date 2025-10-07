@@ -1,17 +1,19 @@
 import React from 'react';
 import InfoIcon from './InfoIcon';
-import './QuestionCard.css';
+
 
 function QuestionCard({ question, answer, onAnswerChange, onInfoClick }) {
   return (
-    <div className="question-card-container">
-      <div className="question-row">
+    <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-mb-4 esg-min-h-[150px] esg-flex esg-flex-col esg-justify-between">
+      <div className="esg-flex esg-justify-start esg-mb-2">
         <InfoIcon onClick={onInfoClick} />
-        <p className="question-text">
+      </div>
+      <div className="esg-flex esg-items-start esg-gap-2 esg-mb-4">
+        <p className="esg-flex-grow">
           {question.text.includes(' – ') ? question.text.split(' – ')[1] : question.text}
         </p>
       </div>
-      <div className="button-row">
+      <div className="esg-flex esg-justify-start esg-gap-2">
         <button
           onClick={() => onAnswerChange(question.id, answer === 'yes' ? null : 'yes')}
           className={`btn-nav ${answer === 'yes' ? 'btn-nav-active' : ''}`}

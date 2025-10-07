@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CircularProgress from './CircularProgress';
-import './Navigation.css';
+
 
 const navSteps = [
   { key: 'E1', title: 'E1: Klimaforandringer' },
@@ -35,14 +35,21 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
   const [isDvaCollapsed, setDvaCollapsed] = useState(false);
   const [isEsgCollapsed, setEsgCollapsed] = useState(true);
   const listRef = useRef(null);
+  const [indicatorTop2, setIndicatorTop2] = useState(0);
+  const listRef2 = useRef(null);
 
   const currentActive = activeGroup;
 
   useEffect(() => {
-    if (listRef.current) {
+    if (activeSection === 'del1' && listRef.current) {
       const activeElement = listRef.current.querySelector('.nav-category-item.active');
       if (activeElement) {
         setIndicatorTop(activeElement.offsetTop);
+      }
+    } else if (activeSection === 'del2' && listRef2.current) {
+      const activeElement = listRef2.current.querySelector('.nav-category-item.active');
+      if (activeElement) {
+        setIndicatorTop2(activeElement.offsetTop);
       }
     }
   }, [activeGroup, activeSection]);
@@ -88,29 +95,29 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
   const del1Steps = navSteps.filter(step => !['matrixQuestions', 'intro'].includes(step.key));
 
   return (
-    <div className="nav-container">
-      <h1>ESG-beregneren</h1>
+    <div className="esg-bg-[#0b3954] esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">
+      <h1 className="esg-text-xl esg-font-bold esg-p-4">ESG-beregneren</h1>
       
       <div>
         <h2 
-          className={`nav-section-header ${activeSection === 'del1' ? 'active' : ''}`}
+          className={`esg-text-lg esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer ${activeSection === 'del1' ? 'esg-text-white' : ''}`}
           onClick={() => handleSectionToggle('del1')}
         >
           DVA
         </h2>
         <ul 
-          className={`nav-category-list ${!isDvaCollapsed ? 'nav-category-list-open' : 'nav-category-list-closed'}`}
+          className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${!isDvaCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`}
           ref={listRef}
         >
-          <div className="active-indicator" style={{ transform: `translateY(${indicatorTop}px)` }} />
+          <div className="esg-absolute esg-left-0 esg-w-[3px] esg-h-10 esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop}px)` }} />
           {del1Steps.map(step => (
             <li
               key={step.key}
               onClick={() => onNavigate('del1', step.key)}
-              className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
+              className={`nav-category-item esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 esg-h-10 hover:esg-bg-white/10 ${currentActive === step.key ? 'active esg-bg-[#BFDBFE] esg-text-[#1e3a8a] esg-font-bold' : ''}`}
             >
               <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={20} />
-              <span className="category-title-text">{step.title}</span>
+              <span className="esg-flex-grow">{step.title}</span>
             </li>
           ))}
         </ul>
@@ -118,17 +125,18 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
 
       <div>
         <h2 
-          className={`nav-section-header ${activeSection === 'del2' ? 'active' : ''}`}
+          className={`esg-text-lg esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer ${activeSection === 'del2' ? 'esg-text-white' : ''}`}
           onClick={() => handleSectionToggle('del2')}
         >
           ESG-score
         </h2>
-        <ul className={`nav-category-list ${!isEsgCollapsed ? 'nav-category-list-open' : 'nav-category-list-closed'}`}>
+        <ul className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`} ref={listRef2}>
+          <div className="esg-absolute esg-left-0 esg-w-[3px] esg-h-10 esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop2}px)` }} />
           {del2NavSteps.map(step => (
             <li
               key={step.key}
               onClick={() => onNavigate('del2', step.key)}
-              className={`nav-category-item ${currentActive === step.key ? 'active' : ''}`}
+              className={`nav-category-item esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 esg-h-10 hover:esg-bg-white/10 ${currentActive === step.key ? 'active esg-bg-[#BFDBFE] esg-text-[#1e3a8a] esg-font-bold' : ''}`}
             >
               {step.title}
             </li>
