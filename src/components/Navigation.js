@@ -3,6 +3,7 @@ import CircularProgress from './CircularProgress';
 
 
 const navSteps = [
+  { key: 'dvaInfo', title: 'Intro' },
   { key: 'E1', title: 'E1: Klimaforandringer' },
   { key: 'E2', title: 'E2: Forurening' },
   { key: 'E3', title: 'E3: Vand- og havressourcer' },
@@ -37,6 +38,16 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
   const listRef = useRef(null);
   const [indicatorTop2, setIndicatorTop2] = useState(0);
   const listRef2 = useRef(null);
+
+  useEffect(() => {
+    if (activeSection === 'del1') {
+      setDvaCollapsed(false);
+      setEsgCollapsed(true);
+    } else if (activeSection === 'del2') {
+      setDvaCollapsed(true);
+      setEsgCollapsed(false);
+    }
+  }, [activeSection]);
 
   const currentActive = activeGroup;
 
@@ -92,7 +103,7 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
   });
   del2NavSteps.push({ key: 'del2Results', title: 'Del 2 Resultater' });
 
-  const del1Steps = navSteps.filter(step => !['matrixQuestions', 'intro'].includes(step.key));
+  const del1Steps = navSteps.filter(step => !['matrixQuestions'].includes(step.key));
 
   return (
     <div className="esg-bg-[#0b3954] esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">
@@ -106,17 +117,19 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
           DVA
         </h2>
         <ul 
-          className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${!isDvaCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`}
+          className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isDvaCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`}
           ref={listRef}
         >
           <div className="esg-absolute esg-left-0 esg-w-[3px] esg-h-10 esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop}px)` }} />
           {del1Steps.map(step => (
             <li
               key={step.key}
-              onClick={() => onNavigate('del1', step.key)}
-              className={`nav-category-item esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 esg-h-10 hover:esg-bg-white/10 ${currentActive === step.key ? 'active esg-bg-[#BFDBFE] esg-text-[#1e3a8a] esg-font-bold' : ''}`}
+              onClick={() => {
+                onNavigate('del1', step.key);
+              }}
+              className={`nav-category-item esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 esg-h-10 hover:esg-bg-slate-500 ${currentActive === step.key ? 'active esg-bg-slate-500 esg-text-white esg-font-bold' : 'esg-text-white'}`}
             >
-              {step.key !== 'matrix' && (
+              {step.key !== 'matrix' && step.key !== 'dvaInfo' && (
                 <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={20} />
               )}
               <span className="esg-flex-grow">{step.title}</span>
@@ -132,13 +145,15 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
         >
           ESG-score
         </h2>
-        <ul className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`} ref={listRef2}>
+        <ul className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`} ref={listRef2}>
           <div className="esg-absolute esg-left-0 esg-w-[3px] esg-h-10 esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop2}px)` }} />
           {del2NavSteps.map(step => (
             <li
               key={step.key}
-              onClick={() => onNavigate('del2', step.key)}
-              className={`nav-category-item esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 esg-h-10 hover:esg-bg-white/10 ${currentActive === step.key ? 'active esg-bg-[#BFDBFE] esg-text-[#1e3a8a] esg-font-bold' : ''}`}
+              onClick={() => {
+                onNavigate('del2', step.key);
+              }}
+              className={`nav-category-item esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 esg-h-10 hover:esg-bg-slate-500 ${currentActive === step.key ? 'active esg-bg-slate-500 esg-text-white esg-font-bold' : 'esg-text-white'}`}
             >
               {step.title}
             </li>

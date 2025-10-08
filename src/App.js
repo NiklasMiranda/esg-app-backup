@@ -7,6 +7,7 @@ import StepResultsMatrix from './components/StepResultsMatrix';
 import StepMatrixQuestions from './components/StepMatrixQuestions';
 import Del2Results from './components/Del2Results';
 import CircularProgress from './components/CircularProgress';
+import StepDVAInfo from './components/StepDVAInfo';
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const matrixQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -249,6 +250,8 @@ function App() {
             setActiveSection('del2');
             setCurrentDel2Step('E1');
           }} />;
+        case 'dvaInfo':
+          return <StepDVAInfo />;
         default:
           return (
             <StepDVA
@@ -323,35 +326,36 @@ function App() {
   };
 
   return (
-    <div className="esg-bg-white esg-min-h-screen">
-      <div className="esg-bg-[#0b3954] esg-p-2">
-        <div className="esg-flex">
-          <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
-            <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} matrixQuestions={matrixQuestions} />
-          </div>
+    <div className="esg-bg-[#0b3954] esg-min-h-screen esg-flex esg-flex-col esg-pb-4">
+      <div className="esg-bg-[#0b3954] esg-p-2 esg-flex-shrink-0">
+        {/* This div is now empty or contains only the main app title if needed */}
+      </div>
+      <div className="esg-flex-grow esg-flex">
+        <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
+          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} matrixQuestions={matrixQuestions} />
+        </div>
 
-          <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">
-            <div className="esg-flex esg-justify-between esg-items-center esg-mb-4 md:esg-hidden">
-              <h1 className="esg-text-xl esg-font-bold">ESG App</h1>
-              <div className="esg-flex esg-items-center">
-                <CircularProgress percentage={totalCompletionPercentage} />
-                <button onClick={toggleNav} className="esg-text-gray-800 focus:esg-outline-none esg-ml-4">
-                  <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    {isNavOpen ? (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    ) : (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    )}
-                  </svg>
-                </button>
-              </div>
+        <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">
+          <div className="esg-flex esg-justify-between esg-items-center esg-mb-4 md:esg-hidden">
+            <h1 className="esg-text-xl esg-font-bold">ESG App</h1>
+            <div className="esg-flex esg-items-center">
+              <CircularProgress percentage={totalCompletionPercentage} />
+              <button onClick={toggleNav} className="esg-text-gray-800 focus:esg-outline-none esg-ml-4">
+                <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {isNavOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin={"round"} strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
             </div>
-            {renderStep()}
           </div>
+          {renderStep()}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default App;

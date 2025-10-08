@@ -83,7 +83,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
   }, [answers]);
 
   return (
-    <div className="">
+    <div className="font-raleway">
       <div className="esg-flex esg-gap-8 esg-mb-8">
         {/* Left Box: Heading and Description */}
         <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
@@ -180,7 +180,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
             </div>
       <div className="esg-flex esg-justify-end esg-mt-4">
         <button
-          onClick={onNext}
+          onClick={() => onNext('del2', 'E1')}
           className="btn-primary"
         >
           Gå til Del 2

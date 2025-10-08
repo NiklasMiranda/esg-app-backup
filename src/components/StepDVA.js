@@ -87,6 +87,11 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
     );
   };
 
+  const handleNextClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    onNext();
+  };
+
   return (
     <div className="esg-flex esg-gap-8">
       <div className="esg-flex-[3]">
@@ -178,7 +183,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
         </div>
         <div className="esg-flex esg-justify-between esg-mt-8">
           <button onClick={onPrev} className="btn-secondary">Forrige</button>
-          <button onClick={onNext} className="btn-primary">Næste</button>
+          <button onClick={handleNextClick} className="btn-primary">Næste</button>
         </div>
       </div>
 
