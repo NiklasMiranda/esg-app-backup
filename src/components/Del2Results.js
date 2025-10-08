@@ -2,18 +2,7 @@ import React, { useMemo } from 'react';
 import CustomPolarChart from './CustomPolarChart';
 
 
-const groupTitles = {
-  E1: 'Klimaforandringer',
-  E2: 'Forurening',
-  E3: 'Vand- og havressourcer',
-  E4: 'Biodiversitet og økosystemer',
-  E5: 'Ressourceanvendelse og cirkulær økonomi',
-  S1: 'Egen arbejdsstyrke',
-  S2: 'Arbejdere i værdikæden',
-  S3: 'Påvirkede samfund',
-  S4: 'Forbrugere',
-  G1: 'Forretningsetik',
-};
+import groupTitles from '../data/groupTitles';
 
 const criterionColors = {
   E1: 'rgb(108,125,71)', 

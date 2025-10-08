@@ -12,32 +12,32 @@ export const categoryDescriptions = {
     description: 'Detaljeret beskrivelse af vand- og havressourcer...'
   },
   E4: {
-    title: 'E4: Biodiversitet',
-    description: 'Detaljeret beskrivelse af biodiversitet...'
+    title: 'E4: Biodiversitet og økosystemer',
+    description: 'Detaljeret beskrivelse af biodiversitet og økosystemer...'
   },
   E5: {
-    title: 'E5: Cirkulær økonomi',
-    description: 'Detaljeret beskrivelse af cirkulær økonomi...'
+    title: 'E5: Ressourceanvendelse og cirkulær økonomi',
+    description: 'Detaljeret beskrivelse af ressourceanvendelse og cirkulær økonomi...'
   },
   S1: {
     title: 'S1: Egen arbejdsstyrke',
     description: 'Detaljeret beskrivelse af egen arbejdsstyrke...'
   },
   S2: {
-    title: 'S2: Arbejdere i værdikæden',
-    description: 'Detaljeret beskrivelse af arbejdere i værdikæden...'
+    title: 'S2: Arbejdstagere i værdikæden',
+    description: 'Detaljeret beskrivelse af arbejdstagere i værdikæden...'
   },
   S3: {
-    title: 'S3: Påvirkede samfund',
-    description: 'Detaljeret beskrivelse af påvirkede samfund...'
+    title: 'S3: Berørte samfund',
+    description: 'Detaljeret beskrivelse af berørte samfund...'
   },
   S4: {
-    title: 'S4: Forbrugere',
-    description: 'Detaljeret beskrivelse af forbrugere...'
+    title: 'S4: Forbrugere og slutbrugere',
+    description: 'Detaljeret beskrivelse af forbrugere og slutbrugere...'
   },
   G1: {
-    title: 'G1: Forretningsetik',
-    description: 'Detaljeret beskrivelse af forretningsetik...'
+    title: 'G1: God forretningsskik',
+    description: 'Detaljeret beskrivelse af god forretningsskik...'
   },
 };
 

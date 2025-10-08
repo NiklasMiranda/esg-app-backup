@@ -1,21 +1,8 @@
 import React, { useMemo } from 'react';
 import { dvaQuestions } from '../data/dvaQuestions'; // Adjust path if necessary
+import groupTitles from '../data/groupTitles';
 
 const axisLabels = ["Ikke relevant", "Lav", "Middel", "Moderat", "Høj", "Meget høj"];
-
-// A simple map for titles, can be expanded (copied from StepDVA for consistency)
-const groupTitles = {
-  E1: 'Klimaforandringer',
-  E2: 'Forurening',
-  E3: 'Vand- og havressourcer',
-  E4: 'Biodiversitet og økosystemer',
-  E5: 'Ressourceanvendelse og cirkulær økonomi',
-  S1: 'Egen arbejdsstyrke',
-  S2: 'Arbejder i værdikæden',
-  S3: 'Påvirkede samfund',
-  S4: 'Forbrugere og slutbrugere',
-  G1: 'Forretningsetik',
-};
 
 function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, onNext }) {
   const { plottedCoordinates } = useMemo(() => {

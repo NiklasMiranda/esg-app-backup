@@ -8,6 +8,8 @@ import StepMatrixQuestions from './components/StepMatrixQuestions';
 import Del2Results from './components/Del2Results';
 import CircularProgress from './components/CircularProgress';
 import StepDVAInfo from './components/StepDVAInfo';
+import { categoryDescriptions } from './data/descriptions';
+import StepESGInfo from './components/StepESGInfo';
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const matrixQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -27,6 +29,7 @@ function App() {
   const [answers, setAnswers] = useState({});
   const [matrixAnswers, setMatrixAnswers] = useState({});
   const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
+  const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
   const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
 
   useEffect(() => {
@@ -71,6 +74,24 @@ function App() {
       setTotalCompletionPercentage(0);
     }
   }, [answers]);
+
+  useEffect(() => {
+    const newEsgCompletionStatus = {};
+    let totalAnsweredEsgQuestions = 0;
+    let totalPossibleEsgQuestions = 0;
+
+    matrixQuestionGroups.forEach(groupLabel => {
+      const questionsInGroup = matrixQuestions.filter(q => q.label === groupLabel);
+      const totalQuestions = questionsInGroup.length;
+      const answeredQuestions = questionsInGroup.filter(q => matrixAnswers[q.id] !== undefined && matrixAnswers[q.id] !== null).length;
+      const percentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
+      newEsgCompletionStatus[groupLabel] = percentage;
+
+      totalAnsweredEsgQuestions += answeredQuestions;
+      totalPossibleEsgQuestions += totalQuestions;
+    });
+    setEsgCategoryCompletionStatus(newEsgCompletionStatus);
+  }, [matrixAnswers]);
 
   const { criteriaWeights, impactFinansielCounts, maxScores } = useMemo(() => {
     const results = {};
@@ -269,6 +290,8 @@ function App() {
     } else if (activeSection === 'del2') {
       const currentMatrixGroup = matrixQuestionGroups.includes(currentDel2Step) ? currentDel2Step : matrixQuestionGroups[0];
       switch (currentDel2Step) {
+        case 'esgInfo':
+          return <StepESGInfo />;
         case 'E1':
         case 'E2':
         case 'E3':
@@ -289,6 +312,7 @@ function App() {
             isFirst={matrixGroupIndex === 0}
             isLast={matrixGroupIndex === matrixQuestionGroups.length - 1}
             onShowResults={() => setCurrentDel2Step('del2Results')}
+            categoryDescriptions={categoryDescriptions}
           />;
         case 'del2Results':
           return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} />;
@@ -332,7 +356,7 @@ function App() {
       </div>
       <div className="esg-flex-grow esg-flex">
         <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
-          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} matrixQuestions={matrixQuestions} />
+          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} matrixQuestions={matrixQuestions} questionGroups={questionGroups} />
         </div>
 
         <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">
