@@ -16,16 +16,16 @@ const groupTitles = {
 };
 
 const criterionColors = {
-  E1: '#006400', // Yellow-Orange
-  E2: '#2e8b57', // Red
-  E3: '#228b22', // Light Green
-  E4: '#006400', // Blue
-  E5: '#004d00', // Dark Red
-  S1: '#8b0000', // Green
-  S2: '#b22222', // Orange
-  S3: '#800000', // Light Blue
-  S4: '#9b111e', // Gray
-  G1: '#1e3a5f', // Purple
+  E1: 'rgb(108,125,71)', 
+  E2: 'rgb(108,125,71,0.90)', 
+  E3: 'rgb(108,125,71,0.80)', 
+  E4: 'rgb(108,125,71,0.70)', 
+  E5: 'rgb(108,125,71,0.60)',
+  S1: 'rgb(147,24,49)', 
+  S2: 'rgb(147,24,49,0.90)', 
+  S3: 'rgb(147,24,49,0.80)', 
+  S4: 'rgb(147,24,49,0.70)', 
+  G1: 'rgb(11,57,84)', 
 };
 
 

@@ -19,25 +19,29 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
     finansiel: true,
   });
 
-  const { yesCount, noCount } = useMemo(() => {
-    let yes = 0;
-    let no = 0;
-    Object.values(answers).forEach(answer => {
-      if (answer === 'yes') {
-        yes++;
-      } else if (answer === 'no') {
-        no++;
-      }
-    });
-    return { yesCount: yes, noCount: no };
-  }, [answers]);
-
   const toggleSection = (section) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
-
   const allQuestionsForGroup = useMemo(() => dvaQuestions.filter(q => q.label === group), [group]);
+
+  const { yesCount, noCount } = useMemo(() => {
+    let yes = 0;
+    let no = 0;
+    const currentGroupQuestions = allQuestionsForGroup.map(q => q.id);
+
+    Object.entries(answers).forEach(([questionId, answer]) => {
+      const numericQuestionId = Number(questionId);
+      if (currentGroupQuestions.includes(numericQuestionId)) {
+        if (answer === 'yes') {
+          yes++;
+        } else if (answer === 'no') {
+          no++;
+        }
+      }
+    });
+    return { yesCount: yes, noCount: no };
+  }, [answers, allQuestionsForGroup]);
   const impactQuestions = useMemo(() => allQuestionsForGroup.filter(q => q.purpose === 'impact'), [allQuestionsForGroup]);
   const finansielQuestions = useMemo(() => allQuestionsForGroup.filter(q => q.purpose === 'finansiel'), [allQuestionsForGroup]);
 
