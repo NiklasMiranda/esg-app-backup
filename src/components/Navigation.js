@@ -116,7 +116,9 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, activeS
               onClick={() => onNavigate('del1', step.key)}
               className={`nav-category-item esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 esg-h-10 hover:esg-bg-white/10 ${currentActive === step.key ? 'active esg-bg-[#BFDBFE] esg-text-[#1e3a8a] esg-font-bold' : ''}`}
             >
-              <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={20} />
+              {step.key !== 'matrix' && (
+                <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={20} />
+              )}
               <span className="esg-flex-grow">{step.title}</span>
             </li>
           ))}

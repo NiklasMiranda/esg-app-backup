@@ -1,51 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import MuiModal from '@mui/material/Modal'; // Renamed to avoid conflict with component name
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 
-function Modal({ isOpen, onClose, position = 'center', children }) {
-  const [status, setStatus] = useState(isOpen ? 'entered' : 'left'); // 'entering', 'entered', 'leaving', 'left'
-  const enterDuration = 300; // Match CSS data-enter duration
-  const leaveDuration = 200; // Match CSS data-leave duration
-
-  useEffect(() => {
-    if (isOpen) {
-      if (status === 'left' || status === 'leaving') {
-        setStatus('entering');
-        const timer = setTimeout(() => {
-          setStatus('entered');
-        }, enterDuration);
-        return () => clearTimeout(timer);
-      }
-    } else {
-      if (status === 'entered' || status === 'entering') {
-        setStatus('leaving');
-        const timer = setTimeout(() => {
-          setStatus('left');
-        }, leaveDuration);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [isOpen, status]);
-
-  if (status === 'left') {
-    return null;
-  }
-
-  const isModalClosed = status === 'left';
-  const isEntering = status === 'entering';
-  const isLeaving = status === 'leaving';
-
+export default function Modal({ isOpen, onClose, children, title }) {
   return (
-    <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex" onClick={onClose}>
-        <div className={`bg-white p-6 rounded-lg shadow-lg z-50 max-w-md w-full mx-4 relative ${position === 'right' ? 'ml-auto' : 'mx-auto'} ${position === 'question-center' ? 'self-center' : 'self-center'}`} onClick={(e) => e.stopPropagation()}>
-          <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
-            &times;
-          </button>
+    <MuiModal
+      open={isOpen}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {title}
+          </Typography>
+          <IconButton onClick={onClose} aria-label="close">
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           {children}
-        </div>
-      </div>
-    </>
+        </Typography>
+      </Box>
+    </MuiModal>
   );
 }
-
-export default Modal;

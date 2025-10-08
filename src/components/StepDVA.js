@@ -6,16 +6,31 @@ import Modal from './Modal';
 import InfoIcon from './InfoIcon';
 import CircularProgress from './CircularProgress';
 import Drawer from './Drawer';
+import AnswerRatioGraph from './AnswerRatioGraph';
 
 
 function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
   const [modalContent, setModalContent] = useState(null);
+  const [modalTitle, setModalTitle] = useState('');
   const [modalPosition, setModalPosition] = useState('center');
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [openSections, setOpenSections] = useState({
     impact: true,
     finansiel: true,
   });
+
+  const { yesCount, noCount } = useMemo(() => {
+    let yes = 0;
+    let no = 0;
+    Object.values(answers).forEach(answer => {
+      if (answer === 'yes') {
+        yes++;
+      } else if (answer === 'no') {
+        no++;
+      }
+    });
+    return { yesCount: yes, noCount: no };
+  }, [answers]);
 
   const toggleSection = (section) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
@@ -35,8 +50,9 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
     return (answeredQuestions / totalQuestions) * 100;
   }, [allQuestionsForGroup, answers]);
 
-  const openModal = (content, position) => {
+  const openModal = (content, title, position) => {
     setModalContent(content);
+    setModalTitle(title);
     setModalPosition(position);
   };
 
@@ -62,6 +78,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
           <p>{questionInfo.typicalIndustry}</p>
         </div>
       </div>,
+      'Spørgsmålsinformation',
       'question-center'
     );
   };
@@ -161,19 +178,22 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
         </div>
       </div>
 
-      <div className="esg-flex-1 esg-sticky esg-top-8 esg-self-start">
-        <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md esg-text-center">
-          <CircularProgress percentage={categoryCompletion} size={150} className="esg-block esg-mx-auto" />
-          <p className="esg-mt-4 esg-text-sm esg-text-gray-700">
+      <div className="esg-flex-1 esg-sticky esg-top-2 esg-self-start esg-pr-8">
+        <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md esg-flex esg-flex-col esg-items-center esg-justify-center">
+          <CircularProgress percentage={categoryCompletion} size={150} />
+          <p className="esg-mt-4 esg-text-sm esg-text-gray-700 esg-text-center">
             Så langt er du nået med spørgsmålene til {categoryInfo.title}
           </p>
         </div>
+        <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md esg-mt-8 esg-flex esg-flex-col esg-items-center esg-justify-center">
+          <AnswerRatioGraph yesCount={yesCount} noCount={noCount} />
+        </div>
       </div>
-      <Drawer isOpen={isCategoryDrawerOpen} onClose={closeModal} title={categoryInfo.title} placement="right">
+      <Drawer isOpen={isCategoryDrawerOpen} onClose={closeModal} title={categoryInfo.title}>
         <p>{categoryInfo.description}</p>
       </Drawer>
 
-      <Modal isOpen={!!modalContent} onClose={closeModal} position={modalPosition}>
+      <Modal isOpen={!!modalContent} onClose={closeModal} title={modalTitle}>
         {modalContent}
       </Modal>    </div>
   );
