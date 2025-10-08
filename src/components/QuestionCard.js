@@ -4,13 +4,14 @@ import InfoIcon from './InfoIcon';
 
 function QuestionCard({ question, answer, onAnswerChange, onInfoClick }) {
   return (
-    <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-mb-4 esg-min-h-[150px] esg-flex esg-flex-col esg-justify-between">
-      <div className="esg-flex esg-justify-start esg-mb-2">
-        <InfoIcon onClick={onInfoClick} />
-      </div>
-      <div className="esg-flex esg-items-start esg-gap-2 esg-mb-4">
-        <p className="esg-flex-grow">
-          {question.text.includes(' – ') ? question.text.split(' – ')[1] : question.text}
+    <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-mb-4 esg-flex esg-flex-col esg-justify-between">
+      <div> {/* Container for number, info, and text */}
+        <div className="esg-flex esg-items-center esg-mb-2"> {/* Question number and InfoIcon */}
+          <p className="esg-font-bold esg-mr-2">{question.number}</p>
+          <InfoIcon onClick={onInfoClick} />
+        </div>
+        <p className="esg-mb-4"> {/* Question text */}
+          {question.text}
         </p>
       </div>
       <div className="esg-flex esg-justify-start esg-gap-2">

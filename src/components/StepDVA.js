@@ -100,7 +100,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
             {categoryInfo.title}
             <InfoIcon onClick={handleCategoryInfoClick} />
           </h1>
-
+          <> {/* Start of React Fragment */}
           {impactQuestions.length > 0 && (
             <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg">
               <button
@@ -125,20 +125,20 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
                   openSections.impact ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
                 }`}
               >
-                <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
-                  {impactQuestions.map(question => (
-                    <div key={question.id} className="esg-flex esg-flex-col esg-items-center">
-                      <QuestionCard
-                        question={question}
-                        answer={answers[question.id]}
-                        onAnswerChange={onAnswerChange}
-                        onInfoClick={() => handleQuestionInfoClick(question.id)}
-                      />
-                    </div>
-                  ))}
+                  <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
+                    {impactQuestions.map(question => (
+                      <div key={question.id} className="esg-flex esg-flex-col esg-items-start">
+                        <QuestionCard
+                          question={question}
+                          answer={answers[question.id]}
+                          onAnswerChange={onAnswerChange}
+                          onInfoClick={() => handleQuestionInfoClick(question.id)}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
           )}
 
           {finansielQuestions.length > 0 && (
@@ -167,19 +167,15 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
               >
                 <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
                   {finansielQuestions.map(question => (
-                    <div key={question.id} className="esg-flex esg-flex-col esg-items-center">
-                      <QuestionCard
-                        question={question}
-                        answer={answers[question.id]}
-                        onAnswerChange={onAnswerChange}
-                        onInfoClick={() => handleQuestionInfoClick(question.id)}
-                      />
+                    <div key={question.id}>
+                      {question.id} - {question.text}
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           )}
+          </> {/* End of React Fragment */}
         </div>
         <div className="esg-flex esg-justify-between esg-mt-8">
           <button onClick={onPrev} className="btn-secondary">Forrige</button>

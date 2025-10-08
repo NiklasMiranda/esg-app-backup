@@ -78,8 +78,11 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
               >
                 <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
                   {questions.map(q => (
-                    <div key={q.id} className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-flex esg-flex-col esg-items-center">
-                      <p className="esg-text-base esg-text-center">{q.number}: {q.text} (Points: {q.points})</p>
+                    <div key={q.id} className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-flex esg-flex-col esg-justify-between esg-items-start">
+                      <div> {/* Container for number and text */}
+                        <p className="esg-font-bold esg-mb-2">{q.number}.</p>
+                        <p className="esg-text-base esg-mb-4">{q.text}</p>
+                      </div>
                       <input
                         type="checkbox"
                         checked={matrixAnswers[q.id] || false}
