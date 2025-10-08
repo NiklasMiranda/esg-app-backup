@@ -58,18 +58,22 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
     }, {});
 
     const finalPlottedCoordinates = [];
-    const offsetAmount = 0.1; // Small offset for overlapping points
+    const offsetAmount = 0.3; // Spacing between points
+    const pointsPerLine = 2; // How many points fit on one line before wrapping
+    const lineOffsetAmount = 0.3; // Spacing between lines
 
     Object.values(groupedCoords).forEach(group => {
       if (group.length === 1) {
         finalPlottedCoordinates.push(group[0]);
       } else {
-        // Apply offset for overlapping points
         group.forEach((coord, index) => {
+          const xOffset = (index % pointsPerLine) * offsetAmount;
+          const yOffset = Math.floor(index / pointsPerLine) * lineOffsetAmount;
+
           finalPlottedCoordinates.push({
             ...coord,
-            impact: coord.impact + (index * offsetAmount) - ((group.length - 1) * offsetAmount / 2), // Center the group
-            finansiel: coord.finansiel + (index * offsetAmount) - ((group.length - 1) * offsetAmount / 2),
+            impact: coord.impact + xOffset - ((Math.min(group.length, pointsPerLine) - 1) * offsetAmount / 2), // Center the line horizontally
+            finansiel: coord.finansiel + yOffset - ((Math.ceil(group.length / pointsPerLine) - 1) * lineOffsetAmount / 2), // Center the group vertically
           });
         });
       }
