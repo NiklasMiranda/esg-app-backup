@@ -14,11 +14,32 @@ import StepESGInfo from './components/StepESGInfo';
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const matrixQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 
+const criterionColors = {
+  E1: 'rgb(108,125,71)', 
+  E2: 'rgb(108,125,71,0.90)', 
+  E3: 'rgb(108,125,71,0.80)', 
+  E4: 'rgb(108,125,71,0.70)', 
+  E5: 'rgb(108,125,71,0.60)',
+  S1: 'rgb(147,24,49)', 
+  S2: 'rgb(147,24,49,0.90)', 
+  S3: 'rgb(147,24,49,0.80)', 
+  S4: 'rgb(147,24,49,0.70)', 
+  G1: 'rgb(11,57,84)', 
+};
+
 const categoryPercentages = {
   E: 40,
   S: 30,
   G: 30,
 };
+
+function getESGLevel(score) {
+  if (score < 35) return 'Ikke bestået';
+  else if (score < 50) return 'Bronze';
+  else if (score < 65) return 'Sølv';
+  else if (score < 80) return 'Guld';
+  else return 'Platin';
+}
 
 function App() {
   const [currentDel1Step, setCurrentDel1Step] = useState('E1');
@@ -185,6 +206,39 @@ function App() {
     return { finalScores: calculatedFinalScores, totalScore: calculatedTotalScore, indicatorPoints: indicatorPoints };
   }, [matrixAnswers, maxScores]);
 
+  const polarBarChartData = useMemo(() => {
+    return Object.entries(finalScores).map(([label, finalScore]) => ({
+      criterion: label.trim(), // Ensure no whitespace
+      "Point (Optjent)": parseFloat(indicatorPoints[label]?.toFixed(2)) || 0,
+    }));
+  }, [finalScores, indicatorPoints]);
+
+  const esgLevel = useMemo(() => getESGLevel(totalScore), [totalScore]);
+
+  const marimekkoData = useMemo(() => {
+    const currentGroup = matrixQuestionGroups.includes(currentDel2Step) ? currentDel2Step : matrixQuestionGroups[0];
+
+    const questionsInGroup = matrixQuestions.filter(q => q.label === currentGroup);
+    const subcategories = [...new Set(questionsInGroup.map(q => q.secondSubcategory))];
+
+    return subcategories.map(subcategory => {
+      const questionsInSubcategory = questionsInGroup.filter(q => q.secondSubcategory === subcategory);
+      const maxPoints = questionsInSubcategory.reduce((sum, q) => sum + q.points, 0);
+      const earnedPoints = questionsInSubcategory.reduce((sum, q) => {
+        if (matrixAnswers[q.id]) {
+          return sum + q.points;
+        }
+        return sum;
+      }, 0);
+
+      return {
+        subcategory,
+        earnedPoints,
+        maxPoints,
+      };
+    });
+  }, [currentDel2Step, matrixAnswers]);
+
   const handleAnswerChange = (questionId, answer) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
@@ -313,9 +367,14 @@ function App() {
             isLast={matrixGroupIndex === matrixQuestionGroups.length - 1}
             onShowResults={() => setCurrentDel2Step('del2Results')}
             categoryDescriptions={categoryDescriptions}
+            polarBarChartData={polarBarChartData}
+            totalScore={totalScore}
+            esgLevel={esgLevel}
+            criterionColors={criterionColors}
+            marimekkoData={marimekkoData}
           />;
         case 'del2Results':
-          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} />;
+          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} />;
         default:
           return <StepMatrixQuestions
             activeMatrixGroup={currentMatrixGroup}
@@ -352,7 +411,21 @@ function App() {
   return (
     <div className="esg-bg-[#0b3954] esg-min-h-screen esg-flex esg-flex-col esg-pb-4">
       <div className="esg-bg-[#0b3954] esg-p-2 esg-flex-shrink-0">
-        {/* This div is now empty or contains only the main app title if needed */}
+        <div className="esg-flex esg-justify-between esg-items-center esg-mb-4 md:esg-hidden">
+          <h1 className="esg-text-xl esg-font-bold">ESG App</h1>
+          <div className="esg-flex esg-items-center">
+            <CircularProgress percentage={totalCompletionPercentage} />
+            <button onClick={toggleNav} className="esg-text-gray-800 focus:esg-outline-none esg-ml-4">
+              <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {isNavOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin={"round"} strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
       <div className="esg-flex-grow esg-flex">
         <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
@@ -360,21 +433,6 @@ function App() {
         </div>
 
         <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">
-          <div className="esg-flex esg-justify-between esg-items-center esg-mb-4 md:esg-hidden">
-            <h1 className="esg-text-xl esg-font-bold">ESG App</h1>
-            <div className="esg-flex esg-items-center">
-              <CircularProgress percentage={totalCompletionPercentage} />
-              <button onClick={toggleNav} className="esg-text-gray-800 focus:esg-outline-none esg-ml-4">
-                <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  {isNavOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin={"round"} strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  )}
-                </svg>
-              </button>
-            </div>
-          </div>
           {renderStep()}
         </div>
       </div>

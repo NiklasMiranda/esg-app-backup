@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { matrixQuestions } from '../data/matrixQuestions';
 import InfoIcon from './InfoIcon';
 import Drawer from './Drawer';
+import CustomPolarChart from './CustomPolarChart';
+import NivoLikeMarimekkoChart from './NivoLikeMarimekkoChart';
 import groupTitles from '../data/groupTitles';
 
-function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerChange, onNext, onPrev, isFirst, isLast, onShowResults, categoryDescriptions }) {
+function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerChange, onNext, onPrev, isFirst, isLast, onShowResults, categoryDescriptions, polarBarChartData, totalScore, esgLevel, criterionColors, marimekkoData }) {
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [openSections, setOpenSections] = useState({});
+
+  const groupedQuestionsBySecondSubcategory = useMemo(() =>
+    matrixQuestions
+      .filter(q => q.label === activeMatrixGroup)
+      .reduce((acc, question) => {
+        (acc[question.secondSubcategory] = acc[question.secondSubcategory] || []).push(question);
+        return acc;
+      }, {}),
+    [activeMatrixGroup]
+  );
+
+  useEffect(() => {
+    setOpenSections(
+      Object.keys(groupedQuestionsBySecondSubcategory).reduce((acc, key) => {
+        acc[key] = true;
+        return acc;
+      }, {})
+    );
+  }, [groupedQuestionsBySecondSubcategory]);
 
   const toggleSection = (section) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
@@ -20,115 +41,102 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
     setIsCategoryDrawerOpen(false);
   };
 
-  // Group questions by label, subcategory, and secondSubcategory
-  const groupedQuestions = matrixQuestions
-    .filter(q => q.label === activeMatrixGroup) // Filter by activeMatrixGroup
-    .reduce((acc, question) => {
-    if (!acc[question.label]) {
-      acc[question.label] = {};
-    }
-    if (!acc[question.label][question.subcategory]) {
-      acc[question.label][question.subcategory] = {};
-    }
-    if (!acc[question.label][question.subcategory][question.secondSubcategory]) {
-      acc[question.label][question.subcategory][question.secondSubcategory] = [];
-    }
-    acc[question.label][question.subcategory][question.secondSubcategory].push(question);
-    return acc;
-  }, {});
+  
 
-  const handleSelectAll = (questions, checked) => {
-    questions.forEach(q => {
-        onMatrixAnswerChange(q.id, checked);
-    });
-  };
+    return (
+    <div className="esg-flex esg-gap-8">
+      <div className="esg-w-9/12">
+        <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
+          <h1 className="esg-text-xl esg-font-bold esg-mb-6 esg-flex esg-items-center">
+            {activeMatrixGroup}: {groupTitles[activeMatrixGroup]}
+            <InfoIcon onClick={handleCategoryInfoClick} />
+          </h1>
 
-  return (
-    <div className="esg-p-4">
-      <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
-        <h1 className="esg-text-xl esg-font-bold esg-mb-6 esg-flex esg-items-center">
-          {activeMatrixGroup}: {groupTitles[activeMatrixGroup]}
-          <InfoIcon onClick={handleCategoryInfoClick} />
-        </h1>
-
-        {Object.entries(groupedQuestions).map(([label, subcategories]) => (
-          <div key={label}>
-            {Object.entries(subcategories).map(([subcategory, secondSubcategories]) => (
-              <div key={subcategory} className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg">
-                <button
-                  className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-4 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg focus:esg-outline-none"
-                  onClick={() => toggleSection(subcategory)}
-                >
-                  <span>{subcategory}</span>
-                  <svg
-                    className={`esg-w-5 esg-h-5 esg-transition-transform esg-duration-300 ${
-                      openSections[subcategory] ? 'esg-rotate-180' : ''
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </button>
-                <div
-                  className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
-                    openSections[subcategory] ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+          {Object.entries(groupedQuestionsBySecondSubcategory).map(([secondSubcategory, questions]) => (
+            <div key={secondSubcategory} className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg">
+              <button
+                className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-4 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg focus:esg-outline-none"
+                onClick={() => toggleSection(secondSubcategory)}
+              >
+                <span>{secondSubcategory}</span>
+                <svg
+                  className={`esg-w-5 esg-h-5 esg-transition-transform esg-duration-300 ${
+                    openSections[secondSubcategory] ? 'esg-rotate-180' : ''
                   }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  {Object.entries(secondSubcategories).map(([secondSubcategory, questions]) => (
-                    <div key={secondSubcategory} className="esg-p-4 esg-grid esg-grid-cols-1 esg-gap-4">
-                      <h4 className="esg-text-lg esg-font-bold esg-mb-2">{secondSubcategory}</h4>
-                      <div className="esg-grid esg-grid-cols-1 esg-gap-4">
-                        {questions.map(q => (
-                          <div key={q.id} className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-flex esg-items-center esg-justify-between">
-                            <p className="esg-text-base">{q.number}: {q.text} (Points: {q.points})</p>
-                            <input
-                              type="checkbox"
-                              checked={matrixAnswers[q.id] || false}
-                              onChange={(e) => onMatrixAnswerChange(q.id, e.target.checked)}
-                              className="esg-form-checkbox esg-h-5 esg-w-5 esg-text-blue-600"
-                            />
-                          </div>
-                        ))}
-                      </div>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div
+                className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
+                  openSections[secondSubcategory] ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+                }`}
+              >
+                <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
+                  {questions.map(q => (
+                    <div key={q.id} className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-flex esg-flex-col esg-items-center">
+                      <p className="esg-text-base esg-text-center">{q.number}: {q.text} (Points: {q.points})</p>
+                      <input
+                        type="checkbox"
+                        checked={matrixAnswers[q.id] || false}
+                        onChange={(e) => onMatrixAnswerChange(q.id, e.target.checked)}
+                        className="esg-form-checkbox esg-h-5 esg-w-5 esg-text-blue-600 esg-mt-2"
+                      />
                     </div>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-        ))}
+            </div>
+          ))}
 
-        <div className="esg-flex esg-justify-between esg-mt-8">
-          <button
-            onClick={onPrev}
-            disabled={isFirst}
-            className="btn-secondary"
-          >
-            Forrige
-          </button>
-          {isLast ? (
+          <div className="esg-flex esg-justify-between esg-mt-8">
             <button
-              onClick={onShowResults}
-              className="btn-primary"
+              onClick={onPrev}
+              disabled={isFirst}
+              className="btn-secondary"
             >
-              Vis Resultater
+              Forrige
             </button>
-          ) : (
-            <button
-              onClick={onNext}
-              className="btn-primary"
-            >
-              Næste
-            </button>
-          )}
+            {isLast ? (
+              <button
+                onClick={onShowResults}
+                className="btn-primary"
+              >
+                Vis Resultater
+              </button>
+            ) : (
+              <button
+                onClick={onNext}
+                className="btn-primary"
+              >
+                Næste
+              </button>
+            )}
+          </div>
+        </div>
+        <Drawer isOpen={isCategoryDrawerOpen} onClose={closeDrawer} title={`${activeMatrixGroup}: ${groupTitles[activeMatrixGroup]}`}>
+          <p>{categoryDescriptions[activeMatrixGroup]?.description || 'Ingen beskrivelse tilgængelig.'}</p>
+        </Drawer>
+      </div>
+      <div className="esg-w-5/12">
+        <div className="esg-sticky esg-top-8">
+          <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md">
+            <CustomPolarChart
+              data={polarBarChartData}
+              totalScore={totalScore}
+              esgLevel={esgLevel}
+              criterionColors={criterionColors}
+            />
+          </div>
+          <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-mt-8">
+            <NivoLikeMarimekkoChart data={marimekkoData} />
+          </div>
         </div>
       </div>
-      <Drawer isOpen={isCategoryDrawerOpen} onClose={closeDrawer} title={`${activeMatrixGroup}: ${groupTitles[activeMatrixGroup]}`}>
-        <p>{categoryDescriptions[activeMatrixGroup]?.description || 'Ingen beskrivelse tilgængelig.'}</p>
-      </Drawer>
     </div>
   );
 }

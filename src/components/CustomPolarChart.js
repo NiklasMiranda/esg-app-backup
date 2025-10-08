@@ -128,7 +128,7 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
             y={y}
             textAnchor="start" // Align text to the start (right) for labels on the right side
             alignmentBaseline="middle"
-            fontSize="16"
+            fontSize="24"
             fill="#000"
           >
             {value}
@@ -153,9 +153,9 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
             y={y}
             textAnchor="middle"
             alignmentBaseline="middle"
-            fontSize="14"
+            fontSize="20"
             fontWeight="bold"
-            fill="#333"
+            fill="#000"
           >
             {criterion}
           </text>

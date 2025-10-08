@@ -4,38 +4,10 @@ import CustomPolarChart from './CustomPolarChart';
 
 import groupTitles from '../data/groupTitles';
 
-const criterionColors = {
-  E1: 'rgb(108,125,71)', 
-  E2: 'rgb(108,125,71,0.90)', 
-  E3: 'rgb(108,125,71,0.80)', 
-  E4: 'rgb(108,125,71,0.70)', 
-  E5: 'rgb(108,125,71,0.60)',
-  S1: 'rgb(147,24,49)', 
-  S2: 'rgb(147,24,49,0.90)', 
-  S3: 'rgb(147,24,49,0.80)', 
-  S4: 'rgb(147,24,49,0.70)', 
-  G1: 'rgb(11,57,84)', 
-};
 
 
+function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgLevel, polarBarChartData, criterionColors }) {
 
-function getESGLevel(score) {
-  if (score < 35) return 'Ikke bestået';
-  else if (score < 50) return 'Bronze';
-  else if (score < 65) return 'Sølv';
-  else if (score < 80) return 'Guld';
-  else return 'Platin';
-}
-
-function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores }) {
-  const polarBarChartData = useMemo(() => {
-    return Object.entries(finalScores).map(([label, finalScore]) => ({
-      criterion: label.trim(), // Ensure no whitespace
-      "Point (Optjent)": parseFloat(indicatorPoints[label]?.toFixed(2)) || 0,
-    }));
-  }, [finalScores, indicatorPoints]);
-
-  const esgLevel = useMemo(() => getESGLevel(totalScore), [totalScore]);
 
   return (
     <div className="esg-p-4">
