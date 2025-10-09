@@ -100,7 +100,7 @@ const NivoLikeMarimekkoChart = ({ data }) => {
             y={innerHeight + 20}
             textAnchor="middle"
             fill="black"
-            fontSize="16"
+            fontSize="18"
             fontWeight="bold"
             pointerEvents="none"
           >

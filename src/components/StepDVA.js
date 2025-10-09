@@ -14,13 +14,24 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
   const [modalTitle, setModalTitle] = useState('');
   const [modalPosition, setModalPosition] = useState('center');
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
-  const [openSections, setOpenSections] = useState({
+  const [allOpenSections, setAllOpenSections] = useState({});
+
+  const openSections = allOpenSections[group] || {
     impact: true,
     finansiel: true,
-  });
+  };
 
   const toggleSection = (section) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setAllOpenSections(prev => {
+      const currentGroupSections = prev[group] || { impact: true, finansiel: true };
+      return {
+        ...prev,
+        [group]: {
+          ...currentGroupSections,
+          [section]: !currentGroupSections[section]
+        }
+      };
+    });
   };
 
   const allQuestionsForGroup = useMemo(() => dvaQuestions.filter(q => q.label === group), [group]);
@@ -127,7 +138,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
               >
                   <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
                     {impactQuestions.map(question => (
-                      <div key={question.id} className="esg-flex esg-flex-col esg-items-start">
+                      <div key={question.id} className="esg-flex esg-flex-col esg-items-start esg-h-full">
                         <QuestionCard
                           question={question}
                           answer={answers[question.id]}
@@ -167,8 +178,13 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
               >
                 <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
                   {finansielQuestions.map(question => (
-                    <div key={question.id}>
-                      {question.id} - {question.text}
+                    <div key={question.id} className="esg-flex esg-flex-col esg-items-start esg-h-full">
+                      <QuestionCard
+                        question={question}
+                        answer={answers[question.id]}
+                        onAnswerChange={onAnswerChange}
+                        onInfoClick={() => handleQuestionInfoClick(question.id)}
+                      />
                     </div>
                   ))}
                 </div>

@@ -4,7 +4,7 @@ import InfoIcon from './InfoIcon';
 
 function QuestionCard({ question, answer, onAnswerChange, onInfoClick }) {
   return (
-    <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-mb-4 esg-flex esg-flex-col esg-justify-between">
+    <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-mb-4 esg-flex esg-flex-col esg-justify-between esg-h-full">
       <div> {/* Container for number, info, and text */}
         <div className="esg-flex esg-items-center esg-mb-2"> {/* Question number and InfoIcon */}
           <p className="esg-font-bold esg-mr-2">{question.number}</p>
