@@ -88,8 +88,8 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
   const del1Steps = navSteps.filter(step => !['matrixQuestions'].includes(step.key));
 
   return (
-    <div className="esg-bg-[#0b3954] esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">
-      <h1 className="esg-text-xl esg-font-bold esg-p-4 esg-border-b esg-border-gray-400 esg-pb-2 esg-mb-2 esg-flex esg-items-center">
+    <div className="esg-bg-[#0b3954] !esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">
+      <h1 className="!esg-text-xl esg-font-bold esg-p-4 esg-border-b esg-border-gray-400 esg-pb-2 esg-mb-2 esg-flex esg-items-center">
         <FaCalculator className="esg-mr-2" />ESG-beregneren
       </h1>
       
