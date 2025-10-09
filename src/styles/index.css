@@ -13,14 +13,6 @@ body {
   background-color: #000;
 }
 
-/* Custom reset for the React app container */
-#esg-root, .esg-app-container {
-  all: initial; /* Resets all inherited properties */
-  box-sizing: border-box; /* Re-apply box-sizing */
-  font-family: 'Raleway', sans-serif; /* Re-apply desired font */
-  /* Add any other base styles you want to explicitly control */
-}
-
 /* For Chrome, Safari, and Opera */
 body::-webkit-scrollbar {
   display: none;
