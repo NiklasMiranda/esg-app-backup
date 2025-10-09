@@ -30,6 +30,7 @@ function QuestionGroup({ title, questions, answers, onAnswerChange, handleQuesti
                     answer={answers[question.id]}
                     onAnswerChange={onAnswerChange}
                     onInfoClick={() => handleQuestionInfoClick(question.id)}
+                    showPoints={true}
                   />
                 </div>
               ))}
@@ -48,6 +49,7 @@ function QuestionGroup({ title, questions, answers, onAnswerChange, handleQuesti
                     answer={answers[question.id]}
                     onAnswerChange={onAnswerChange}
                     onInfoClick={() => handleQuestionInfoClick(question.id)}
+                    showPoints={true}
                   />
                 </div>
               ))}
