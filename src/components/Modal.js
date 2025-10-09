@@ -25,10 +25,7 @@ export default function Modal({ isOpen, onClose, children, title }) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {title}
-          </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'right', alignItems: 'center', mb: 2 }}>
           <IconButton onClick={onClose} aria-label="close">
             <CloseIcon />
           </IconButton>

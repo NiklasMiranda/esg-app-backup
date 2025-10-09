@@ -42,7 +42,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
 
         {/* Right: Table */}
         <div className="esg-flex-[2] esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
-          <table className="esg-min-w-full esg-bg-white esg-rounded-lg">
+          <table className="esg-min-w-full esg-bg-white esg-rounded-lg esg-overflow-hidden">
             <thead>
               <tr className="esg-bg-[#f4f4f4]">
                 <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
@@ -56,7 +56,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
               {Object.entries(finalScores).map(([label, finalScore]) => (
                 <tr key={label}>
                   <td className="esg-py-2 esg-px-4 esg-border-b">{label}: {groupTitles[label]}</td>
-                  <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{indicatorPoints[label] || 0}</td>
+                  <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{(indicatorPoints[label] || 0).toFixed(2)}</td>
                   <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">100</td>
                   <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{maxScores[label]?.toFixed(2) || 0}</td>
                   <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{finalScore.toFixed(2)}</td>

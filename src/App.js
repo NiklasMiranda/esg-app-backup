@@ -270,6 +270,7 @@ function App() {
   };
 
   const handleNextMatrixGroup = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (matrixGroupIndex < matrixQuestionGroups.length - 1) {
       setMatrixGroupIndex(matrixGroupIndex + 1);
       setCurrentDel2Step(matrixQuestionGroups[matrixGroupIndex + 1]);
@@ -279,6 +280,7 @@ function App() {
   };
 
   const handlePrevMatrixGroup = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (matrixGroupIndex > 0) {
       setMatrixGroupIndex(matrixGroupIndex - 1);
       setCurrentDel2Step(matrixQuestionGroups[matrixGroupIndex - 1]);
@@ -288,6 +290,7 @@ function App() {
   };
 
   const navigateTo = (section, stepKey) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (section === 'del1') {
       const groupIdx = questionGroups.indexOf(stepKey);
       if (groupIdx !== -1) {
