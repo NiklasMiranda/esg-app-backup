@@ -18,7 +18,7 @@ const CircularProgress = ({ percentage, size = 24 }) => {
   const progressColor = interpolateColor(percentage);
 
   return (
-    <svg style={{ width: size, height: size }} className="esg-transform esg-rotate-[-90deg]">
+    <svg style={{ width: size, height: size, minWidth: size, minHeight: size }} className="esg-transform esg-rotate-[-90deg]">
       <circle
         className="esg-text-gray-300"
         strokeWidth={strokeWidth}
