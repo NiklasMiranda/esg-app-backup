@@ -31,7 +31,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
         <h2 className="esg-text-2xl esg-mb-4">Detaljeret Score per Kriterie:</h2>
         <table className="esg-min-w-full esg-bg-white esg-border esg-border-gray-300">
           <thead>
-            <tr>
+            <tr className="esg-bg-[#f4f4f4]">
               <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
               <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Optjent)</th>
               <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Maks)</th>

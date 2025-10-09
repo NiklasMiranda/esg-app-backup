@@ -89,7 +89,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
             <div className="esg-absolute esg-top-0 esg-left-1/2 esg-transform esg--translate-x-1/2 esg--translate-y-6 esg-text-xs sm:esg-text-sm">Impact</div>
 
             {/* Y-axis labels (Finansiel) */}
-            <div className="esg-absolute esg-left-0 esg-top-0 esg-h-full esg-flex esg-flex-col esg-justify-around esg-items-center esg-pr-2 esg-text-xs sm:esg-text-sm esg-w-20 esg-text-right esg--translate-x-full">
+            <div className="esg-absolute esg-left-0 esg-top-0 esg-h-full esg-flex esg-flex-col esg-justify-around esg-pr-2 esg-text-xs sm:esg-text-sm esg-w-20 esg-text-right esg--translate-x-full">
               {axisLabels.slice().reverse().map((label, index) => (
                 <span key={index} className="esg-h-1/6 esg-flex esg-items-center esg-justify-end">{label}</span>
               ))}
@@ -145,7 +145,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
               <div className="esg-flex-[2] esg-bg-white esg-p-14 esg-rounded-lg esg-shadow-md esg-overflow-x-auto">
                 <table className="esg-min-w-full esg-bg-white esg-border esg-border-gray-300 esg-rounded-lg esg-overflow-hidden">
                   <thead>
-                    <tr>
+                    <tr className="esg-bg-[#f4f4f4]">
                       <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
                       <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Impact</th>
                       <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Finansiel</th>
