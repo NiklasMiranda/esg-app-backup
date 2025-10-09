@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('esg-root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
