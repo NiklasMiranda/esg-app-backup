@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StepESGInfo() {
+function StepESGInfo({ onNext }) {
   return (
     <div className="esg-p-4">
       <h1 className="esg-text-3xl esg-font-bold esg-mb-8">ESG-score: Introduktion</h1>
@@ -45,6 +45,9 @@ function StepESGInfo() {
             Det handler om, hvordan virksomheden ledes retfærdigt, etisk og transparent.
           </p>
         </div>
+      </div>
+      <div className="esg-flex esg-justify-end esg-mt-8">
+        <button onClick={onNext} className="btn-primary">Start ESG-score</button>
       </div>
     </div>
   );

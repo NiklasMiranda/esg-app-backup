@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StepDVAInfo() {
+function StepDVAInfo({ onNext }) {
   return (
     <div className="esg-p-4">
       <h1 className="esg-text-3xl esg-font-bold esg-mb-8">Dobbeltvæsentlighedsanalysen (DVA)</h1>
@@ -37,6 +37,9 @@ function StepDVAInfo() {
             Virksomheden skal vurdere, hvordan disse faktorer kan påvirke dens indtjening, omkostninger, kapitaladgang og langsigtede værdiskabelse.
           </p>
         </div>
+      </div>
+      <div className="esg-flex esg-justify-end esg-mt-8">
+        <button onClick={onNext} className="btn-primary">Start DVA</button>
       </div>
     </div>
   );

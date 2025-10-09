@@ -5,7 +5,7 @@ import groupTitles from '../data/groupTitles';
 
 
 
-function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgLevel, polarBarChartData, criterionColors }) {
+function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgLevel, polarBarChartData, criterionColors, onPrev }) {
 
 
   return (
@@ -65,6 +65,14 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="esg-flex esg-justify-start esg-mt-4">
+        <button
+          onClick={onPrev}
+          className="btn-secondary"
+        >
+          Forrige
+        </button>
       </div>
     </div>
     </div>

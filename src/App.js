@@ -264,6 +264,8 @@ function App() {
   const handlePrevGroup = () => {
     if (groupIndex > 0) {
       setGroupIndex(groupIndex - 1);
+    } else {
+      setCurrentDel1Step('dvaInfo');
     }
   };
 
@@ -281,7 +283,7 @@ function App() {
       setMatrixGroupIndex(matrixGroupIndex - 1);
       setCurrentDel2Step(matrixQuestionGroups[matrixGroupIndex - 1]);
     } else {
-      setCurrentDel2Step(matrixQuestionGroups[0]);
+      setCurrentDel2Step('esgInfo');
     }
   };
 
@@ -323,10 +325,10 @@ function App() {
         case 'matrix':
           return <StepResultsMatrix answers={answers} criteriaWeights={criteriaWeights} impactFinansielCounts={impactFinansielCounts} dvaQuestions={dvaQuestions} onNext={() => {
             setActiveSection('del2');
-            setCurrentDel2Step('E1');
-          }} />;
+            setCurrentDel2Step('esgInfo');
+          }} onPrev={() => setCurrentDel1Step(questionGroups[questionGroups.length - 1])} />;
         case 'dvaInfo':
-          return <StepDVAInfo />;
+          return <StepDVAInfo onNext={() => setCurrentDel1Step(questionGroups[0])} />;
         default:
           return (
             <StepDVA
@@ -345,7 +347,7 @@ function App() {
       const currentMatrixGroup = matrixQuestionGroups.includes(currentDel2Step) ? currentDel2Step : matrixQuestionGroups[0];
       switch (currentDel2Step) {
         case 'esgInfo':
-          return <StepESGInfo />;
+          return <StepESGInfo onNext={() => setCurrentDel2Step(matrixQuestionGroups[0])} />;
         case 'E1':
         case 'E2':
         case 'E3':
@@ -374,7 +376,7 @@ function App() {
             marimekkoData={marimekkoData}
           />;
         case 'del2Results':
-          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} />;
+          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(matrixQuestionGroups[matrixQuestionGroups.length - 1])} />;
         default:
           return <StepMatrixQuestions
             activeMatrixGroup={currentMatrixGroup}

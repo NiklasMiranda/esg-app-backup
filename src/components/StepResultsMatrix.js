@@ -4,7 +4,7 @@ import groupTitles from '../data/groupTitles';
 
 const axisLabels = ["Ikke relevant", "Lav", "Middel", "Moderat", "Høj", "Meget høj"];
 
-function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, onNext }) {
+function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev }) {
   const { plottedCoordinates } = useMemo(() => {
     const results = {};
     [...new Set(dvaQuestions.map(q => q.label))].forEach(label => {
@@ -165,7 +165,13 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
                 </table>
               </div>
             </div>
-      <div className="esg-flex esg-justify-end esg-mt-4">
+      <div className="esg-flex esg-justify-between esg-mt-4">
+        <button
+          onClick={onPrev}
+          className="btn-secondary"
+        >
+          Forrige
+        </button>
         <button
           onClick={() => onNext('del2', 'E1')}
           className="btn-primary"

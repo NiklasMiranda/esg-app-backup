@@ -109,7 +109,6 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
           <div className="esg-flex esg-justify-between esg-mt-8">
             <button
               onClick={onPrev}
-              disabled={isFirst}
               className="btn-secondary"
             >
               Forrige
