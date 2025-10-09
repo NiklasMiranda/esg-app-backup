@@ -143,7 +143,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
       
               {/* Right Box: Table Form */}
               <div className="esg-flex-[2] esg-bg-white esg-p-14 esg-rounded-lg esg-shadow-md esg-overflow-x-auto">
-                <table className="esg-min-w-full esg-bg-white esg-border esg-border-gray-300 esg-rounded-lg esg-overflow-hidden">
+                <table className="esg-min-w-full esg-bg-white esg-border esg-border-[#f4f4f4] esg-rounded-lg esg-overflow-hidden">
                   <thead>
                     <tr className="esg-bg-[#f4f4f4]">
                       <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>

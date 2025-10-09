@@ -100,12 +100,17 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
               fill={color}
               stroke="#fff"
               strokeWidth="1"
-              onMouseEnter={(e) => {
+              onMouseEnter={() => {
+                const anglePerSegment = 360 / data.length;
+                const midAngle = (index * anglePerSegment) + (anglePerSegment / 2);
+                const tooltipRadius = outerRadius * 0.7; // Position tooltip at 70% of outerRadius
+                const { x, y } = polarToCartesian(centerX, centerY, tooltipRadius, midAngle);
+
                 setTooltip({
                   criterion: item.criterion,
                   score: item["Point (Optjent)"],
-                  x: e.nativeEvent.offsetX,
-                  y: e.nativeEvent.offsetY,
+                  x: x,
+                  y: y,
                 });
               }}
               onMouseLeave={() => setTooltip(null)}
@@ -172,10 +177,10 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
 
       {/* Tooltip */}
       {tooltip && (
-        <g>
+        <g pointer-events="none">
           <rect
-            x={tooltip.x + 10}
-            y={tooltip.y - 20}
+            x={tooltip.x - 60} // Half of width (120/2)
+            y={tooltip.y - 20} // Half of height (40/2)
             width={120}
             height={40}
             fill="rgba(0, 0, 0, 0.7)"
@@ -183,8 +188,10 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
             ry="5"
           />
           <text
-            x={tooltip.x + 20}
-            y={tooltip.y}
+            x={tooltip.x}
+            y={tooltip.y + 5} // Adjust for vertical centering of text
+            textAnchor="middle"
+            alignmentBaseline="middle"
             fill="#fff"
             fontSize="14"
           >

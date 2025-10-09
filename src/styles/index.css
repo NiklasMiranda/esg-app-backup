@@ -29,13 +29,13 @@ body::-webkit-scrollbar {
     @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full;
   }
   .btn-secondary {
-    @apply esg-bg-[#ffffff] hover:esg-bg-[#f4f4f4] esg-text-black esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full;
+    @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full;
   }
   .btn-nav {
-    @apply esg-px-4 esg-py-2 esg-transition-colors esg-duration-200 esg-bg-gray-200 esg-text-gray-800 hover:esg-bg-blue-200 esg-rounded-full;
+    @apply esg-px-4 esg-py-2 esg-transition-colors esg-duration-200 esg-bg-[#f4f4f4] esg-text-black hover:esg-bg-[#0b3954] hover:esg-text-white esg-rounded-full;
   }
   .btn-nav-active {
-    @apply esg-bg-[#0b3954] esg-text-white esg-rounded-full;
+    @apply esg-bg-black esg-text-white esg-rounded-full;
   }
   .btn-icon {
     @apply esg-text-blue-500 hover:esg-text-blue-700;

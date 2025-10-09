@@ -10,48 +10,63 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
 
   return (
     <div className="esg-p-4">
-      <h1 className="esg-text-3xl esg-mb-6">Del 2 Resultater</h1>
 
-      <div className="esg-mb-8">
-        <h2 className="esg-text-2xl esg-mb-4">Samlet ESG Score: {totalScore.toFixed(2)}</h2>
+
+    <div>
+      {/* First Row */}
+      <div className="esg-flex esg-gap-8 esg-mb-8">
+        {/* Left: Explanation for first graph */}
+        <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
+          <h2 className="esg-text-2xl esg-mb-4">Samlet ESG Score: {totalScore.toFixed(2)}</h2>
+        </div>
+
+        {/* Right: First Graph */}
+        <div className="esg-flex-[2] esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
+          <div className="esg-mb-8 esg-w-full esg-h-auto esg-aspect-square esg-mx-auto esg-relative">
+            <CustomPolarChart
+              data={polarBarChartData}
+              totalScore={totalScore}
+              esgLevel={esgLevel}
+              criterionColors={criterionColors}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Custom Inverted Polar Chart */}
-      <div className="esg-mb-8 esg-w-full md:esg-max-w-3xl esg-h-auto esg-aspect-square esg-mx-auto esg-relative">
-        <h2 className="esg-text-2xl esg-mb-4">ESG Kriterie Sammenligning (Custom Inverted)</h2>
-        <CustomPolarChart
-          data={polarBarChartData}
-          totalScore={totalScore}
-          esgLevel={esgLevel}
-          criterionColors={criterionColors}
-        />
-      </div>
+      {/* Second Row */}
+      <div className="esg-flex esg-gap-8 esg-mb-8">
+        {/* Left: Explanation for table */}
+        <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
+          <h2 className="esg-text-2xl esg-mb-4">Detaljeret Score per Kriterie:</h2>
+        </div>
 
-      <div className="esg-mb-8">
-        <h2 className="esg-text-2xl esg-mb-4">Detaljeret Score per Kriterie:</h2>
-        <table className="esg-min-w-full esg-bg-white esg-border esg-border-gray-300">
-          <thead>
-            <tr className="esg-bg-[#f4f4f4]">
-              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
-              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Optjent)</th>
-              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Maks)</th>
-              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (Maks)</th>
-              <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (Endelig)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(finalScores).map(([label, finalScore]) => (
-              <tr key={label}>
-                <td className="esg-py-2 esg-px-4 esg-border-b">{label}: {groupTitles[label]}</td>
-                <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{indicatorPoints[label] || 0}</td>
-                <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">100</td>
-                <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{maxScores[label]?.toFixed(2) || 0}</td>
-                <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{finalScore.toFixed(2)}</td>
+        {/* Right: Table */}
+        <div className="esg-flex-[2] esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
+          <table className="esg-min-w-full esg-bg-white esg-rounded-lg">
+            <thead>
+              <tr className="esg-bg-[#f4f4f4]">
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Optjent)</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Maks)</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (Maks)</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (Endelig)</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {Object.entries(finalScores).map(([label, finalScore]) => (
+                <tr key={label}>
+                  <td className="esg-py-2 esg-px-4 esg-border-b">{label}: {groupTitles[label]}</td>
+                  <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{indicatorPoints[label] || 0}</td>
+                  <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">100</td>
+                  <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{maxScores[label]?.toFixed(2) || 0}</td>
+                  <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{finalScore.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+    </div>
     </div>
   );
 }

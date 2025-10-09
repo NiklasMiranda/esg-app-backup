@@ -88,9 +88,9 @@ const NivoLikeMarimekkoChart = ({ data }) => {
         {/* Legends */}
         <g transform={`translate(${innerWidth / 3}, ${innerHeight + 60})`}>
           <rect x={-60} y={0} width={20} height={20} fill="#6495ED" />
-          <text x={-30} y={15}>Optjente points</text>
+          <text x={-30} y={15} fontSize="20">Optjente points</text>
           <rect x={180} y={0} width={20} height={20} fill="#e0e0e0" />
-          <text x={210} y={15}>Maksimale points</text>
+          <text x={210} y={15} fontSize="20">Maksimale points</text>
         </g>
 
         {/* Tooltip */}
@@ -100,7 +100,7 @@ const NivoLikeMarimekkoChart = ({ data }) => {
             y={innerHeight + 20}
             textAnchor="middle"
             fill="black"
-            fontSize="18"
+            fontSize="16"
             fontWeight="bold"
             pointerEvents="none"
           >
