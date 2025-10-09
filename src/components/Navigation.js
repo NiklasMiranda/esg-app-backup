@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CircularProgress from './CircularProgress';
 import groupTitles from '../data/groupTitles';
+import { FaCalculator } from "react-icons/fa6";
+import { LuWeight } from "react-icons/lu";
+import { HiDocumentReport } from "react-icons/hi";
 
 const navSteps = [
   { key: 'dvaInfo', title: 'Intro' },
@@ -86,17 +89,19 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
 
   return (
     <div className="esg-bg-[#0b3954] esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">
-      <h1 className="esg-text-xl esg-font-bold esg-p-4">ESG-beregneren</h1>
+      <h1 className="esg-text-xl esg-font-bold esg-p-4 esg-border-b esg-border-gray-400 esg-pb-2 esg-mb-2 esg-flex esg-items-center">
+        <FaCalculator className="esg-mr-2" />ESG-beregneren
+      </h1>
       
       <div>
         <h2 
-          className={`esg-text-lg esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer ${activeSection === 'del1' ? 'esg-text-white' : ''}`}
+          className={`esg-text-l esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer esg-border-b esg-border-gray-400 esg-pb-2 esg-mb-2 esg-flex esg-items-center ${activeSection === 'del1' ? 'esg-text-white' : ''}`}
           onClick={() => handleSectionToggle('del1')}
         >
-          DVA
+          <LuWeight className="esg-mr-2" />DVA
         </h2>
         <ul 
-          className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isDvaCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`}
+          className={`esg-relative esg-text-sm esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isDvaCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`}
           ref={listRef}
         >
           <div className="esg-absolute esg-left-0 esg-w-[3px] esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop}px)`, height: `${indicatorHeight}px` }} />
@@ -121,12 +126,12 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
 
       <div>
         <h2 
-          className={`esg-text-lg esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer ${activeSection === 'del2' ? 'esg-text-white esg-bg-[#0b3954]' : ''}`}
+          className={`esg-text-l esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center ${activeSection === 'del2' ? 'esg-text-white esg-bg-[#0b3954]' : ''}`}
           onClick={() => handleSectionToggle('del2')}
         >
-          ESG-score
+          <HiDocumentReport className="esg-mr-2" />ESG-score
         </h2>
-        <ul className={`esg-relative esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`} ref={listRef2}>
+        <ul className={`esg-relative esg-text-sm esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`} ref={listRef2}>
           <div className="esg-absolute esg-left-0 esg-w-[3px] esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop2}px)`, height: `${indicatorHeight2}px` }} />
           {del2NavSteps.map(step => (
             <li
