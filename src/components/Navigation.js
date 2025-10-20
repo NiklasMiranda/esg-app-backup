@@ -6,7 +6,7 @@ import { LuWeight } from "react-icons/lu";
 import { HiDocumentReport } from "react-icons/hi";
 
 const navSteps = [
-  { key: 'intro', title: 'Overordnet Introduktion' },
+  { key: 'intro', title: 'Overordnet introduktion' },
   { key: 'dvaInfo', title: 'Introduktion til DVA' },
   { key: 'E1', title: 'E1: Klimaforandringer' },
   { key: 'E2', title: 'E2: Forurening' },

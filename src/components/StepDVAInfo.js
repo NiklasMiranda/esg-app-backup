@@ -5,15 +5,23 @@ function StepDVAInfo({ onNext, onPrev }) {
     <div className="esg-p-4">
       <h1 className="esg-text-3xl esg-font-bold esg-mb-8">Dobbeltvæsentlighedsanalysen (DVA)</h1>
 
-      <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-3 esg-gap-8">
+      <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-8">
         {/* DVA Info Box */}
-        <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
-          <h2 className="esg-text-xl esg-font-bold esg-mb-4">Hvad er Dobbeltvæsentlighedsanalysen?</h2>
+        <div className="md:esg-col-span-2 esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
+          <h2 className="esg-text-xl esg-font-bold esg-mb-4">Hvad er dobbeltvæsentlighedsanalysen?</h2>
           <p className="esg-text-gray-700">
-            Dobbeltvæsentlighedsanalysen er en central del af de nye EU-krav til bæredygtighedsrapportering (CSRD).
-            Den kræver, at virksomheder vurderer deres væsentligste påvirkninger, risici og muligheder ud fra to perspektiver:
-            både hvordan virksomhedens aktiviteter påvirker omverdenen (Impact-perspektivet) og hvordan eksterne bæredygtighedsforhold påvirker virksomhedens økonomi (Finansielt perspektiv).
-            Målet er at give et helhedsbillede af virksomhedens bæredygtighedsperformance og dens relevans for interessenter.
+            Dobbelt væsentlighed er grundprincippet bag ESGScore-beregningen. 
+            Det betyder, at en virksomheds bæredygtighedsvurdering ikke kun handler om dens påvirkning af omgivelserne, 
+            men også om hvordan bæredygtighedsforhold påvirker virksomheden selv.
+            <br></br><br></br>
+            I praksis sikrer dobbelt væsentlighed, at ESG-scoren bliver både relevant og retfærdig. 
+            Den tager højde for, at virksomheder står over for vidt forskellige risici, muligheder og påvirkninger – 
+            afhængigt af branche, størrelse og forretningsmodel. 
+            En byggevirksomhed skal fx vægte klima og ressourceforbrug højt, 
+            mens et revisionshus i højere grad skal fokusere på etik, databeskyttelse og governance.
+            <br></br><br></br>
+            Ved at integrere dobbelt væsentlighed i beregningsmodellen bliver ESG-scoren et mere præcist udtryk for, 
+            hvor virksomheden reelt gør en forskel – og hvor den har mest at vinde eller tabe.
           </p>
         </div>
 
@@ -21,10 +29,17 @@ function StepDVAInfo({ onNext, onPrev }) {
         <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
           <h2 className="esg-text-xl esg-font-bold esg-mb-4">Impact-perspektivet</h2>
           <p className="esg-text-gray-700">
-            Impact-perspektivet handler om virksomhedens positive og negative påvirkninger på mennesker og miljø.
-            Dette inkluderer emner som klimaforandringer, forurening, biodiversitet, arbejdsforhold, menneskerettigheder og samfundsforhold.
-            Virksomheden skal identificere, vurdere og rapportere om, hvordan dens drift, produkter og services påvirker disse områder.
-            Det handler om at forstå og håndtere virksomhedens fodaftryk på omverdenen.
+            Impact-væsentlighed handler om den effekt, virksomheden har på mennesker og miljø. 
+            Det dækker alt fra CO₂-udledninger, energiforbrug og forurening til arbejdsforhold, menneskerettigheder og lokalsamfund.
+            <br></br><br></br>
+            I ESGScore-beregningen vurderes impact-væsentligheden gennem en række indikatorer, 
+            der måler hvor konkret virksomheden handler, og hvordan den dokumenterer sin indsats. 
+            Det betyder, at virksomheder, der aktivt reducerer deres miljøpåvirkning, 
+            styrker deres arbejdsmiljø eller tager ansvar i værdikæden, opnår en højere score – uanset deres udgangspunkt.
+            <br></br><br></br>
+            Denne tilgang gør det muligt at belønne reelle fremskridt frem for blot resultater. 
+            En virksomhed med højt energiforbrug kan stadig få en høj score, 
+            hvis den arbejder systematisk og dokumenteret med at reducere sin påvirkning.
           </p>
         </div>
 
@@ -32,15 +47,24 @@ function StepDVAInfo({ onNext, onPrev }) {
         <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
           <h2 className="esg-text-xl esg-font-bold esg-mb-4">Finansielt perspektiv</h2>
           <p className="esg-text-gray-700">
-            Det finansielle perspektiv fokuserer på, hvordan bæredyygtighedsforhold påvirker virksomhedens økonomi og forretningsmodel.
-            Dette kan omfatte risici som fysiske klimaforandringer, overgangsrisici (f.eks. nye reguleringer), ressourceknaphed, men også muligheder som nye grønne markeder, energieffektivitet og forbedret omdømme.
-            Virksomheden skal vurdere, hvordan disse faktorer kan påvirke dens indtjening, omkostninger, kapitaladgang og langsigtede værdiskabelse.
+            Finansiel væsentlighed fokuserer på hvordan bæredygtighedsforhold påvirker virksomhedens økonomi, 
+            drift og risikoprofil. Det kan være alt fra stigende energipriser 
+            og klimapolitisk regulering til ændrede kundekrav, forsyningsrisici eller omdømmetab.
+            <br></br><br></br>
+            I ESGScore-modellen inddrages finansiel væsentlighed ved at vægte de temaer højest, 
+            som har størst økonomisk betydning for den enkelte virksomhedstype. 
+            For eksempel vil klimarisici og ressourceeffektivitet være finansielt væsentlige for produktionsvirksomheder, 
+            mens dataetik og governance vejer tungere i videns- og serviceerhverv.
+            <br></br><br></br>
+            Ved at kombinere de to perspektiver – virksomhedens påvirkning af verden 
+            og verdens påvirkning af virksomheden – sikrer beregneren en balanceret 
+            og helhedsorienteret ESG-score, der kan bruges som et reelt ledelses- og kommunikationsværktøj.
           </p>
         </div>
       </div>
       <div className="esg-flex esg-justify-between esg-mt-8">
         <button onClick={onPrev} className="btn-secondary">Tilbage</button>
-        <button onClick={onNext} className="btn-primary">Start DVA</button>
+        <button onClick={onNext} className="btn-primary">Til DVA</button>
       </div>
     </div>
   );
