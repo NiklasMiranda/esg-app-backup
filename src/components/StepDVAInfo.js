@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StepDVAInfo({ onNext }) {
+function StepDVAInfo({ onNext, onPrev }) {
   return (
     <div className="esg-p-4">
       <h1 className="esg-text-3xl esg-font-bold esg-mb-8">Dobbeltvæsentlighedsanalysen (DVA)</h1>
@@ -32,13 +32,14 @@ function StepDVAInfo({ onNext }) {
         <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
           <h2 className="esg-text-xl esg-font-bold esg-mb-4">Finansielt perspektiv</h2>
           <p className="esg-text-gray-700">
-            Det finansielle perspektiv fokuserer på, hvordan bæredygtighedsforhold påvirker virksomhedens økonomi og forretningsmodel.
+            Det finansielle perspektiv fokuserer på, hvordan bæredyygtighedsforhold påvirker virksomhedens økonomi og forretningsmodel.
             Dette kan omfatte risici som fysiske klimaforandringer, overgangsrisici (f.eks. nye reguleringer), ressourceknaphed, men også muligheder som nye grønne markeder, energieffektivitet og forbedret omdømme.
             Virksomheden skal vurdere, hvordan disse faktorer kan påvirke dens indtjening, omkostninger, kapitaladgang og langsigtede værdiskabelse.
           </p>
         </div>
       </div>
-      <div className="esg-flex esg-justify-end esg-mt-8">
+      <div className="esg-flex esg-justify-between esg-mt-8">
+        <button onClick={onPrev} className="btn-secondary">Tilbage</button>
         <button onClick={onNext} className="btn-primary">Start DVA</button>
       </div>
     </div>

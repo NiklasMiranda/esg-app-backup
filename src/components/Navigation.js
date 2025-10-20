@@ -6,7 +6,8 @@ import { LuWeight } from "react-icons/lu";
 import { HiDocumentReport } from "react-icons/hi";
 
 const navSteps = [
-  { key: 'dvaInfo', title: 'Intro' },
+  { key: 'intro', title: 'Overordnet Introduktion' },
+  { key: 'dvaInfo', title: 'Introduktion til DVA' },
   { key: 'E1', title: 'E1: Klimaforandringer' },
   { key: 'E2', title: 'E2: Forurening' },
   { key: 'E3', title: 'E3: Vand- og havressourcer' },
@@ -59,7 +60,8 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
     }
   }, [activeGroup, activeSection]);
 
-  const handleSectionToggle = (section) => {
+  const handleSectionToggle = (section, event) => {
+    event.stopPropagation();
     if (section === 'del1') {
       if (activeSection === 'del1') {
         setDvaCollapsed(!isDvaCollapsed);
@@ -80,12 +82,12 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
   };
 
   const del2NavSteps = [
-    { key: 'esgInfo', title: 'Intro' },
+    { key: 'esgInfo', title: 'Introduktion til matrix-spørgsmål' },
     ...questionGroups.map(groupKey => ({ key: groupKey, title: `${groupKey}: ${groupTitles[groupKey] || ''}` })),
     { key: 'del2Results', title: 'Score' },
   ];
 
-  const del1Steps = navSteps.filter(step => !['matrixQuestions'].includes(step.key));
+  const del1Steps = navSteps.filter(step => !['matrixQuestions', 'intro'].includes(step.key));
 
   return (
     <div className="esg-bg-[#0b3954] !esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">
@@ -93,15 +95,29 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
         <FaCalculator className="esg-mr-2" />ESG-beregneren
       </h1>
       
+      <ul>
+        <li
+            key='intro'
+            onClick={() => {
+            onNavigate('del1', 'intro');
+            }}
+            className={`nav-category-item esg-py-4 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 hover:esg-bg-slate-500 ${currentActive === 'intro' ? 'active esg-bg-slate-500 esg-text-white esg-font-bold' : 'esg-text-white'}`}
+        >
+            <div className="esg-flex esg-items-center esg-gap-3">
+                <span className="esg-flex-grow">Overordnet Introduktion</span>
+            </div>
+        </li>
+      </ul>
+
       <div>
         <h2 
           className={`esg-text-l esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer esg-border-b esg-border-gray-400 esg-pb-2 esg-mb-2 esg-flex esg-items-center ${activeSection === 'del1' ? 'esg-text-white' : ''}`}
-          onClick={() => handleSectionToggle('del1')}
+          onClick={(event) => handleSectionToggle('del1', event)}
         >
           <LuWeight className="esg-mr-2" />DVA
         </h2>
         <ul 
-          className={`esg-relative esg-text-sm esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isDvaCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`}
+          className={`esg-relative esg-text-sm esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isDvaCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0 esg-pointer-events-none esg-opacity-0'}`}
           ref={listRef}
         >
           <div className="esg-absolute esg-left-0 esg-w-[3px] esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop}px)`, height: `${indicatorHeight}px` }} />
@@ -127,11 +143,11 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
       <div>
         <h2 
           className={`esg-text-l esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center ${activeSection === 'del2' ? 'esg-text-white esg-bg-[#0b3954]' : ''}`}
-          onClick={() => handleSectionToggle('del2')}
+          onClick={(event) => handleSectionToggle('del2', event)}
         >
-          <HiDocumentReport className="esg-mr-2" />ESG-score
+          <HiDocumentReport className="esg-mr-2" />Matrix
         </h2>
-        <ul className={`esg-relative esg-text-sm esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0'}`} ref={listRef2}>
+        <ul className={`esg-relative esg-text-sm esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0 esg-pointer-events-none esg-opacity-0'}`} ref={listRef2}>
           <div className="esg-absolute esg-left-0 esg-w-[3px] esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop2}px)`, height: `${indicatorHeight2}px` }} />
           {del2NavSteps.map(step => (
             <li
