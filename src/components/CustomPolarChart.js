@@ -32,7 +32,7 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
   return (
     <svg className="esg-w-full esg-h-full" viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}>
       {/* Background circle - now it's the inner hole fill */}
-      <circle cx={centerX} cy={centerY} r={innerChartRadius} fill="#f0f0f0" />
+      <circle cx={centerX} cy={centerY} r={innerChartRadius} fill="#f4f4f4" />
 
       {/* Circular Grid Lines */}
       {[...Array(numCircularLines)].map((_, i) => {
@@ -46,7 +46,7 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
             r={r}
             fill="none"
             stroke="#ccc"
-            strokeWidth="0.5"
+            strokeWidth="1"
             strokeDasharray="2 2"
           />
         );
@@ -65,7 +65,7 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
             x2={end.x}
             y2={end.y}
             stroke="#ccc"
-            strokeWidth="0.5"
+            strokeWidth="1"
           />
         );
       })}
@@ -171,7 +171,7 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
       <text x={centerX} y={centerY - 10} textAnchor="middle" fontSize="26" fontWeight="bold">
         {totalScore.toFixed(2)}
       </text>
-      <text x={centerX} y={centerY + 20} textAnchor="middle" fontSize="20" fill="#555">
+      <text x={centerX} y={centerY + 20} textAnchor="middle" fontSize="20" fill="#000000">
         {esgLevel}
       </text>
 

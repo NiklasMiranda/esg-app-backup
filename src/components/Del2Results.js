@@ -37,7 +37,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
       <div className="esg-flex esg-gap-8 esg-mb-8">
         {/* Left: Explanation for table */}
         <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
-          <h2 className="esg-text-2xl esg-mb-4">Detaljeret Score per Kriterie:</h2>
+          <h2 className="esg-text-2xl esg-mb-4">Detaljeret score per kriterie:</h2>
         </div>
 
         {/* Right: Table */}
@@ -46,10 +46,10 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
             <thead>
               <tr className="esg-bg-[#f4f4f4]">
                 <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
-                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Optjent)</th>
-                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (Maks)</th>
-                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (Maks)</th>
-                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (Endelig)</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (optjent)</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Point (maks)</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (maks)</th>
+                <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtet score (endelig)</th>
               </tr>
             </thead>
             <tbody>

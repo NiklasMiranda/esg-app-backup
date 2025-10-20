@@ -4,7 +4,7 @@ import groupTitles from '../data/groupTitles';
 
 const axisLabels = ["Ikke relevant", "Lav", "Middel", "Moderat", "Høj", "Meget høj"];
 
-function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev }) {
+function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev, criterionColors }) {
   const { plottedCoordinates } = useMemo(() => {
     const results = {};
     [...new Set(dvaQuestions.map(q => q.label))].forEach(label => {
@@ -77,7 +77,7 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
           <h2 className="esg-text-2xl esg-font-bold esg-mb-4">Væsentlighedsmatrix</h2>
           <p className="esg-text-gray-700">
             Her kan du se en visuel repræsentation af din væsentlighedsmatrix, baseret på dine besvarelser.
-            Akserne repræsenterer henholdsvis Impact og Finansiel væsentlighed.
+            Akserne repræsenterer henholdsvis impact og finansiel væsentlighed.
           </p>
         </div>
 
@@ -112,8 +112,9 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
               {plottedCoordinates.map((item) => (
                 <div
                   key={item.label}
-                  className="esg-absolute esg-flex esg-items-center esg-justify-center esg-text-xxs sm:esg-text-xs esg-bg-blue-500 esg-text-white esg-rounded-full"
+                  className="esg-absolute esg-flex esg-items-center esg-justify-center esg-text-xxs sm:esg-text-xs esg-text-white esg-rounded-full"
                   style={{
+                    backgroundColor: criterionColors[item.label] || '#ccc',
                     left: `calc(${(item.impact + 0.5) * (100 / 6)}% - 10px)`,
                     bottom: `calc(${(item.finansiel + 0.5) * (100 / 6)}% - 10px)`,
                     width: '30px',
@@ -135,9 +136,9 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
             <div className="esg-flex esg-gap-8 esg-mb-8">
               {/* Left Box: Heading and Description */}
               <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
-                <h2 className="esg-text-2xl esg-font-bold esg-mb-4">Vægtning af Kriterier</h2>
+                <h2 className="esg-text-2xl esg-font-bold esg-mb-4">Vægtning af kriterier</h2>
                 <p className="esg-text-gray-700">
-                  Her kan du justere vægtningen af de forskellige kriterier for at afspejle deres relative betydning for din virksomhed.
+                  Her kan du få et overblik over de forskellige kriterier, der afspejler deres relative betydning for din virksomhed.
                 </p>
               </div>
       

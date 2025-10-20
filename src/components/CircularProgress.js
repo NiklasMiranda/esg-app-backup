@@ -7,11 +7,11 @@ const CircularProgress = ({ percentage, size = 24 }) => {
   const offset = circumference - (percentage / 100) * circumference;
 
   const interpolateColor = (percent) => {
-    const blue = [59, 130, 246];
-    const green = [34, 197, 94];
-    const r = Math.round(blue[0] + (green[0] - blue[0]) * (percent / 100));
-    const g = Math.round(blue[1] + (green[1] - blue[1]) * (percent / 100));
-    const b = Math.round(blue[2] + (green[2] - blue[2]) * (percent / 100));
+    const startColor = [11, 57, 84]; // #0b3954
+    const endColor = [205, 226, 180]; // #cde2b4
+    const r = Math.round(startColor[0] + (endColor[0] - startColor[0]) * (percent / 100));
+    const g = Math.round(startColor[1] + (endColor[1] - startColor[1]) * (percent / 100));
+    const b = Math.round(startColor[2] + (endColor[2] - startColor[2]) * (percent / 100));
     return `rgb(${r},${g},${b})`;
   };
 

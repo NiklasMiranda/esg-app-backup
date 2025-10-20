@@ -34,13 +34,15 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
 
   useEffect(() => {
     if (activeSection === 'del1') {
-      setDvaCollapsed(false);
+      if (activeGroup !== 'intro') {
+        setDvaCollapsed(false);
+      }
       setEsgCollapsed(true);
     } else if (activeSection === 'del2') {
       setDvaCollapsed(true);
       setEsgCollapsed(false);
     }
-  }, [activeSection]);
+  }, [activeSection, activeGroup]);
 
   const currentActive = activeGroup;
 
@@ -84,7 +86,7 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
   const del2NavSteps = [
     { key: 'esgInfo', title: 'Introduktion til matrix-spørgsmål' },
     ...questionGroups.map(groupKey => ({ key: groupKey, title: `${groupKey}: ${groupTitles[groupKey] || ''}` })),
-    { key: 'del2Results', title: 'Score' },
+    { key: 'del2Results', title: 'Endelige resultater' },
   ];
 
   const del1Steps = navSteps.filter(step => !['matrixQuestions', 'intro'].includes(step.key));

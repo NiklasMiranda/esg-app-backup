@@ -18,11 +18,11 @@ const AnswerRatioGraph = ({ yesCount, noCount }) => {
     <div className="esg-mt-6 esg-w-full esg-max-w-xs">
       <div className="esg-flex esg-h-6 esg-rounded-md esg-overflow-hidden esg-bg-gray-200">
         <div
-          className="esg-h-full esg-bg-blue-400 esg-transition-all esg-duration-500 esg-ease-in-out"
+          className="esg-h-full esg-bg-[#cde2b4] esg-transition-all esg-duration-500 esg-ease-in-out"
           style={{ width: `${yesPercentage}%` }}
         ></div>
         <div
-          className="esg-h-full esg-bg-gray-400 esg-transition-all esg-duration-500 esg-ease-in-out"
+          className="esg-h-full esg-bg-[#0b3954] esg-transition-all esg-duration-500 esg-ease-in-out"
           style={{ width: `${noPercentage}%` }}
         ></div>
       </div>

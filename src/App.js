@@ -294,6 +294,7 @@ function App() {
 
     const navigateTo = (section, stepKey) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      setActiveSection(section);
       if (section === 'del1') {
         const groupIdx = questionGroups.indexOf(stepKey);
         if (groupIdx !== -1) {
@@ -386,7 +387,7 @@ function App() {
             />
           );
         case 'matrix':
-          return <StepResultsMatrix answers={answers} criteriaWeights={criteriaWeights} impactFinansielCounts={impactFinansielCounts} dvaQuestions={dvaQuestions} onNext={() => {
+          return <StepResultsMatrix answers={answers} criteriaWeights={criteriaWeights} impactFinansielCounts={impactFinansielCounts} dvaQuestions={dvaQuestions} criterionColors={criterionColors} onNext={() => {
             setActiveSection('del2');
             setCurrentDel2Step('esgInfo');
           }} onPrev={() => setCurrentDel1Step(questionGroups[questionGroups.length - 1])} />;
