@@ -84,11 +84,11 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
     const questionInfo = questionDescriptions[questionId] || {};
     openModal(
       <div className="esg-flex esg-gap-4">
-        <div className="esg-flex-1">
+        <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-p-4 esg-rounded-lg">
           <h3 className="esg-font-bold">Information:</h3>
           <p>{questionInfo.description}</p>
         </div>
-        <div className="esg-flex-1">
+        <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-p-4 esg-rounded-lg">
           <h3 className="esg-font-bold">Typiske brancher:</h3>
           <p>{questionInfo.typicalIndustry}</p>
         </div>

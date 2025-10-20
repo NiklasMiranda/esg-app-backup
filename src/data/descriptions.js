@@ -1,43 +1,43 @@
 export const categoryDescriptions = {
   E1: {
     title: 'E1: Klimaforandringer',
-    description: 'Detaljeret beskrivelse af klimaforandringer...'
+    description: 'Denne kategori vurderer, hvordan virksomheden arbejder med at reducere sit klimaaftryk. Det omfatter både måling af CO₂-udledninger (Scope 1–3), konkrete reduktionsmål, strategier og brugen af vedvarende energi.\nMålet er at vurdere, om virksomheden aktivt og dokumenteret tager ansvar for sin del af den globale klimabelastning og arbejder mod reelle forbedringer.'
   },
   E2: {
     title: 'E2: Forurening',
-    description: 'Detaljeret beskrivelse af forurening...'
+    description: 'E2 handler om, hvordan virksomheden forebygger og håndterer forurening af luft, vand, jord og natur. Kriterierne dækker blandt andet kortlægning af risici, politikker for håndtering af forurenende stoffer og strategier for udfasning af skadelige materialer.\nFokus er på, om virksomheden arbejder systematisk for at minimere negativ miljøpåvirkning og overholder relevante miljøkrav.'
   },
   E3: {
     title: 'E3: Vand- og havressourcer',
-    description: 'Detaljeret beskrivelse af vand- og havressourcer...'
+    description: 'Denne kategori vurderer, hvordan virksomheden bruger, beskytter og genanvender vand. Det gælder både forbrug, rensning og forebyggelse af vandforurening.\nFormålet er at sikre, at virksomheden anvender vand ansvarligt og bidrager til at beskytte vandmiljøer mod belastning og spild.'
   },
   E4: {
     title: 'E4: Biodiversitet og økosystemer',
-    description: 'Detaljeret beskrivelse af biodiversitet og økosystemer...'
+    description: 'E4 handler om virksomhedens påvirkning af naturen – herunder arealanvendelse, indvirkning på levesteder og hensyn til sårbare økosystemer.\nKategorien vurderer, om virksomheden tager aktivt hensyn til natur og biodiversitet i sine aktiviteter, og om der findes politikker og dokumenterede tiltag til at beskytte økosystemer.'
   },
   E5: {
     title: 'E5: Ressourceanvendelse og cirkulær økonomi',
-    description: 'Detaljeret beskrivelse af ressourceanvendelse og cirkulær økonomi...'
+    description: 'Denne kategori fokuserer på, hvordan virksomheden udnytter materialer, energi og ressourcer effektivt – og hvordan den arbejder med genbrug, genanvendelse og affaldshåndtering.\nFormålet er at fremme cirkulær tænkning og ressourceeffektivitet, så virksomheden minimerer spild og bidrager til en mere bæredygtig værdikæde.'
   },
   S1: {
-    title: 'S1: Egen arbejdsstyrke',
-    description: 'Detaljeret beskrivelse af egen arbejdsstyrke...'
+    title: 'S1: Egne medarbejdere',
+    description: 'S1 vurderer virksomhedens forhold til sine egne ansatte – herunder arbejdsmiljø, sikkerhed, trivsel, ligestilling og kompetenceudvikling.\nKategorien ser på, om virksomheden skaber sunde, trygge og retfærdige arbejdsforhold og aktivt arbejder for at fastholde og udvikle medarbejderne.'
   },
   S2: {
     title: 'S2: Arbejdstagere i værdikæden',
-    description: 'Detaljeret beskrivelse af arbejdstagere i værdikæden...'
+    description: 'Denne kategori handler om, hvordan virksomheden sikrer ordentlige forhold hos sine leverandører og samarbejdspartnere.\nDer lægges vægt på risikovurdering, ansvarlig leverandørstyring og politikker for menneskerettigheder.\nMålet er at sikre, at virksomheden tager ansvar for arbejdsforhold i hele værdikæden – ikke kun i egen drift.'
   },
   S3: {
     title: 'S3: Berørte samfund',
-    description: 'Detaljeret beskrivelse af berørte samfund...'
+    description: 'S3 måler virksomhedens påvirkning af lokalsamfund og omgivelser – både socialt og miljømæssigt.\nDet kan handle om dialog med lokalsamfund, forebyggelse af gener (som støj eller forurening) og bidrag til samfundsudvikling.\nFokus er på, om virksomheden handler ansvarligt dér, hvor den opererer, og respekterer de mennesker, der påvirkes af dens aktiviteter.'
   },
   S4: {
     title: 'S4: Forbrugere og slutbrugere',
-    description: 'Detaljeret beskrivelse af forbrugere og slutbrugere...'
+    description: 'S4 vurderer, hvordan virksomheden behandler sine kunder og brugere – med fokus på sikkerhed, ansvarlig markedsføring og databeskyttelse.\nMålet er at sikre, at virksomheden leverer produkter og tjenester på etisk og gennemsigtig vis, og at den tager ansvar for brugernes tryghed og rettigheder.'
   },
   G1: {
     title: 'G1: God forretningsskik',
-    description: 'Detaljeret beskrivelse af god forretningsskik...'
+    description: 'G1 måler virksomhedens integritet og styring – herunder politikker mod korruption og bestikkelse, etiske retningslinjer, gennemsigtighed og overholdelse af lovgivning.\nFokus er på, om virksomheden driver sin forretning ansvarligt og med høj etisk standard, og om bæredygtighed er forankret i ledelsen og beslutningsprocesserne.'
   },
 };
 
