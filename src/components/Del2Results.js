@@ -17,7 +17,23 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
       <div className="esg-flex esg-gap-8 esg-mb-8">
         {/* Left: Explanation for first graph */}
         <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
-          <h2 className="esg-text-2xl esg-mb-4">Samlet ESG Score: {totalScore.toFixed(2)}</h2>
+          <h2 className="esg-text-2xl esg-mb-4">Din samlede ESG-score</h2>
+          <p className="esg-text-gray-700 esg-font-bold">Din samlede ESG-score er: {totalScore.toFixed(2)}</p>
+          <p className="esg-text-gray-700 esg-font-bold">Din placering i vores niveauopdeling er: {esgLevel}</p>
+          <p className="esg-text-gray-700 esg-mt-4">
+            Din samlede ESG-score er beregnet på baggrund af dine besvarelser i matrix-spørgsmålene, vægtet i forhold til din dobbeltvæsentlighedsanalyse.
+            Score-niveauet indikerer din virksomheds nuværende modenhed inden for bæredygtighed:
+          </p>
+          <ul className="esg-list-disc esg-list-inside esg-text-gray-700 esg-mt-2">
+            <li><b>Platin:</b> 80-100 (Fremragende)</li>
+            <li><b>Guld:</b> 65-79 (Meget god)</li>
+            <li><b>Sølv:</b> 50-64 (God)</li>
+            <li><b>Bronze:</b> 35-49 (Grundlæggende)</li>
+            <li><b>Ikke bestået:</b> 0-34 (Utilstrækkelig)</li>
+          </ul>
+          <p className="esg-text-gray-700 esg-mt-4">
+            Brug scoren som et internt redskab til at identificere styrker og svagheder. Får du dine resultater verificeret hos os, kan du også på sigt bruge den som et eksternt kommunikationsværktøj over for kunder, investorer og andre interessenter.
+          </p>
         </div>
 
         {/* Right: First Graph */}
@@ -38,6 +54,9 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
         {/* Left: Explanation for table */}
         <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
           <h2 className="esg-text-2xl esg-mb-4">Detaljeret score per kriterie:</h2>
+          <p className="esg-text-gray-700">
+            Tabellen viser en detaljeret oversigt over din score for hvert enkelt ESG-kriterie. Her kan du se de optjente point, den maksimale mulige score og den endelige vægtede score, der bidrager til din samlede ESG-score.
+          </p>
         </div>
 
         {/* Right: Table */}

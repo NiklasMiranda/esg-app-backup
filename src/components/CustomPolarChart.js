@@ -119,27 +119,7 @@ const CustomPolarChart = ({ data, totalScore, esgLevel, criterionColors }) => {
         );
       })}
 
-      {/* Circular Grid Labels (20-interval) - Moved after chart segments */}
-      {[...Array(numCircularLines)].map((_, i) => {
-        const value = (i + 1) * (maxPossiblePoints / numCircularLines); // 20, 40, 60, 80, 100
-        // Position the label slightly outside the circular grid line, along the 0-degree radial line
-        const r = innerChartRadius + (outerRadius - innerChartRadius) * ((i + 1) / numCircularLines);
-        const { x, y } = polarToCartesian(centerX, centerY, r, 0); // 0-degree angle (upwards)
-
-        return (
-          <text
-            key={`grid-label-${i}`}
-            x={x + 5} // Offset slightly to the right
-            y={y}
-            textAnchor="start" // Align text to the start (right) for labels on the right side
-            alignmentBaseline="middle"
-            fontSize="24"
-            fill="#000"
-          >
-            {value}
-          </text>
-        );
-      })}
+      
 
       {/* Category Labels - Moved after chart segments */}
       {data.map((item, index) => {
