@@ -21,7 +21,7 @@ function QuestionGroup({ title, questions, answers, onAnswerChange, handleQuesti
       <div className={`esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isExpanded ? 'esg-max-h-[2000px] esg-p-4' : 'esg-max-h-0'}`}>
         {impactQuestions.length > 0 && (
           <div className="esg-mt-4 first:esg-mt-0">
-            <h4 className="esg-font-bold esg-text-base esg-mb-2 esg-border-b esg-border-gray-200 esg-pb-1">Impact</h4>
+            <h4 className="esg-font-bold esg-text-base esg-mb-2 esg-border-b esg-border-gray-200 esg-pb-1">Virkningsvæsentlighed</h4>
             <div className="question-grid">
               {impactQuestions.map(question => (
                 <div key={question.id} className="question-grid-item">
@@ -40,7 +40,7 @@ function QuestionGroup({ title, questions, answers, onAnswerChange, handleQuesti
 
         {finansielQuestions.length > 0 && (
           <div className="esg-mt-4 first:esg-mt-0">
-            <h4 className="esg-font-bold esg-text-base esg-mb-2 esg-border-b esg-border-gray-200 esg-pb-1">Finansiel</h4>
+            <h4 className="esg-font-bold esg-text-base esg-mb-2 esg-border-b esg-border-gray-200 esg-pb-1">Finansiel væsentlighed</h4>
             <div className="question-grid">
               {finansielQuestions.map(question => (
                 <div key={question.id} className="question-grid-item">

@@ -77,7 +77,7 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
           <h2 className="esg-text-2xl esg-font-bold esg-mb-4">Væsentlighedsanalyse</h2>
           <p className="esg-text-gray-700">
             Her kan du se en visuel repræsentation af din væsentlighedsanalyse, baseret på dine besvarelser.
-            Akserne repræsenterer henholdsvis impact og finansiel væsentlighed.
+            Akserne repræsenterer henholdsvis virkningsvæsentlighed og finansiel væsentlighed.
           </p>
         </div>
 
@@ -85,17 +85,17 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
         <div className="esg-flex-[2] esg-bg-white esg-p-14 esg-rounded-lg esg-shadow-md esg-relative">
           <div className="esg-relative esg-w-full esg-max-w-xl esg-h-auto esg-aspect-square esg-mx-auto">
             
-            {/* Impact label (above graph) */}
-            <div className="esg-absolute esg-top-0 esg-left-1/2 esg-transform esg--translate-x-1/2 esg--translate-y-6 esg-text-xs sm:esg-text-sm">Impact</div>
+            {/* Virkningsvæsentlighed label (above graph) */}
+            <div className="esg-absolute esg-top-0 esg-left-1/2 esg-transform esg--translate-x-1/2 esg--translate-y-6 esg-text-xs sm:esg-text-sm">Virkningsvæsentlighed</div>
 
-            {/* Y-axis labels (Finansiel) */}
+            {/* Y-axis labels (Finansiel væsentlighed) */}
             <div className="esg-absolute esg-left-0 esg-top-0 esg-h-full esg-flex esg-flex-col esg-justify-around esg-pr-2 esg-text-xs sm:esg-text-sm esg-w-20 esg-text-right esg--translate-x-full">
               {axisLabels.slice().reverse().map((label, index) => (
                 <span key={index} className="esg-h-1/6 esg-flex esg-items-center esg-justify-end">{label}</span>
               ))}
             </div>
 
-            {/* X-axis labels (Impact) */}
+            {/* X-axis labels (Virkningsvæsentlighed) */}
             <div className="esg-absolute esg-bottom-0 esg-left-0 esg-w-full esg-flex esg-justify-around esg-items-center esg-pt-2 esg-text-xs sm:esg-text-sm esg-h-10 esg-translate-y-full">
               {axisLabels.map((label, index) => (
                 <span key={index} className="esg-w-1/6 esg-text-center">{label}</span>
@@ -115,8 +115,8 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
                   className="esg-absolute esg-flex esg-items-center esg-justify-center esg-text-xxs sm:esg-text-xs esg-text-white esg-rounded-full"
                   style={{
                     backgroundColor: criterionColors[item.label] || '#ccc',
-                    left: `calc(${(item.impact + 0.5) * (100 / 6)}% - 10px)`,
-                    bottom: `calc(${(item.finansiel + 0.5) * (100 / 6)}% - 10px)`,
+                    left: `calc(${(item.virkningsvaesentlighed + 0.5) * (100 / 6)}% - 10px)`,
+                    bottom: `calc(${(item.finansielVaesentlighed + 0.5) * (100 / 6)}% - 10px)`,
                     width: '30px',
                     height: '30px',
                     transform: 'translate(-50%, -50%)',
@@ -127,8 +127,8 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
               ))}
             </div>
             
-            {/* Finansiel label (right of graph) */}
-            <div className="esg-absolute esg-right-3 esg-top-1/2 esg-transform esg-translate-x-full esg--translate-y-1/2 esg-rotate-90 esg-text-xs sm:esg-text-sm esg-whitespace-nowrap">Finansiel</div>
+            {/* Finansiel væsentlighed label (right of graph) */}
+            <div className="esg-absolute esg-right-3 esg-top-1/2 esg-transform esg-translate-x-full esg--translate-y-1/2 esg-rotate-90 esg-text-xs sm:esg-text-sm esg-whitespace-nowrap">Finansiel væsentlighed</div>
           </div>
         </div>
       </div>
@@ -148,8 +148,8 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
                   <thead>
                     <tr className="esg-bg-[#f4f4f4]">
                       <th className="esg-py-2 esg-px-4 esg-border-b esg-text-left">Kriterie</th>
-                      <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Impact</th>
-                      <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Finansiel</th>
+                      <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Virkningsvæsentlighed</th>
+                      <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Finansiel væsentlighed</th>
                       <th className="esg-py-2 esg-px-4 esg-border-b esg-text-right">Vægtning</th>
                     </tr>
                   </thead>

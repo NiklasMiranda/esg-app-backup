@@ -357,7 +357,7 @@ function App() {
                   <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
                     <h2 className="esg-text-xl esg-font-bold esg-mb-4">Del 1: Dobbeltvæsentlighedsanalyse (DVA)</h2>
                     <p className="esg-text-gray-700">
-                      I første del af værktøjet identificeres de ESG-emner, der er væsentlige for jeres virksomhed. Dette sker gennem en analyse, der både tager højde for, hvordan jeres virksomhed påvirker samfundet og miljøet (impact-perspektiv), og hvordan bæredygtighedsforhold kan påvirke jeres økonomi (finansielt perspektiv).
+                      I første del af værktøjet identificeres de ESG-emner, der er væsentlige for jeres virksomhed. Dette sker gennem en analyse, der både tager højde for, hvordan jeres virksomhed påvirker samfundet og miljøet (virkningsvæsentlighedsperspektiv), og hvordan bæredygtighedsforhold kan påvirke jeres økonomi (finansiel væsentlighedsperspektiv).
                     </p>
                   </div>
                   {/* ESG Data Info Box */}

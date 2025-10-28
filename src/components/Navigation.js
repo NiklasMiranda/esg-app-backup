@@ -22,7 +22,7 @@ const navSteps = [
 
 ];
 
-function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCategoryCompletionStatus, activeSection, onSectionChange, matrixQuestions, questionGroups }) {
+function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCategoryCompletionStatus, activeSection, onSectionChange, iaQuestions, questionGroups }) {
   const [indicatorTop, setIndicatorTop] = useState(0);
   const [indicatorHeight, setIndicatorHeight] = useState(0);
   const [isDvaCollapsed, setDvaCollapsed] = useState(false);
@@ -84,12 +84,12 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
   };
 
   const del2NavSteps = [
-    { key: 'esgInfo', title: 'Introduktion til initiativanalyse' },
+    { key: 'esgInfo', title: 'Introduktion til Initiativanalyse' },
     ...questionGroups.map(groupKey => ({ key: groupKey, title: `${groupKey}: ${groupTitles[groupKey] || ''}` })),
     { key: 'del2Results', title: 'Endelige resultater' },
   ];
 
-  const del1Steps = navSteps.filter(step => !['matrixQuestions', 'intro'].includes(step.key));
+  const del1Steps = navSteps.filter(step => !['iaQuestions', 'intro'].includes(step.key));
 
   return (
     <div className="esg-bg-[#0b3954] !esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">
@@ -132,7 +132,7 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
               className={`nav-category-item esg-py-4 esg-px-4 esg-cursor-pointer esg-flex esg-items-center esg-gap-3 hover:esg-bg-slate-500 ${currentActive === step.key ? 'active esg-bg-slate-500 esg-text-white esg-font-bold' : 'esg-text-white'}`}
             >
               <div className="esg-flex esg-items-center esg-gap-3">
-                {step.key !== 'matrix' && step.key !== 'dvaInfo' && (
+                {step.key !== 'dvaResults' && step.key !== 'dvaInfo' && (
                   <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={20} className="esg-flex-shrink-0" />
                 )}
                 <span className="esg-flex-grow">{step.title}</span>

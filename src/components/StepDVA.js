@@ -118,7 +118,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
                 className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-4 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg focus:esg-outline-none"
                 onClick={() => toggleSection('impact')}
               >
-                <span>Impact</span>
+                <span>Virkningsvæsentlighed</span>
                 <svg
                   className={`esg-w-5 esg-h-5 esg-transition-transform esg-duration-300 ${
                     openSections.impact ? 'esg-rotate-180' : ''
@@ -158,7 +158,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
                 className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-4 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg focus:esg-outline-none"
                 onClick={() => toggleSection('finansiel')}
               >
-                <span>Finansiel</span>
+                <span>Finansiel væsentlighed</span>
                 <svg
                   className={`esg-w-5 esg-h-5 esg-transition-transform esg-duration-300 ${
                     openSections.finansiel ? 'esg-rotate-180' : ''

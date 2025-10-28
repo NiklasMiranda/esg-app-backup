@@ -27,12 +27,12 @@ function StepDVAInfo({ onNext, onPrev }) {
 
         {/* Impact Info Box */}
         <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
-          <h2 className="esg-text-xl esg-font-bold esg-mb-4">Impact-perspektivet</h2>
+          <h2 className="esg-text-xl esg-font-bold esg-mb-4">Virkningsvæsentlighedsperspektivet</h2>
           <p className="esg-text-gray-700">
-            Impact-væsentlighed handler om den effekt, virksomheden har på mennesker og miljø. 
+            Virkningsvæsentlighed handler om den effekt, virksomheden har på mennesker og miljø. 
             Det dækker alt fra CO₂-udledninger, energiforbrug og forurening til arbejdsforhold, menneskerettigheder og lokalsamfund.
             <br></br><br></br>
-            I ESGScore-beregningen vurderes impact-væsentligheden gennem en række indikatorer, 
+            I ESGScore-beregningen vurderes virkningsvæsentligheden gennem en række indikatorer, 
             der måler hvor konkret virksomheden handler, og hvordan den dokumenterer sin indsats. 
             Det betyder, at virksomheder, der aktivt reducerer deres miljøpåvirkning, 
             styrker deres arbejdsmiljø eller tager ansvar i værdikæden, opnår en højere score – uanset deres udgangspunkt.
@@ -45,7 +45,7 @@ function StepDVAInfo({ onNext, onPrev }) {
 
         {/* Finansiel Info Box */}
         <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
-          <h2 className="esg-text-xl esg-font-bold esg-mb-4">Finansielt perspektiv</h2>
+          <h2 className="esg-text-xl esg-font-bold esg-mb-4">Finansiel væsentlighedsperspektiv</h2>
           <p className="esg-text-gray-700">
             Finansiel væsentlighed fokuserer på hvordan bæredygtighedsforhold påvirker virksomhedens økonomi, 
             drift og risikoprofil. Det kan være alt fra stigende energipriser 
