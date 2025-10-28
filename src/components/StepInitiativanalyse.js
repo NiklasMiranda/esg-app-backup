@@ -45,7 +45,7 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
 
     return (
     <div className="esg-flex esg-flex-col lg:esg-flex-row esg-gap-8">
-      <div className="esg-w-full lg:esg-w-7/12">
+      <div className="esg-w-full lg:esg-w-8/12">
         <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
           <h1 className="esg-text-xl esg-font-bold esg-mb-6 esg-flex esg-items-center">
             {activeIaGroup}: {groupTitles[activeIaGroup]}
@@ -134,7 +134,7 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
           <p>{categoryDescriptions[activeIaGroup]?.description || 'Ingen beskrivelse tilgængelig.'}</p>
         </Drawer>
       </div>
-      <div className="esg-w-full lg:esg-w-5/12">
+      <div className="esg-w-full lg:esg-w-4/12">
         <div className="esg-sticky esg-top-8">
           <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md">
             <CustomPolarChart
