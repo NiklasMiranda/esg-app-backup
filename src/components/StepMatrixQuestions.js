@@ -44,8 +44,8 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
   
 
     return (
-    <div className="esg-flex esg-gap-8">
-      <div className="esg-w-9/12">
+    <div className="esg-flex esg-flex-col lg:esg-flex-row esg-gap-8">
+      <div className="esg-w-full lg:esg-w-7/12">
         <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
           <h1 className="esg-text-xl esg-font-bold esg-mb-6 esg-flex esg-items-center">
             {activeMatrixGroup}: {groupTitles[activeMatrixGroup]}
@@ -73,10 +73,10 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
               </button>
               <div
                 className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
-                  openSections[secondSubcategory] ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+                  openSections[secondSubcategory] ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
                 }`}
               >
-                <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
+                <div className="esg-p-4 esg-grid esg-grid-cols-1 md:esg-grid-cols-2 xl:esg-grid-cols-3 esg-gap-6">
                   {questions.map(q => (
                     <div key={q.id} className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-flex esg-flex-col esg-justify-between esg-items-start">
                       <div> {/* Container for number and text */}
@@ -134,7 +134,7 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
           <p>{categoryDescriptions[activeMatrixGroup]?.description || 'Ingen beskrivelse tilgængelig.'}</p>
         </Drawer>
       </div>
-      <div className="esg-w-5/12">
+      <div className="esg-w-full lg:esg-w-5/12">
         <div className="esg-sticky esg-top-8">
           <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md">
             <CustomPolarChart

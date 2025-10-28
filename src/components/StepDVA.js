@@ -104,8 +104,8 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
   };
 
   return (
-    <div className="esg-flex esg-gap-8">
-      <div className="esg-flex-[3]">
+    <div className="esg-flex esg-flex-col lg:esg-flex-row esg-gap-8">
+      <div className="esg-w-full lg:esg-flex-[3]">
         <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
           <h1 className="esg-text-xl esg-font-bold esg-mb-6 esg-flex esg-items-center">
             {categoryInfo.title}
@@ -133,10 +133,10 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
               </button>
               <div
                 className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
-                  openSections.impact ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+                  openSections.impact ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
                 }`}
               >
-                  <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
+                  <div className="esg-p-4 esg-grid esg-grid-cols-1 md:esg-grid-cols-2 xl:esg-grid-cols-3 esg-gap-6">
                     {impactQuestions.map(question => (
                       <div key={question.id} className="esg-flex esg-flex-col esg-items-start esg-h-full">
                         <QuestionCard
@@ -173,10 +173,10 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
               </button>
               <div
                 className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
-                  openSections.finansiel ? 'esg-max-h-screen esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+                  openSections.finansiel ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
                 }`}
               >
-                <div className="esg-p-4 esg-grid esg-grid-cols-3 esg-gap-6">
+                <div className="esg-p-4 esg-grid esg-grid-cols-1 md:esg-grid-cols-2 xl:esg-grid-cols-3 esg-gap-6">
                   {finansielQuestions.map(question => (
                     <div key={question.id} className="esg-flex esg-flex-col esg-items-start esg-h-full">
                       <QuestionCard
@@ -199,7 +199,7 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
         </div>
       </div>
 
-      <div className="esg-flex-1 esg-sticky esg-top-2 esg-self-start esg-pr-8">
+      <div className="esg-w-full lg:esg-flex-1 esg-sticky esg-top-2 esg-self-start lg:esg-pr-8">
         <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md esg-flex esg-flex-col esg-items-center esg-justify-center">
           <CircularProgress percentage={categoryCompletion} size={150} />
           <p className="esg-mt-4 esg-text-sm esg-text-gray-700 esg-text-center">
