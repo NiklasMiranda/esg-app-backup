@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { dvaQuestions } from './data/dvaQuestions';
-import { matrixQuestions } from './data/matrixQuestions';
+import { iaQuestions } from './data/iaQuestions';
 import Navigation from './components/Navigation';
 import StepDVA from './components/StepDVA';
-import StepResultsMatrix from './components/StepResultsMatrix';
-import StepMatrixQuestions from './components/StepMatrixQuestions';
+import StepResultsDVA from './components/StepResultsDVA';
+import StepInitiativanalyse from './components/StepInitiativanalyse';
 import Del2Results from './components/Del2Results';
 import CircularProgress from './components/CircularProgress';
 import StepDVAInfo from './components/StepDVAInfo';
@@ -12,7 +12,7 @@ import { categoryDescriptions } from './data/descriptions';
 import StepESGInfo from './components/StepESGInfo';
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
-const matrixQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
+const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 
 const criterionColors = {
   E1: '#565e39', 
@@ -43,12 +43,12 @@ function getESGLevel(score) {
 
 function App() {
     const [currentDel1Step, setCurrentDel1Step] = useState('intro');
-    const [matrixGroupIndex, setMatrixGroupIndex] = useState(0);
-    const [currentDel2Step, setCurrentDel2Step] = useState(matrixQuestionGroups[matrixGroupIndex]);
+    const [iaGroupIndex, setIaGroupIndex] = useState(0);
+    const [currentDel2Step, setCurrentDel2Step] = useState(iaQuestionGroups[iaGroupIndex]);
     const [activeSection, setActiveSection] = useState('del1');
     const [groupIndex, setGroupIndex] = useState(0);
     const [answers, setAnswers] = useState({});
-    const [matrixAnswers, setMatrixAnswers] = useState({});
+    const [iaAnswers, setIaAnswers] = useState({});
     const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
@@ -57,12 +57,12 @@ function App() {
       setCurrentDel1Step('intro');
       setActiveSection('del1');
       const savedDvaAnswers = localStorage.getItem('dvaAnswers');
-      const savedMatrixAnswers = localStorage.getItem('matrixAnswers');
+      const savedIaAnswers = localStorage.getItem('iaAnswers');
       if (savedDvaAnswers) {
         setAnswers(JSON.parse(savedDvaAnswers));
       }
-      if (savedMatrixAnswers) {
-        setMatrixAnswers(JSON.parse(savedMatrixAnswers));
+      if (savedIaAnswers) {
+        setIaAnswers(JSON.parse(savedIaAnswers));
       }
     }, []);
 
@@ -71,8 +71,8 @@ function App() {
     }, [answers]);
 
     useEffect(() => {
-      localStorage.setItem('matrixAnswers', JSON.stringify(matrixAnswers));
-    }, [matrixAnswers]);
+      localStorage.setItem('iaAnswers', JSON.stringify(iaAnswers));
+    }, [iaAnswers]);
 
     useEffect(() => {
       const newCompletionStatus = {};
@@ -103,10 +103,10 @@ function App() {
       let totalAnsweredEsgQuestions = 0;
       let totalPossibleEsgQuestions = 0;
 
-      matrixQuestionGroups.forEach(groupLabel => {
-        const questionsInGroup = matrixQuestions.filter(q => q.label === groupLabel);
+      iaQuestionGroups.forEach(groupLabel => {
+        const questionsInGroup = iaQuestions.filter(q => q.label === groupLabel);
         const totalQuestions = questionsInGroup.length;
-        const answeredQuestions = questionsInGroup.filter(q => matrixAnswers[q.id] !== undefined && matrixAnswers[q.id] !== null).length;
+        const answeredQuestions = questionsInGroup.filter(q => iaAnswers[q.id] !== undefined && iaAnswers[q.id] !== null).length;
         const percentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
         newEsgCompletionStatus[groupLabel] = percentage;
 
@@ -114,7 +114,7 @@ function App() {
         totalPossibleEsgQuestions += totalQuestions;
       });
       setEsgCategoryCompletionStatus(newEsgCompletionStatus);
-    }, [matrixAnswers]);
+    }, [iaAnswers]);
 
     const { criteriaWeights, impactFinansielCounts, maxScores } = useMemo(() => {
       const results = {};
@@ -182,13 +182,13 @@ function App() {
 
     const { finalScores, totalScore, indicatorPoints } = useMemo(() => {
       const indicatorPoints = {};
-      [...new Set(matrixQuestions.map(q => q.label))].forEach(label => {
+      [...new Set(iaQuestions.map(q => q.label))].forEach(label => {
         indicatorPoints[label] = 0;
       });
 
-      Object.entries(matrixAnswers).forEach(([questionId, isSelected]) => {
+      Object.entries(iaAnswers).forEach(([questionId, isSelected]) => {
         if (isSelected) {
-          const question = matrixQuestions.find(q => q.id === parseInt(questionId));
+          const question = iaQuestions.find(q => q.id === parseInt(questionId));
           if (question) {
             indicatorPoints[question.label] += question.points;
           }
@@ -206,7 +206,7 @@ function App() {
       });
 
       return { finalScores: calculatedFinalScores, totalScore: calculatedTotalScore, indicatorPoints: indicatorPoints };
-    }, [matrixAnswers, maxScores]);
+    }, [iaAnswers, maxScores]);
 
     const polarBarChartData = useMemo(() => {
       return Object.entries(finalScores).map(([label, finalScore]) => ({
@@ -218,16 +218,16 @@ function App() {
     const esgLevel = useMemo(() => getESGLevel(totalScore), [totalScore]);
 
     const marimekkoData = useMemo(() => {
-      const currentGroup = matrixQuestionGroups.includes(currentDel2Step) ? currentDel2Step : matrixQuestionGroups[0];
+      const currentGroup = iaQuestionGroups.includes(currentDel2Step) ? currentDel2Step : iaQuestionGroups[0];
 
-      const questionsInGroup = matrixQuestions.filter(q => q.label === currentGroup);
+      const questionsInGroup = iaQuestions.filter(q => q.label === currentGroup);
       const subcategories = [...new Set(questionsInGroup.map(q => q.secondSubcategory))];
 
       return subcategories.map(subcategory => {
         const questionsInSubcategory = questionsInGroup.filter(q => q.secondSubcategory === subcategory);
         const maxPoints = questionsInSubcategory.reduce((sum, q) => sum + q.points, 0);
         const earnedPoints = questionsInSubcategory.reduce((sum, q) => {
-          if (matrixAnswers[q.id]) {
+          if (iaAnswers[q.id]) {
             return sum + q.points;
           }
           return sum;
@@ -239,7 +239,7 @@ function App() {
           maxPoints,
         };
       });
-    }, [currentDel2Step, matrixAnswers]);
+    }, [currentDel2Step, iaAnswers]);
 
     const handleAnswerChange = (questionId, answer) => {
       setAnswers(prevAnswers => ({
@@ -248,9 +248,9 @@ function App() {
       }));
     };
 
-    const handleMatrixAnswerChange = (questionId, isSelected) => {
-      setMatrixAnswers(prevMatrixAnswers => ({
-        ...prevMatrixAnswers,
+    const handleIaAnswerChange = (questionId, isSelected) => {
+      setIaAnswers(prevIaAnswers => ({
+        ...prevIaAnswers,
         [questionId]: isSelected,
       }));
     };
@@ -259,7 +259,7 @@ function App() {
       if (groupIndex < questionGroups.length - 1) {
         setGroupIndex(groupIndex + 1);
       } else {
-        setCurrentDel1Step('matrix');
+        setCurrentDel1Step('dvaResults');
       }
     };
 
@@ -271,21 +271,21 @@ function App() {
       }
     };
 
-    const handleNextMatrixGroup = () => {
+    const handleNextIaGroup = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      if (matrixGroupIndex < matrixQuestionGroups.length - 1) {
-        setMatrixGroupIndex(matrixGroupIndex + 1);
-        setCurrentDel2Step(matrixQuestionGroups[matrixGroupIndex + 1]);
+      if (iaGroupIndex < iaQuestionGroups.length - 1) {
+        setIaGroupIndex(iaGroupIndex + 1);
+        setCurrentDel2Step(iaQuestionGroups[iaGroupIndex + 1]);
       } else {
         setCurrentDel2Step('del2Results');
       }
     };
 
-    const handlePrevMatrixGroup = () => {
+    const handlePrevIaGroup = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      if (matrixGroupIndex > 0) {
-        setMatrixGroupIndex(matrixGroupIndex - 1);
-        setCurrentDel2Step(matrixQuestionGroups[matrixGroupIndex - 1]);
+      if (iaGroupIndex > 0) {
+        setIaGroupIndex(iaGroupIndex - 1);
+        setCurrentDel2Step(iaQuestionGroups[iaGroupIndex - 1]);
       }
       else {
         setCurrentDel2Step('esgInfo');
@@ -304,9 +304,9 @@ function App() {
           setCurrentDel1Step(stepKey);
         }
       } else if (section === 'del2') {
-        const groupIdx = matrixQuestionGroups.indexOf(stepKey);
+        const groupIdx = iaQuestionGroups.indexOf(stepKey);
         if (groupIdx !== -1) {
-          setMatrixGroupIndex(groupIdx);
+          setIaGroupIndex(groupIdx);
           setCurrentDel2Step(stepKey);
         } else {
           setCurrentDel2Step(stepKey);
@@ -362,7 +362,7 @@ function App() {
                   </div>
                   {/* ESG Data Info Box */}
                   <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md">
-                    <h2 className="esg-text-xl esg-font-bold esg-mb-4">Del 2: Matrix-spørgsmål</h2>
+                    <h2 className="esg-text-xl esg-font-bold esg-mb-4">Del 2: Initiativanalyse</h2>
                     <p className="esg-text-gray-700">
                       Anden del fokuserer på indsamling af specifikke data baseret på resultaterne fra DVA'en. Værktøjet hjælper med at strukturere dataindsamlingen, så I kan måle og rapportere jeres performance på de væsentligste områder. Dette danner grundlaget for jeres bæredygtighedsrapport.
                     </p>
@@ -386,8 +386,8 @@ function App() {
               dvaQuestions={dvaQuestions}
             />
           );
-        case 'matrix':
-          return <StepResultsMatrix answers={answers} criteriaWeights={criteriaWeights} impactFinansielCounts={impactFinansielCounts} dvaQuestions={dvaQuestions} criterionColors={criterionColors} onNext={() => {
+        case 'dvaResults':
+          return <StepResultsDVA answers={answers} criteriaWeights={criteriaWeights} impactFinansielCounts={impactFinansielCounts} dvaQuestions={dvaQuestions} criterionColors={criterionColors} onNext={() => {
             setActiveSection('del2');
             setCurrentDel2Step('esgInfo');
           }} onPrev={() => setCurrentDel1Step(questionGroups[questionGroups.length - 1])} />;
@@ -408,10 +408,10 @@ function App() {
       }
 
     } else if (activeSection === 'del2') {
-      const currentMatrixGroup = matrixQuestionGroups.includes(currentDel2Step) ? currentDel2Step : matrixQuestionGroups[0];
+      const currentIaGroup = iaQuestionGroups.includes(currentDel2Step) ? currentDel2Step : iaQuestionGroups[0];
       switch (currentDel2Step) {
         case 'esgInfo':
-          return <StepESGInfo onNext={() => setCurrentDel2Step(matrixQuestionGroups[0])} />;
+          return <StepESGInfo onNext={() => setCurrentDel2Step(iaQuestionGroups[0])} />;
         case 'E1':
         case 'E2':
         case 'E3':
@@ -422,15 +422,15 @@ function App() {
         case 'S3':
         case 'S4':
         case 'G1':
-          return <StepMatrixQuestions
-            activeMatrixGroup={currentMatrixGroup}
-            matrixQuestions={matrixQuestions}
-            matrixAnswers={matrixAnswers}
-            onMatrixAnswerChange={handleMatrixAnswerChange}
-            onNext={handleNextMatrixGroup}
-            onPrev={handlePrevMatrixGroup}
-            isFirst={matrixGroupIndex === 0}
-            isLast={matrixGroupIndex === matrixQuestionGroups.length - 1}
+          return <StepInitiativanalyse
+            activeIaGroup={currentIaGroup}
+            iaQuestions={iaQuestions}
+            iaAnswers={iaAnswers}
+            onIaAnswerChange={handleIaAnswerChange}
+            onNext={handleNextIaGroup}
+            onPrev={handlePrevIaGroup}
+            isFirst={iaGroupIndex === 0}
+            isLast={iaGroupIndex === iaQuestionGroups.length - 1}
             onShowResults={() => setCurrentDel2Step('del2Results')}
             categoryDescriptions={categoryDescriptions}
             polarBarChartData={polarBarChartData}
@@ -440,17 +440,17 @@ function App() {
             marimekkoData={marimekkoData}
           />;
         case 'del2Results':
-          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(matrixQuestionGroups[matrixQuestionGroups.length - 1])} />;
+          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])} />;
         default:
-          return <StepMatrixQuestions
-            activeMatrixGroup={currentMatrixGroup}
-            matrixQuestions={matrixQuestions}
-            matrixAnswers={matrixAnswers}
-            onMatrixAnswerChange={handleMatrixAnswerChange}
-            onNext={handleNextMatrixGroup}
-            onPrev={handlePrevMatrixGroup}
-            isFirst={matrixGroupIndex === 0}
-            isLast={matrixGroupIndex === matrixQuestionGroups.length - 1}
+          return <StepInitiativanalyse
+            activeIaGroup={currentIaGroup}
+            iaQuestions={iaQuestions}
+            iaAnswers={iaAnswers}
+            onIaAnswerChange={handleIaAnswerChange}
+            onNext={handleNextIaGroup}
+            onPrev={handlePrevIaGroup}
+            isFirst={iaGroupIndex === 0}
+            isLast={iaGroupIndex === iaQuestionGroups.length - 1}
             onShowResults={() => setCurrentDel2Step('del2Results')}
           />;
       }
@@ -460,7 +460,7 @@ function App() {
 
   let activeGroup;
   if (activeSection === 'del1') {
-    if (['intro', 'matrix', 'dvaInfo'].includes(currentDel1Step)) {
+    if (['intro', 'dvaResults', 'dvaInfo'].includes(currentDel1Step)) {
       activeGroup = currentDel1Step;
     } else {
       activeGroup = questionGroups[groupIndex];
@@ -496,7 +496,7 @@ function App() {
       </div>
       <div className="esg-flex-grow esg-flex">
         <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
-          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} matrixQuestions={matrixQuestions} questionGroups={questionGroups} />
+          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} iaQuestions={iaQuestions} questionGroups={questionGroups} />
         </div>
 
         <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">

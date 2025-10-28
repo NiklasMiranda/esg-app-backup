@@ -4,7 +4,7 @@ import groupTitles from '../data/groupTitles';
 
 const axisLabels = ["Ikke relevant", "Lav", "Middel", "Moderat", "Høj", "Meget høj"];
 
-function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev, criterionColors }) {
+function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev, criterionColors }) {
   const { plottedCoordinates } = useMemo(() => {
     const results = {};
     [...new Set(dvaQuestions.map(q => q.label))].forEach(label => {
@@ -74,14 +74,14 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
       <div className="esg-flex esg-gap-8 esg-mb-8">
         {/* Left Box: Heading and Description */}
         <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
-          <h2 className="esg-text-2xl esg-font-bold esg-mb-4">Væsentlighedsmatrix</h2>
+          <h2 className="esg-text-2xl esg-font-bold esg-mb-4">Væsentlighedsanalyse</h2>
           <p className="esg-text-gray-700">
-            Her kan du se en visuel repræsentation af din væsentlighedsmatrix, baseret på dine besvarelser.
+            Her kan du se en visuel repræsentation af din væsentlighedsanalyse, baseret på dine besvarelser.
             Akserne repræsenterer henholdsvis impact og finansiel væsentlighed.
           </p>
         </div>
 
-        {/* Right Box: Matrix Chart */}
+        {/* Right Box: Chart */}
         <div className="esg-flex-[2] esg-bg-white esg-p-14 esg-rounded-lg esg-shadow-md esg-relative">
           <div className="esg-relative esg-w-full esg-max-w-xl esg-h-auto esg-aspect-square esg-mx-auto">
             
@@ -184,4 +184,4 @@ function StepResultsMatrix({ answers, criteriaWeights, impactFinansielCounts, on
   );
 }
 
-export default StepResultsMatrix;
+export default StepResultsDVA;

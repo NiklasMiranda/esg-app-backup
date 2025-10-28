@@ -1,4 +1,4 @@
-export const matrixQuestions = [
+export const iaQuestions = [
   {
     id: 1,
     category: 'E',

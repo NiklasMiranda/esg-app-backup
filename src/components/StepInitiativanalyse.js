@@ -1,23 +1,23 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { matrixQuestions } from '../data/matrixQuestions';
+import { iaQuestions } from '../data/iaQuestions';
 import InfoIcon from './InfoIcon';
 import Drawer from './Drawer';
 import CustomPolarChart from './CustomPolarChart';
 import NivoLikeMarimekkoChart from './NivoLikeMarimekkoChart';
 import groupTitles from '../data/groupTitles';
 
-function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerChange, onNext, onPrev, isFirst, isLast, onShowResults, categoryDescriptions, polarBarChartData, totalScore, esgLevel, criterionColors, marimekkoData }) {
+function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNext, onPrev, isFirst, isLast, onShowResults, categoryDescriptions, polarBarChartData, totalScore, esgLevel, criterionColors, marimekkoData }) {
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [openSections, setOpenSections] = useState({});
 
   const groupedQuestionsBySecondSubcategory = useMemo(() =>
-    matrixQuestions
-      .filter(q => q.label === activeMatrixGroup)
+    iaQuestions
+      .filter(q => q.label === activeIaGroup)
       .reduce((acc, question) => {
         (acc[question.secondSubcategory] = acc[question.secondSubcategory] || []).push(question);
         return acc;
       }, {}),
-    [activeMatrixGroup]
+    [activeIaGroup]
   );
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
       <div className="esg-w-full lg:esg-w-7/12">
         <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
           <h1 className="esg-text-xl esg-font-bold esg-mb-6 esg-flex esg-items-center">
-            {activeMatrixGroup}: {groupTitles[activeMatrixGroup]}
+            {activeIaGroup}: {groupTitles[activeIaGroup]}
             <InfoIcon onClick={handleCategoryInfoClick} />
           </h1>
 
@@ -86,8 +86,8 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
                       <div className="esg-flex esg-justify-between esg-items-center esg-w-full">
                         <input
                           type="checkbox"
-                          checked={matrixAnswers[q.id] || false}
-                          onChange={(e) => onMatrixAnswerChange(q.id, e.target.checked)}
+                          checked={iaAnswers[q.id] || false}
+                          onChange={(e) => onIaAnswerChange(q.id, e.target.checked)}
                           className="esg-form-checkbox esg-h-5 esg-w-5 esg-text-blue-600 esg-mt-2"
                         />
                         {q.points && (
@@ -130,8 +130,8 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
             )}
           </div>
         </div>
-        <Drawer isOpen={isCategoryDrawerOpen} onClose={closeDrawer} title={`${activeMatrixGroup}: ${groupTitles[activeMatrixGroup]}`}>
-          <p>{categoryDescriptions[activeMatrixGroup]?.description || 'Ingen beskrivelse tilgængelig.'}</p>
+        <Drawer isOpen={isCategoryDrawerOpen} onClose={closeDrawer} title={`${activeIaGroup}: ${groupTitles[activeIaGroup]}`}>
+          <p>{categoryDescriptions[activeIaGroup]?.description || 'Ingen beskrivelse tilgængelig.'}</p>
         </Drawer>
       </div>
       <div className="esg-w-full lg:esg-w-5/12">
@@ -153,4 +153,4 @@ function StepMatrixQuestions({ activeMatrixGroup, matrixAnswers, onMatrixAnswerC
   );
 }
 
-export default StepMatrixQuestions;
+export default StepInitiativanalyse;

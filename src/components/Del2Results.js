@@ -21,7 +21,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
           <p className="esg-text-gray-700 esg-font-bold">Din samlede ESG-score er: {totalScore.toFixed(2)}</p>
           <p className="esg-text-gray-700 esg-font-bold">Din placering i vores niveauopdeling er: {esgLevel}</p>
           <p className="esg-text-gray-700 esg-mt-4">
-            Din samlede ESG-score er beregnet på baggrund af dine besvarelser i matrix-spørgsmålene, vægtet i forhold til din dobbeltvæsentlighedsanalyse.
+            Din samlede ESG-score er beregnet på baggrund af dine besvarelser i initiativanalysen, vægtet i forhold til din dobbeltvæsentlighedsanalyse.
             Score-niveauet indikerer din virksomheds nuværende modenhed inden for bæredygtighed:
           </p>
           <ul className="esg-list-disc esg-list-inside esg-text-gray-700 esg-mt-2">

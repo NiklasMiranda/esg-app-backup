@@ -18,8 +18,8 @@ const navSteps = [
   { key: 'S3', title: 'S3: Berørte samfund' },
   { key: 'S4', title: 'S4: Forbrugere og slutbrugere' },
   { key: 'G1', title: 'G1: God forretningsskik' },
-  { key: 'matrix', title: 'Resultater' },
-  { key: 'matrixQuestions', title: 'Matrix Spørgsmål' },
+  { key: 'dvaResults', title: 'Resultater' },
+
 ];
 
 function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCategoryCompletionStatus, activeSection, onSectionChange, matrixQuestions, questionGroups }) {
@@ -84,7 +84,7 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
   };
 
   const del2NavSteps = [
-    { key: 'esgInfo', title: 'Introduktion til matrix-spørgsmål' },
+    { key: 'esgInfo', title: 'Introduktion til initiativanalyse' },
     ...questionGroups.map(groupKey => ({ key: groupKey, title: `${groupKey}: ${groupTitles[groupKey] || ''}` })),
     { key: 'del2Results', title: 'Endelige resultater' },
   ];
@@ -147,7 +147,7 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
           className={`esg-text-l esg-font-bold esg-py-2 esg-px-4 esg-cursor-pointer esg-flex esg-items-center ${activeSection === 'del2' ? 'esg-text-white esg-bg-[#0b3954]' : ''}`}
           onClick={(event) => handleSectionToggle('del2', event)}
         >
-          <HiDocumentReport className="esg-mr-2" />Matrix
+          <HiDocumentReport className="esg-mr-2" />IA
         </h2>
         <ul className={`esg-relative esg-text-sm esg-pl-4 esg-transition-[max-height] esg-duration-500 esg-ease-in-out esg-overflow-hidden esg-bg-[#0b3954] ${!isEsgCollapsed ? 'esg-max-h-[1000px]' : 'esg-max-h-0 esg-pointer-events-none esg-opacity-0'}`} ref={listRef2}>
           <div className="esg-absolute esg-left-0 esg-w-[3px] esg-bg-[#bd822e] esg-transition-transform esg-duration-300 esg-ease-in-out" style={{ transform: `translateY(${indicatorTop2}px)`, height: `${indicatorHeight2}px` }} />
