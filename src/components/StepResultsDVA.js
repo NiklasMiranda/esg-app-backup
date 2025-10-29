@@ -82,7 +82,7 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
           </div>
 
           {/* Right Box: Chart */}
-          <div className="esg-flex-[2] esg-bg-white esg-p-14 esg-rounded-lg esg-shadow-md esg-relative">
+          <div className="esg-flex-[5] esg-bg-white esg-p-20 esg-rounded-lg esg-shadow-md esg-relative">
             <div className="esg-relative esg-w-full esg-max-w-xl esg-h-auto esg-aspect-square esg-mx-auto">
               {/* Virkningsvæsentlighed label */}
               <div className="esg-absolute esg-top-0 esg-left-1/2 esg-transform esg--translate-x-1/2 esg--translate-y-6 esg-text-xs sm:esg-text-sm">
