@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
-import { dvaQuestions } from './data/dvaQuestions';
-import { iaQuestions } from './data/iaQuestions';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { dvaQuestions as importedDvaQuestions } from './data/dvaQuestions';
+import { iaQuestions as importedIaQuestions } from './data/iaQuestions';
 import Navigation from './components/Navigation';
 import StepDVA from './components/StepDVA';
 import StepResultsDVA from './components/StepResultsDVA';
@@ -8,8 +8,9 @@ import StepInitiativanalyse from './components/StepInitiativanalyse';
 import Del2Results from './components/Del2Results';
 import CircularProgress from './components/CircularProgress';
 import StepDVAInfo from './components/StepDVAInfo';
-import { categoryDescriptions } from './data/descriptions';
+import { categoryDescriptions, questionDescriptions } from './data/descriptions';
 import StepESGInfo from './components/StepESGInfo';
+import { fetchUserData, saveUserData } from './api';
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -42,79 +43,76 @@ function getESGLevel(score) {
 }
 
 function App() {
+    // const chartRef = useRef(null); // No longer needed here
     const [currentDel1Step, setCurrentDel1Step] = useState('intro');
     const [iaGroupIndex, setIaGroupIndex] = useState(0);
     const [currentDel2Step, setCurrentDel2Step] = useState(iaQuestionGroups[iaGroupIndex]);
     const [activeSection, setActiveSection] = useState('del1');
     const [groupIndex, setGroupIndex] = useState(0);
-    const [answers, setAnswers] = useState({});
+    const [answers, setAnswers] = useState(() => {
+      try {
+        const savedAnswers = localStorage.getItem('esgAppAnswers');
+        return savedAnswers ? JSON.parse(savedAnswers) : {};
+      } catch (error) {
+        console.error("Error parsing saved answers from localStorage:", error);
+        return {};
+      }
+    });
     const [iaAnswers, setIaAnswers] = useState({});
+    const [polarChartImage, setPolarChartImage] = useState(null); // State for a gemme graf-billede
+
+    // Funktion til at POSTe billedet til WordPress 
+    const saveImage = useCallback(async (imageDataUrl) => {
+      if (!window.esgConfig) return;
+      const { apiUrl, userId, nonce } = window.esgConfig;
+
+      try {
+        const response = await fetch(`${apiUrl}data/${userId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain', // Send som plain text, ikke JSON
+            'X-WP-Nonce': nonce,
+          },
+          body: imageDataUrl, // Send den rå base64 string direkte
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Serveren kunne ikke gemme billedet: ${errorText}`);
+        }
+
+        const result = await response.json();
+        console.log('ESG-graf gemt via /data/ endpoint (text/plain):', result);
+      } catch (err) {
+        console.error('Kunne ikke gemme ESG-graf:', err);
+      }
+    }, []); // Empty dependency array as it only uses window scope
     const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
+    
+    const iaQuestions = useMemo(() => importedIaQuestions, []);
+    const dvaQuestions = useMemo(() => importedDvaQuestions, []);
+    const descriptions = useMemo(() => ({
+      ...categoryDescriptions,
+      ...questionDescriptions,
+    }), []);
 
+    // Calculate category completion for DVA (Del 1)
     useEffect(() => {
-      setCurrentDel1Step('intro');
-      setActiveSection('del1');
-      const savedDvaAnswers = localStorage.getItem('dvaAnswers');
-      const savedIaAnswers = localStorage.getItem('iaAnswers');
-      if (savedDvaAnswers) {
-        setAnswers(JSON.parse(savedDvaAnswers));
-      }
-      if (savedIaAnswers) {
-        setIaAnswers(JSON.parse(savedIaAnswers));
-      }
-    }, []);
-
-    useEffect(() => {
-      localStorage.setItem('dvaAnswers', JSON.stringify(answers));
-    }, [answers]);
-
-    useEffect(() => {
-      localStorage.setItem('iaAnswers', JSON.stringify(iaAnswers));
-    }, [iaAnswers]);
-
-    useEffect(() => {
-      const newCompletionStatus = {};
-      let totalAnsweredQuestions = 0;
-      let totalPossibleQuestions = 0;
-
-      questionGroups.forEach(groupLabel => {
-        const questionsInGroup = dvaQuestions.filter(q => q.label === groupLabel);
-        const totalQuestions = questionsInGroup.length;
-        const answeredQuestions = questionsInGroup.filter(q => answers[q.id] !== undefined && answers[q.id] !== null).length;
-        const percentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
-        newCompletionStatus[groupLabel] = percentage;
-
-        totalAnsweredQuestions += answeredQuestions;
-        totalPossibleQuestions += totalQuestions;
-      });
-      setCategoryCompletionStatus(newCompletionStatus);
-
-      if (totalPossibleQuestions > 0) {
-        setTotalCompletionPercentage((totalAnsweredQuestions / totalPossibleQuestions) * 100);
-      } else {
-        setTotalCompletionPercentage(0);
-      }
-    }, [answers]);
-
-    useEffect(() => {
-      const newEsgCompletionStatus = {};
-      let totalAnsweredEsgQuestions = 0;
-      let totalPossibleEsgQuestions = 0;
-
-      iaQuestionGroups.forEach(groupLabel => {
-        const questionsInGroup = iaQuestions.filter(q => q.label === groupLabel);
-        const totalQuestions = questionsInGroup.length;
-        const answeredQuestions = questionsInGroup.filter(q => iaAnswers[q.id] !== undefined && iaAnswers[q.id] !== null).length;
-        const percentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
-        newEsgCompletionStatus[groupLabel] = percentage;
-
-        totalAnsweredEsgQuestions += answeredQuestions;
-        totalPossibleEsgQuestions += totalQuestions;
-      });
-      setEsgCategoryCompletionStatus(newEsgCompletionStatus);
-    }, [iaAnswers]);
+        const newCategoryCompletionStatus = {};
+        questionGroups.forEach(groupKey => {
+            const questionsInGroup = dvaQuestions.filter(q => q.label === groupKey);
+            const totalQuestions = questionsInGroup.length;
+            if (totalQuestions === 0) {
+                newCategoryCompletionStatus[groupKey] = 0;
+                return;
+            }
+            const answeredQuestions = questionsInGroup.filter(q => answers[q.id] !== undefined && answers[q.id] !== null).length;
+            newCategoryCompletionStatus[groupKey] = (answeredQuestions / totalQuestions) * 100;
+        });
+            setCategoryCompletionStatus(newCategoryCompletionStatus);
+            }, [answers, dvaQuestions, questionGroups]);
 
     const { criteriaWeights, impactFinansielCounts, maxScores } = useMemo(() => {
       const results = {};
@@ -148,7 +146,7 @@ function App() {
         .reduce((sum, [, weight]) => sum + weight, 0);
       const totalWeightS = Object.entries(calculatedCriteriaWeights)
         .filter(([label]) => label.startsWith('S'))
-  .reduce((sum, [, weight]) => sum + weight, 0);
+        .reduce((sum, [, weight]) => sum + weight, 0);
       const totalWeightG = Object.entries(calculatedCriteriaWeights)
         .filter(([label]) => label.startsWith('G'))
         .reduce((sum, [, weight]) => sum + weight, 0);
@@ -440,7 +438,7 @@ function App() {
             marimekkoData={marimekkoData}
           />;
         case 'del2Results':
-          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])} />;
+          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])} onCapture={saveImage} />;
         default:
           return <StepInitiativanalyse
             activeIaGroup={currentIaGroup}
@@ -496,7 +494,7 @@ function App() {
       </div>
       <div className="esg-flex-grow esg-flex">
         <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
-          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} iaQuestions={iaQuestions} questionGroups={questionGroups} />
+          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} iaQuestions={iaQuestions} questionGroups={questionGroups} iaQuestionGroups={iaQuestionGroups} />
         </div>
 
         <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">

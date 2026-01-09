@@ -5,22 +5,7 @@ import { FaCalculator } from "react-icons/fa6";
 import { LuWeight } from "react-icons/lu";
 import { HiDocumentReport } from "react-icons/hi";
 
-const navSteps = [
-  { key: 'intro', title: 'Overordnet introduktion' },
-  { key: 'dvaInfo', title: 'Introduktion til DVA' },
-  { key: 'E1', title: 'E1: Klimaforandringer' },
-  { key: 'E2', title: 'E2: Forurening' },
-  { key: 'E3', title: 'E3: Vand- og havressourcer' },
-  { key: 'E4', title: 'E4: Biodiversitet og økosystemer' },
-  { key: 'E5', title: 'E5: Ressourceanvendelse og cirkulær økonomi' },
-  { key: 'S1', title: 'S1: Egen arbejdsstyrke' },
-  { key: 'S2', title: 'S2: Arbejdstagere i værdikæden' },
-  { key: 'S3', title: 'S3: Berørte samfund' },
-  { key: 'S4', title: 'S4: Forbrugere og slutbrugere' },
-  { key: 'G1', title: 'G1: God forretningsskik' },
-  { key: 'dvaResults', title: 'Resultater' },
 
-];
 
 function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCategoryCompletionStatus, activeSection, onSectionChange, iaQuestions, questionGroups }) {
   const [indicatorTop, setIndicatorTop] = useState(0);
@@ -89,7 +74,11 @@ function Navigation({ activeGroup, onNavigate, categoryCompletionStatus, esgCate
     { key: 'del2Results', title: 'Endelige resultater' },
   ];
 
-  const del1Steps = navSteps.filter(step => !['iaQuestions', 'intro'].includes(step.key));
+  const del1Steps = [
+    { key: 'dvaInfo', title: 'Introduktion til DVA' },
+    ...questionGroups.map(groupKey => ({ key: groupKey, title: `${groupKey}: ${groupTitles[groupKey] || ''}` })),
+    { key: 'dvaResults', title: 'Resultater' },
+  ];
 
   return (
     <div className="esg-bg-[#0b3954] !esg-text-white esg-mt-[5px] esg-mb-[5px] esg-ml-[5px]">

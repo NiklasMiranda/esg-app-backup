@@ -65,6 +65,8 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
       };
     });
 
+    console.log('Plotted Coordinates:', JSON.stringify(jitteredCoordinates, null, 2)); // Debugging line
+    console.log('Plotted Coordinates:', JSON.stringify(jitteredCoordinates, null, 2)); // Debugging line
     return { plottedCoordinates: jitteredCoordinates };
   }, [answers]);
 
