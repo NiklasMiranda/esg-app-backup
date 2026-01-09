@@ -7,9 +7,12 @@
 export const fetchUserData = async () => {
   const { userId, nonce, apiUrl } = window.esgConfig || {};
 
-  if (!userId || !apiUrl) {
-    // If no user is logged in or config is missing, we can't fetch data.
-    console.log("User not logged in or API config missing. Cannot fetch data.");
+  console.log('fetchUserData - window.esgConfig:', window.esgConfig); // Debugging
+  console.log('fetchUserData - userId:', userId, 'nonce:', nonce, 'apiUrl:', apiUrl); // Debugging
+
+  // Add more robust check for userId
+  if (!userId || !apiUrl || (typeof userId !== 'number' && typeof userId !== 'string')) {
+    console.error("User not logged in, API config missing, or userId is invalid. Cannot fetch data. userId:", userId);
     return Promise.resolve(null);
   }
 
@@ -42,9 +45,12 @@ export const fetchUserData = async () => {
 export const saveUserData = async (dataToSave) => {
   const { userId, nonce, apiUrl } = window.esgConfig || {};
 
-  if (!userId || !apiUrl) {
-    // If no user is logged in or config is missing, we can't save data.
-    console.log("User not logged in or API config missing. Cannot save data.");
+  console.log('saveUserData - window.esgConfig:', window.esgConfig); // Debugging
+  console.log('saveUserData - userId:', userId, 'nonce:', nonce, 'apiUrl:', apiUrl); // Debugging
+
+  // Add more robust check for userId
+  if (!userId || !apiUrl || (typeof userId !== 'number' && typeof userId !== 'string')) {
+    console.error("User not logged in, API config missing, or userId is invalid. Cannot save data. userId:", userId);
     return Promise.resolve(null);
   }
 

@@ -90,6 +90,43 @@ function App() {
     const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
+
+    // Fetch initial user data on component mount
+    useEffect(() => {
+      const loadUserData = async () => {
+        try {
+          const userData = await fetchUserData();
+          if (userData) {
+            if (userData.dvaAnswers) setAnswers(userData.dvaAnswers);
+            if (userData.iaAnswers) setIaAnswers(userData.iaAnswers);
+          }
+        } catch (error) {
+          console.error("Failed to fetch user data:", error);
+        }
+      };
+      loadUserData();
+    }, []);
+
+    // Save answers to backend when they change
+    useEffect(() => {
+        const handler = setTimeout(async () => {
+            try {
+                // Combine all relevant data to save
+                const dataToSave = {
+                    dvaAnswers: answers,
+                    iaAnswers: iaAnswers,
+                };
+                await saveUserData(dataToSave);
+                console.log('User data (answers) saved successfully!');
+            } catch (error) {
+                console.error("Failed to save user data:", error);
+            }
+        }, 1000); // Debounce by 1 second
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [answers, iaAnswers, saveUserData]);
     
     const iaQuestions = useMemo(() => importedIaQuestions, []);
     const dvaQuestions = useMemo(() => importedDvaQuestions, []);

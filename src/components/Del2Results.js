@@ -1,8 +1,30 @@
+import React, { useRef } from 'react';
 import CustomPolarChart from './CustomPolarChart';
 import groupTitles from '../data/groupTitles';
+import html2canvas from 'html2canvas';
 
 // 1. Modtag onCapture som en prop
 function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgLevel, polarBarChartData, criterionColors, onPrev, onCapture }) {
+  const chartRef = useRef(null); // Create chartRef
+
+  // New onClick handler for "Gem graf"
+  const handleSaveGraph = async () => {
+    if (chartRef.current) {
+      try {
+        const canvas = await html2canvas(chartRef.current, {
+          backgroundColor: '#ffffff',
+          useCORS: true,
+          logging: false,
+        });
+        const imageDataUrl = canvas.toDataURL('image/png');
+        onCapture(imageDataUrl); // Call onCapture with the image data
+      } catch (error) {
+        console.error('Error capturing chart for saving:', error);
+      }
+    } else {
+      console.warn('chartRef.current is null, cannot capture chart.');
+    }
+  };
 
   return (
     <div className="esg-p-4">
@@ -38,7 +60,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
                 totalScore={totalScore}
                 esgLevel={esgLevel}
                 criterionColors={criterionColors}
-                onCapture={onCapture}
+                ref={chartRef} // Pass chartRef to CustomPolarChart
               />
             </div>
           </div>
@@ -80,12 +102,18 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
             </table>
           </div>
         </div>
-        <div className="esg-flex esg-justify-start esg-mt-4">
+        <div className="esg-flex esg-justify-between esg-mt-4">
           <button
             onClick={onPrev}
             className="btn-secondary"
           >
             Forrige
+          </button>
+          <button
+            onClick={handleSaveGraph} // Use the new handler
+            className="btn-primary"
+          >
+            Gem graf
           </button>
         </div>
       </div>

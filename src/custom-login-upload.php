@@ -637,17 +637,17 @@ add_action('rest_api_init', function () {
 
                 // Hvis det er almindelige JSON-data (dvaAnswers, etc.)
                 if ($content_type && strpos($content_type, 'application/json') !== false) {
-                    $data = $request->get_json_params();
-                    if (!is_array($data)) $data = [];
+                    $new_data_from_request = $request->get_json_params();
+                    if (!is_array($new_data_from_request)) $new_data_from_request = [];
 
-                    // Bevar eksisterende billede, hvis det findes, da denne anmodning kun sender svar
-                    $existing_data = get_user_meta($user_id, 'esg_data', true);
-                    if (!is_array($existing_data)) $existing_data = [];
-                    if (isset($existing_data['polarChartImage'])) {
-                        $data['polarChartImage'] = $existing_data['polarChartImage'];
-                    }
+                    $existing_esg_data = get_user_meta($user_id, 'esg_data', true);
+                    if (!is_array($existing_esg_data)) $existing_esg_data = [];
+                    
+                    // Merge existing data with new data. New data (answers) take precedence.
+                    // Other existing fields like 'polarChartImage' are preserved if not overwritten by new_data_from_request.
+                    $updated_esg_data = array_merge($existing_esg_data, $new_data_from_request);
 
-                    update_user_meta($user_id, 'esg_data', $data);
+                    update_user_meta($user_id, 'esg_data', $updated_esg_data);
                     return new WP_REST_Response(['status' => 'success', 'message' => 'Data gemt.'], 200);
 
                 // Hvis det er billed-data (sendt som 'text/plain')
@@ -680,7 +680,7 @@ add_action('rest_api_init', function () {
     ]);
 });
 
-// ESG user chart shortcode - debug version
+// ESG user chart shortcode
 add_shortcode('esg_user_chart', function() {
     if (!is_user_logged_in()) {
         return '<p>Log venligst ind for at se dit dashboard.</p>';
@@ -697,17 +697,29 @@ add_shortcode('esg_user_chart', function() {
     // Hent alt esg_data for brugeren
     $esg_data = get_user_meta($view_user_id, 'esg_data', true);
 
-    // Debug output - viser alt data i en <pre> blok
-    $debug_html = '<h3>DEBUG: ESG Data</h3><pre>' . print_r($esg_data, true) . '</pre>';
 
     // Hent billedet, hvis det findes
     $image_base64 = $esg_data['polarChartImage'] ?? '';
 
+    // --- DEBUGGING START ---
+    $debug_html = '';
+    $debug_html .= '<p>DEBUG: Type of $image_base64: ' . gettype($image_base64) . '</p>';
+    if (is_string($image_base64)) {
+        $debug_html .= '<p>DEBUG: Length of $image_base64: ' . strlen($image_base64) . '</p>';
+        $debug_html .= '<p>DEBUG: First 50 chars of $image_base64: ' . substr($image_base64, 0, 50) . '</p>';
+    } else {
+        $debug_html .= '<pre>DEBUG: $image_base64 content: ' . print_r($image_base64, true) . '</pre>';
+    }
+    // --- DEBUGGING END ---
+
+    // Remove the data URI prefix if it exists, as the shortcode adds it
+    $image_base64 = str_replace('data:image/png;base64,', '', $image_base64);
+
     if (!empty($image_base64) && is_string($image_base64)) {
         $img_html = '<h3>ESG Performance Graf</h3>
-                     <img src="' . $image_base64 . '" alt="ESG Performance Graf" style="max-width:100%; height:auto; border-radius:8px;" />';
+                     <img src="data:image/png;base64,' . $image_base64 . '" alt="ESG Performance Graf" style="max-width:100%; height:auto; border-radius:8px;" />';
     } else {
-        $img_html = '<p>Billeddata findes ikke endnu.</p>';
+        $img_html = '<p>Udfyld beregneren for at se din performance her.</p>';
     }
 
     return $debug_html . $img_html;
