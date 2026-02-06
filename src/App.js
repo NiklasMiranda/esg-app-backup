@@ -1,6 +1,4 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { dvaQuestions as importedDvaQuestions } from './data/dvaQuestions';
-import { iaQuestions as importedIaQuestions } from './data/iaQuestions';
 import Navigation from './components/Navigation';
 import StepDVA from './components/StepDVA';
 import StepResultsDVA from './components/StepResultsDVA';
@@ -10,7 +8,7 @@ import CircularProgress from './components/CircularProgress';
 import StepDVAInfo from './components/StepDVAInfo';
 import { categoryDescriptions, questionDescriptions } from './data/descriptions';
 import StepESGInfo from './components/StepESGInfo';
-import { fetchUserData, saveUserData } from './api';
+import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi } from './api';
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -34,13 +32,7 @@ const categoryPercentages = {
   G: 30,
 };
 
-function getESGLevel(score) {
-  if (score < 35) return 'Ikke bestået';
-  else if (score < 50) return 'Bronze';
-  else if (score < 65) return 'Sølv';
-  else if (score < 80) return 'Guld';
-  else return 'Platin';
-}
+
 
 function App() {
     // const chartRef = useRef(null); // No longer needed here
@@ -60,6 +52,13 @@ function App() {
     });
     const [iaAnswers, setIaAnswers] = useState({});
     const [polarChartImage, setPolarChartImage] = useState(null); // State for a gemme graf-billede
+
+    // State for questions fetched from API
+    const [dvaQuestions, setDvaQuestions] = useState([]);
+    const [iaQuestions, setIaQuestions] = useState([]);
+    const [loadingQuestions, setLoadingQuestions] = useState(true);
+    // State for calculation results fetched from API
+    const [calculationResults, setCalculationResults] = useState({});
 
     // Funktion til at POSTe billedet til WordPress 
     const saveImage = useCallback(async (imageDataUrl) => {
@@ -91,21 +90,34 @@ function App() {
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
 
-    // Fetch initial user data on component mount
+    // Fetch questions and user data on component mount
     useEffect(() => {
-      const loadUserData = async () => {
+      const loadAllData = async () => {
         try {
-          const userData = await fetchUserData();
+          setLoadingQuestions(true);
+          const [fetchedDvaQuestions, fetchedIaQuestions, userData, fetchedCalculationResults] = await Promise.all([
+            fetchDvaQuestionsFromApi(),
+            fetchIaQuestionsFromApi(),
+            fetchUserData(), // Use the updated fetchUserData
+            fetchCalculationResultsFromApi(1, 2026) // companyId=1, year=2026 (hardcoded for now)
+          ]);
+          setDvaQuestions(fetchedDvaQuestions);
+          setIaQuestions(fetchedIaQuestions);
           if (userData) {
             if (userData.dvaAnswers) setAnswers(userData.dvaAnswers);
             if (userData.iaAnswers) setIaAnswers(userData.iaAnswers);
           }
+          if (fetchedCalculationResults) {
+            setCalculationResults(fetchedCalculationResults);
+          }
         } catch (error) {
-          console.error("Failed to fetch user data:", error);
+          console.error("Failed to load initial data:", error);
+        } finally {
+          setLoadingQuestions(false);
         }
       };
-      loadUserData();
-    }, []);
+      loadAllData();
+    }, []); // Empty dependency array means this runs once on mount
 
     // Save answers to backend when they change
     useEffect(() => {
@@ -128,153 +140,38 @@ function App() {
         };
     }, [answers, iaAnswers, saveUserData]);
     
-    const iaQuestions = useMemo(() => importedIaQuestions, []);
-    const dvaQuestions = useMemo(() => importedDvaQuestions, []);
-    const descriptions = useMemo(() => ({
+    // const iaQuestions = useMemo(() => importedIaQuestions, []); // Removed
+    // const dvaQuestions = useMemo(() => importedDvaQuestions, []); // Removed
+    const descriptions = {
       ...categoryDescriptions,
       ...questionDescriptions,
-    }), []);
+    };
 
-    // Calculate category completion for DVA (Del 1)
-    useEffect(() => {
-        const newCategoryCompletionStatus = {};
+    const { newCategoryCompletionStatus, newTotalCompletionPercentage } = useMemo(() => {
+        const calculatedCategoryCompletionStatus = {};
         questionGroups.forEach(groupKey => {
             const questionsInGroup = dvaQuestions.filter(q => q.label === groupKey);
             const totalQuestions = questionsInGroup.length;
             if (totalQuestions === 0) {
-                newCategoryCompletionStatus[groupKey] = 0;
+                calculatedCategoryCompletionStatus[groupKey] = 0;
                 return;
             }
             const answeredQuestions = questionsInGroup.filter(q => answers[q.id] !== undefined && answers[q.id] !== null).length;
-            newCategoryCompletionStatus[groupKey] = (answeredQuestions / totalQuestions) * 100;
+            calculatedCategoryCompletionStatus[groupKey] = (answeredQuestions / totalQuestions) * 100;
         });
-            setCategoryCompletionStatus(newCategoryCompletionStatus);
-            }, [answers, dvaQuestions, questionGroups]);
 
-    const { criteriaWeights, impactFinansielCounts, maxScores } = useMemo(() => {
-      const results = {};
-      [...new Set(dvaQuestions.map(q => q.label))].forEach(label => {
-        results[label] = { impact: 0, finansiel: 0, label };
-      });
+        const totalAnsweredCount = Object.values(calculatedCategoryCompletionStatus).filter(p => p > 0).length;
+        const totalQuestionGroups = questionGroups.length;
+        const calculatedTotalCompletionPercentage = totalQuestionGroups > 0 ? (totalAnsweredCount / totalQuestionGroups) * 100 : 0;
 
-      const selectedQuestions = new Set();
-      for (const questionId in answers) {
-        if (answers[questionId] === 'yes') {
-          selectedQuestions.add(parseInt(questionId));
-        }
-      }
+        return { newCategoryCompletionStatus: calculatedCategoryCompletionStatus, newTotalCompletionPercentage: calculatedTotalCompletionPercentage };
+    }, [answers, dvaQuestions, questionGroups]);
 
-      dvaQuestions.forEach(q => {
-        if (selectedQuestions.has(q.id)) {
-          if (q.purpose === 'impact') results[q.label].impact++;
-          else if (q.purpose === 'finansiel') results[q.label].finansiel++;
-        }
-      });
-
-      const calculatedCriteriaWeights = {};
-      const calculatedImpactFinansielCounts = {};
-      Object.entries(results).forEach(([label, d]) => {
-        calculatedCriteriaWeights[label] = Math.floor((d.impact + d.finansiel) / 2);
-        calculatedImpactFinansielCounts[label] = { impact: d.impact, finansiel: d.finansiel };
-      });
-
-      const totalWeightE = Object.entries(calculatedCriteriaWeights)
-        .filter(([label]) => label.startsWith('E'))
-        .reduce((sum, [, weight]) => sum + weight, 0);
-      const totalWeightS = Object.entries(calculatedCriteriaWeights)
-        .filter(([label]) => label.startsWith('S'))
-        .reduce((sum, [, weight]) => sum + weight, 0);
-      const totalWeightG = Object.entries(calculatedCriteriaWeights)
-        .filter(([label]) => label.startsWith('G'))
-        .reduce((sum, [, weight]) => sum + weight, 0);
-
-      const calculatedMaxScores = {};
-      Object.entries(calculatedCriteriaWeights).forEach(([label, weight]) => {
-        const category = label.charAt(0);
-        let totalCategoryWeight = 0;
-        let categoryPercentage = 0;
-
-        if (category === 'E') {
-          totalCategoryWeight = totalWeightE;
-          categoryPercentage = categoryPercentages.E;
-        } else if (category === 'S') {
-          totalCategoryWeight = totalWeightS;
-          categoryPercentage = categoryPercentages.S;
-        } else if (category === 'G') {
-          totalCategoryWeight = totalWeightG;
-          categoryPercentage = categoryPercentages.G;
-        }
-
-        if (totalCategoryWeight > 0) {
-          calculatedMaxScores[label] = (weight / totalCategoryWeight) * categoryPercentage;
-        } else {
-          calculatedMaxScores[label] = 0;
-        }
-      });
-
-      return { criteriaWeights: calculatedCriteriaWeights, impactFinansielCounts: calculatedImpactFinansielCounts, maxScores: calculatedMaxScores };
-    }, [answers]);
-
-    const { finalScores, totalScore, indicatorPoints } = useMemo(() => {
-      const indicatorPoints = {};
-      [...new Set(iaQuestions.map(q => q.label))].forEach(label => {
-        indicatorPoints[label] = 0;
-      });
-
-      Object.entries(iaAnswers).forEach(([questionId, isSelected]) => {
-        if (isSelected) {
-          const question = iaQuestions.find(q => q.id === parseInt(questionId));
-          if (question) {
-            indicatorPoints[question.label] += question.points;
-          }
-        }
-      });
-
-      const calculatedFinalScores = {};
-      let calculatedTotalScore = 0;
-
-      Object.entries(indicatorPoints).forEach(([label, points]) => {
-        if (maxScores[label] !== undefined) {
-          calculatedFinalScores[label] = (points * maxScores[label]) / 100;
-          calculatedTotalScore += calculatedFinalScores[label];
-        }
-      });
-
-      return { finalScores: calculatedFinalScores, totalScore: calculatedTotalScore, indicatorPoints: indicatorPoints };
-    }, [iaAnswers, maxScores]);
-
-    const polarBarChartData = useMemo(() => {
-      return Object.entries(finalScores).map(([label, finalScore]) => ({
-        criterion: label.trim(), // Ensure no whitespace
-        "Point (Optjent)": parseFloat(indicatorPoints[label]?.toFixed(2)) || 0,
-      }));
-    }, [finalScores, indicatorPoints]);
-
-    const esgLevel = useMemo(() => getESGLevel(totalScore), [totalScore]);
-
-    const marimekkoData = useMemo(() => {
-      const currentGroup = iaQuestionGroups.includes(currentDel2Step) ? currentDel2Step : iaQuestionGroups[0];
-
-      const questionsInGroup = iaQuestions.filter(q => q.label === currentGroup);
-      const subcategories = [...new Set(questionsInGroup.map(q => q.secondSubcategory))];
-
-      return subcategories.map(subcategory => {
-        const questionsInSubcategory = questionsInGroup.filter(q => q.secondSubcategory === subcategory);
-        const maxPoints = questionsInSubcategory.reduce((sum, q) => sum + q.points, 0);
-        const earnedPoints = questionsInSubcategory.reduce((sum, q) => {
-          if (iaAnswers[q.id]) {
-            return sum + q.points;
-          }
-          return sum;
-        }, 0);
-
-        return {
-          subcategory,
-          earnedPoints,
-          maxPoints,
-        };
-      });
-    }, [currentDel2Step, iaAnswers]);
+    // Update state variables based on useMemo results
+    useEffect(() => {
+        setCategoryCompletionStatus(newCategoryCompletionStatus);
+        setTotalCompletionPercentage(newTotalCompletionPercentage);
+    }, [newCategoryCompletionStatus, newTotalCompletionPercentage]);
 
     const handleAnswerChange = (questionId, answer) => {
       setAnswers(prevAnswers => ({
@@ -422,7 +319,7 @@ function App() {
             />
           );
         case 'dvaResults':
-          return <StepResultsDVA answers={answers} criteriaWeights={criteriaWeights} impactFinansielCounts={impactFinansielCounts} dvaQuestions={dvaQuestions} criterionColors={criterionColors} onNext={() => {
+          return <StepResultsDVA answers={answers} criteriaWeights={calculationResults.criteriaWeights} impactFinansielCounts={calculationResults.impactFinansielCounts} dvaQuestions={dvaQuestions} criterionColors={criterionColors} onNext={() => {
             setActiveSection('del2');
             setCurrentDel2Step('esgInfo');
           }} onPrev={() => setCurrentDel1Step(questionGroups[questionGroups.length - 1])} />;
@@ -468,14 +365,14 @@ function App() {
             isLast={iaGroupIndex === iaQuestionGroups.length - 1}
             onShowResults={() => setCurrentDel2Step('del2Results')}
             categoryDescriptions={categoryDescriptions}
-            polarBarChartData={polarBarChartData}
-            totalScore={totalScore}
-            esgLevel={esgLevel}
+            polarBarChartData={calculationResults.polarBarChartData}
+            totalScore={calculationResults.totalScore}
+            esgLevel={calculationResults.esgLevel}
             criterionColors={criterionColors}
-            marimekkoData={marimekkoData}
+            marimekkoData={calculationResults.marimekkoData}
           />;
         case 'del2Results':
-          return <Del2Results finalScores={finalScores} totalScore={totalScore} indicatorPoints={indicatorPoints} maxScores={maxScores} esgLevel={esgLevel} polarBarChartData={polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])} onCapture={saveImage} />;
+          return <Del2Results finalScores={calculationResults.finalScores} totalScore={calculationResults.totalScore} indicatorPoints={calculationResults.indicatorPoints} maxScores={calculationResults.maxScores} esgLevel={calculationResults.esgLevel} polarBarChartData={calculationResults.polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])} onCapture={saveImage} />;
         default:
           return <StepInitiativanalyse
             activeIaGroup={currentIaGroup}
@@ -516,7 +413,7 @@ function App() {
         <div className="esg-flex esg-justify-between esg-items-center esg-mb-4 md:esg-hidden">
           <h1 className="esg-text-xl esg-font-bold">ESG App</h1>
           <div className="esg-flex esg-items-center">
-            <CircularProgress percentage={totalCompletionPercentage} />
+            <CircularProgress percentage={newTotalCompletionPercentage} />
             <button onClick={toggleNav} className="esg-text-gray-800 focus:esg-outline-none esg-ml-4">
               <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isNavOpen ? (
