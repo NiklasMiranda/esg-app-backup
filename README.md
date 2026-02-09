@@ -29,8 +29,8 @@ Den valgte teknologistak er designet til at være robust, skalerbar og effektiv 
 *   **Database:** **PostgreSQL**
     *   En robust, relationel database til at gemme alle strukturerede data (brugere, svar, nøgletal, etc.).
 
-*   **Fil-lagring:** **Cloud Storage (f.eks. Amazon S3)**
-    *   Til sikker og skalerbar opbevaring af uploadede dokumenter. Håndteres via en Django-udvidelse som `django-storages`.
+*   **Fil-lagring:** **Azure Blob Storage (f.eks.)**
+    *   Til sikker og skalerbar opbevaring af uploadede dokumenter. Dette er den foretrukne løsning, men kræver yderligere afklaring omkring specifikke opsætningsdetaljer, før implementering påbegyndes.
 
 ## Projektplan for Ombygning
 

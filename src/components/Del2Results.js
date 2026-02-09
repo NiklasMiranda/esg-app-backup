@@ -4,7 +4,7 @@ import groupTitles from '../data/groupTitles';
 import html2canvas from 'html2canvas';
 
 // 1. Modtag onCapture som en prop
-function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgLevel, polarBarChartData, criterionColors, onPrev, onCapture }) {
+function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgLevel, polarBarChartData, criterionColors, onPrev, onCapture, onGeneratePdf }) {
   const chartRef = useRef(null); // Create chartRef
 
   // New onClick handler for "Gem graf"
@@ -34,7 +34,7 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
           {/* Left: Explanation for first graph */}
           <div className="esg-flex-1 esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
             <h2 className="esg-text-2xl esg-mb-4">Din samlede ESG-score</h2>
-            <p className="esg-text-gray-700 esg-font-bold">Din samlede ESG-score er: {totalScore.toFixed(2)}</p>
+            <p className="esg-text-gray-700 esg-font-bold">Din samlede ESG-score er: {(totalScore || 0).toFixed(2)}</p>
             <p className="esg-text-gray-700 esg-font-bold">Din placering i vores niveauopdeling er: {esgLevel}</p>
             <p className="esg-text-gray-700 esg-mt-4">
               Din samlede ESG-score er beregnet på baggrund af dine besvarelser i initiativanalysen, vægtet i forhold til din dobbeltvæsentlighedsanalyse.
@@ -89,13 +89,13 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
                 </tr>
               </thead>
               <tbody>
-                {Object.entries(finalScores).map(([label, finalScore]) => (
+                {Object.entries(finalScores || {}).map(([label, finalScore]) => (
                   <tr key={label}>
                     <td className="esg-py-2 esg-px-4 esg-border-b">{label}: {groupTitles[label]}</td>
                     <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{(indicatorPoints[label] || 0).toFixed(2)}</td>
                     <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">100</td>
                     <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{maxScores[label]?.toFixed(2) || 0}</td>
-                    <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{finalScore.toFixed(2)}</td>
+                    <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">{(finalScore || 0).toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -110,10 +110,16 @@ function Del2Results({ finalScores, totalScore, indicatorPoints, maxScores, esgL
             Forrige
           </button>
           <button
-            onClick={handleSaveGraph} // Use the new handler
-            className="btn-primary"
+            onClick={handleSaveGraph}
+            className="btn-primary esg-ml-4" // Added margin-left for spacing
           >
             Gem graf
+          </button>
+          <button
+            onClick={onGeneratePdf}
+            className="btn-primary esg-ml-4" // Added margin-left for spacing
+          >
+            Generer PDF Rapport
           </button>
         </div>
       </div>

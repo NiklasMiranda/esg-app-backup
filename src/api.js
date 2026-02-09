@@ -1,20 +1,97 @@
 // new-esg-app/src/api.js
 
-const DJANGO_API_BASE_URL = 'http://127.0.0.1:8000/api/'; // Hardcoded for now
-const TEST_COMPANY_ID = 1; // Placeholder until authentication and company context are implemented
+const DJANGO_API_BASE_URL = 'http://127.0.0.1:8000/api/';
+
+// Helper to get auth token
+const getAuthToken = () => localStorage.getItem('authToken');
+
+// Helper to create authorization header
+const createAuthHeader = () => {
+  const token = getAuthToken();
+  console.log('createAuthHeader: Retrieved Token:', token); // More descriptive log
+  const headers = token ? { 'Authorization': `Token ${token}` } : {};
+  console.log('createAuthHeader: Generated Headers:', headers); // Log the full headers object
+  return headers;
+};
+
+/**
+ * Logs in a user and stores the authentication token.
+ * @param {string} username
+ * @param {string} password
+ * @returns {Promise<Object>} The user data including token.
+ */
+export const loginUser = async (username, password) => {
+  try {
+    const response = await fetch(`${DJANGO_API_BASE_URL}token-auth/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.non_field_errors || 'Login failed');
+    }
+
+    const data = await response.json();
+    localStorage.setItem('authToken', data.token);
+    // Assuming the backend also sends user info or company_id upon login
+    // For now, we'll return the token and assume companyId is handled elsewhere
+    return data;
+  } catch (error) {
+    console.error('Error logging in:', error);
+    throw error;
+  }
+};
+
+/**
+ * Logs out a user and removes the authentication token.
+ */
+export const logoutUser = async () => {
+  const token = getAuthToken(); // Get token before the fetch
+  // Check for falsy values (null, undefined, '')
+  if (!token || token === '') {
+    console.log('No valid authentication token found. Already logged out or token missing.');
+    localStorage.removeItem('authToken'); // Ensure it's cleared locally
+    return; // Exit without making a backend call
+  }
+
+  try {
+    const response = await fetch(`${DJANGO_API_BASE_URL}logout/`, {
+      method: 'POST',
+      headers: createAuthHeader(),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Logout failed: ${response.statusText} - ${errorText}`);
+    }
+
+    localStorage.removeItem('authToken');
+    console.log('Successfully logged out.');
+  } catch (error) {
+    console.error('Error logging out:', error);
+    throw error;
+  }
+};
 
 /**
  * Fetches user data (answers) from the Django backend.
+ * @param {number} companyId The ID of the company to fetch data for.
+ * @param {number} year The year for which to fetch data.
  * @returns {Promise<Object>} A promise that resolves to the user's saved data.
  */
-export const fetchUserData = async () => {
-  // This will eventually fetch answers linked to the authenticated user/company
-  console.log("Fetching user data from Django API (placeholder for company_id: " + TEST_COMPANY_ID + ")");
+export const fetchUserData = async (companyId, year) => {
+  console.log(`Fetching user data from Django API for company ${companyId}, year ${year}`);
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}user-answers/${TEST_COMPANY_ID}/`); // Custom endpoint for user answers
+    const response = await fetch(`${DJANGO_API_BASE_URL}user-answers/${companyId}/${year}/`, {
+      headers: createAuthHeader(),
+    });
     if (!response.ok) {
         if (response.status === 404) {
-            console.warn(`No existing user data found for company ${TEST_COMPANY_ID}. Returning empty answers.`);
+            console.warn(`No existing user data found for company ${companyId} and year ${year}. Returning empty answers.`);
             return { dvaAnswers: {}, iaAnswers: {} };
         }
         throw new Error('Network response was not ok: ' + response.statusText);
@@ -23,26 +100,28 @@ export const fetchUserData = async () => {
     return data;
   } catch (error) {
     console.error('Error fetching user data:', error);
-    // If fetching fails, return empty answers to prevent app crash
     return { dvaAnswers: {}, iaAnswers: {} };
   }
 };
 
 /**
  * Saves user data (answers) to the Django backend.
+ * @param {number} companyId The ID of the company to save data for.
+ * @param {number} year The year for which to save data.
  * @param {Object} dataToSave The data to be saved (e.g., { dvaAnswers, iaAnswers }).
  * @returns {Promise<Object>} A promise that resolves to the server's response.
  */
-export const saveUserData = async (dataToSave) => {
-  console.log("Saving user data to Django API (placeholder for company_id: " + TEST_COMPANY_ID + ")");
-  console.log("Data being sent:", dataToSave); // Add this line
+export const saveUserData = async (companyId, year, dataToSave) => {
+  console.log(`Saving user data to Django API for company ${companyId}, year ${year}`);
+  console.log("Data being sent:", dataToSave);
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}user-answers/${TEST_COMPANY_ID}/`, { // Custom endpoint for user answers
-      method: 'PUT', // Assuming PUT for update/create, can be POST for create and PUT for update
+    const response = await fetch(`${DJANGO_API_BASE_URL}user-answers/${companyId}/${year}/`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        ...createAuthHeader(),
       },
-      body: JSON.stringify({ company_id: TEST_COMPANY_ID, ...dataToSave }), // Spread dataToSave directly
+      body: JSON.stringify({ company_id: companyId, ...dataToSave }),
     });
 
     if (!response.ok) {
@@ -63,7 +142,9 @@ export const saveUserData = async (dataToSave) => {
  */
 export const fetchDvaQuestionsFromApi = async () => {
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}questions/?question_type=DVA`);
+    const response = await fetch(`${DJANGO_API_BASE_URL}questions/?question_type=DVA`, {
+      headers: createAuthHeader(),
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -81,7 +162,9 @@ export const fetchDvaQuestionsFromApi = async () => {
  */
 export const fetchIaQuestionsFromApi = async () => {
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}questions/?question_type=IA`);
+    const response = await fetch(`${DJANGO_API_BASE_URL}questions/?question_type=IA`, {
+      headers: createAuthHeader(),
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -101,8 +184,9 @@ export const fetchIaQuestionsFromApi = async () => {
  */
 export const fetchCalculationResultsFromApi = async (companyId, year) => {
   try {
-    // Hardcode year for now as it's hardcoded in backend, will make dynamic later
-    const response = await fetch(`${DJANGO_API_BASE_URL}calculation-results/${companyId}/?year=${year}`);
+    const response = await fetch(`${DJANGO_API_BASE_URL}calculation-results/${companyId}/${year}/`, {
+      headers: createAuthHeader(),
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -114,4 +198,51 @@ export const fetchCalculationResultsFromApi = async (companyId, year) => {
   }
 };
 
+/**
+ * Fetches a PDF report from the Django backend and triggers a download.
+ * @param {number} companyId The ID of the company for which to generate the report.
+ * @param {number} year The year for which to generate the report.
+ * @returns {Promise<void>}
+ */
+export const fetchPdfReport = async (companyId, year) => {
+  try {
+    const response = await fetch(`${DJANGO_API_BASE_URL}pdf-report/${companyId}/${year}/`, {
+      headers: createAuthHeader(),
+    });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to generate PDF report: ${response.statusText} - ${errorText}`);
+    }
+
+    // Get the filename from the Content-Disposition header, if available
+    const contentDisposition = response.headers.get('Content-Disposition');
+    let filename = `ESG_Report_${companyId}_${year}.pdf`; // Default filename
+    if (contentDisposition && contentDisposition.indexOf('filename=') !== -1) {
+      filename = contentDisposition.split('filename=')[1].replace(/"/g, '');
+    }
+
+    // Get the blob from the response
+    const blob = await response.blob();
+
+    // Create a URL for the blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a temporary link element
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename; // Set the download filename
+    document.body.appendChild(a);
+    a.click(); // Programmatically click the link to trigger download
+
+    // Clean up: remove the link and revoke the blob URL
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+
+    console.log('PDF report downloaded successfully.');
+
+  } catch (error) {
+    console.error('Error fetching PDF report:', error);
+    throw error;
+  }
+};

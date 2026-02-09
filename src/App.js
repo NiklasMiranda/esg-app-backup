@@ -8,7 +8,8 @@ import CircularProgress from './components/CircularProgress';
 import StepDVAInfo from './components/StepDVAInfo';
 import { categoryDescriptions, questionDescriptions } from './data/descriptions';
 import StepESGInfo from './components/StepESGInfo';
-import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi } from './api';
+import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi, logoutUser, fetchPdfReport } from './api';
+import Login from './components/Login'; // Import the Login component
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -35,7 +36,10 @@ const categoryPercentages = {
 
 
 function App() {
-    // const chartRef = useRef(null); // No longer needed here
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken')); // Check token on init
+    const [userCompanyId, setUserCompanyId] = useState(null); // Dynamic company ID
+    const [currentYear, setCurrentYear] = useState(2026); // Allow year selection later
+
     const [currentDel1Step, setCurrentDel1Step] = useState('intro');
     const [iaGroupIndex, setIaGroupIndex] = useState(0);
     const [currentDel2Step, setCurrentDel2Step] = useState(iaQuestionGroups[iaGroupIndex]);
@@ -43,7 +47,7 @@ function App() {
     const [groupIndex, setGroupIndex] = useState(0);
     const [answers, setAnswers] = useState(() => {
       try {
-        const savedAnswers = localStorage.getItem('esgAppAnswers');
+        const savedAnswers = localStorage.getItem('esgAppAnswers'); // This will be removed later
         return savedAnswers ? JSON.parse(savedAnswers) : {};
       } catch (error) {
         console.error("Error parsing saved answers from localStorage:", error);
@@ -60,7 +64,7 @@ function App() {
     // State for calculation results fetched from API
     const [calculationResults, setCalculationResults] = useState({});
 
-    // Funktion til at POSTe billedet til WordPress 
+    // Funktion til at POSTe billedet til WordPress (will be removed or updated later)
     const saveImage = useCallback(async (imageDataUrl) => {
       if (!window.esgConfig) return;
       const { apiUrl, userId, nonce } = window.esgConfig;
@@ -90,45 +94,90 @@ function App() {
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
 
-    // Fetch questions and user data on component mount
+    // Initial check for company ID (e.g., from stored user data after login)
+    useEffect(() => {
+      // In a real app, you'd fetch company_id based on the authenticated user.
+      // For now, if logged in, we assume a default company ID or retrieve it from a user profile endpoint.
+      if (isLoggedIn && !userCompanyId) {
+        // Placeholder: Set a default company ID. This needs to come from the backend.
+        // For testing, hardcode to 1. In production, this would be part of login response or a /me endpoint
+        setUserCompanyId(1); 
+      }
+    }, [isLoggedIn, userCompanyId]);
+
+
+    // Fetch questions and user data on component mount (and when login state/companyId changes)
     useEffect(() => {
       const loadAllData = async () => {
+        if (!isLoggedIn || !userCompanyId) return; // Only load if logged in and company ID is set
+
         try {
           setLoadingQuestions(true);
-          const [fetchedDvaQuestions, fetchedIaQuestions, userData, fetchedCalculationResults] = await Promise.all([
+          const [fetchedDvaQuestions, fetchedIaQuestionsRaw, userDataRaw, fetchedCalculationResults] = await Promise.all([
             fetchDvaQuestionsFromApi(),
-            fetchIaQuestionsFromApi(),
-            fetchUserData(), // Use the updated fetchUserData
-            fetchCalculationResultsFromApi(1, 2026) // companyId=1, year=2026 (hardcoded for now)
+            fetchIaQuestionsFromApi(), // Raw IA questions
+            fetchUserData(userCompanyId, currentYear), // Raw user data
+            fetchCalculationResultsFromApi(userCompanyId, currentYear) // Pass dynamic companyId and year
           ]);
+
+          const filteredIaQuestions = fetchedIaQuestionsRaw.filter(q => q.question_type === 'IA');
           setDvaQuestions(fetchedDvaQuestions);
-          setIaQuestions(fetchedIaQuestions);
-          if (userData) {
-            if (userData.dvaAnswers) setAnswers(userData.dvaAnswers);
-            if (userData.iaAnswers) setIaAnswers(userData.iaAnswers);
+          setIaQuestions(filteredIaQuestions);
+
+          if (userDataRaw) {
+            let processedIaAnswers = {};
+            if (filteredIaQuestions.length > 0) {
+                const validIaQuestionIds = new Set(filteredIaQuestions.map(q => q.id.toString()));
+                processedIaAnswers = Object.fromEntries(
+                    Object.entries(userDataRaw.iaAnswers || {}).filter(([questionId, answer]) =>
+                        validIaQuestionIds.has(questionId)
+                    )
+                );
+            }
+
+            if (userDataRaw.dvaAnswers) setAnswers(userDataRaw.dvaAnswers);
+            setIaAnswers(processedIaAnswers);
           }
           if (fetchedCalculationResults) {
             setCalculationResults(fetchedCalculationResults);
           }
         } catch (error) {
           console.error("Failed to load initial data:", error);
+          // Handle token expiration or invalid token by logging out
+          if (error.message.includes('401')) { // Example check for unauthorized
+            handleLogout();
+          }
         } finally {
           setLoadingQuestions(false);
         }
       };
       loadAllData();
-    }, []); // Empty dependency array means this runs once on mount
+    }, [isLoggedIn, userCompanyId, currentYear]); // Add isLoggedIn and userCompanyId to dependency array
 
     // Save answers to backend when they change
     useEffect(() => {
+        if (!isLoggedIn || !userCompanyId) return; // Only save if logged in and company ID is set
+
         const handler = setTimeout(async () => {
             try {
                 // Combine all relevant data to save
                 const dataToSave = {
                     dvaAnswers: answers,
-                    iaAnswers: iaAnswers,
+                    iaAnswers: {}, // Initialize to empty
                 };
-                await saveUserData(dataToSave);
+
+                // Only process if we have IA questions
+                if (iaQuestions.length > 0) {
+                    const validIaQuestionIds = new Set(iaQuestions.map(q => q.id.toString()));
+                    const filteredIaAnswers = Object.fromEntries(
+                        Object.entries(iaAnswers).filter(([questionId, answer]) =>
+                            validIaQuestionIds.has(questionId)
+                        )
+                    );
+                    dataToSave.iaAnswers = filteredIaAnswers; // Assign filtered IA answers
+                }
+                
+                await saveUserData(userCompanyId, currentYear, dataToSave); // Pass dynamic companyId and year
                 console.log('User data (answers) saved successfully!');
             } catch (error) {
                 console.error("Failed to save user data:", error);
@@ -138,10 +187,8 @@ function App() {
         return () => {
             clearTimeout(handler);
         };
-    }, [answers, iaAnswers, saveUserData]);
+    }, [answers, iaAnswers, iaQuestions, saveUserData, userCompanyId, currentYear, isLoggedIn]);
     
-    // const iaQuestions = useMemo(() => importedIaQuestions, []); // Removed
-    // const dvaQuestions = useMemo(() => importedDvaQuestions, []); // Removed
     const descriptions = {
       ...categoryDescriptions,
       ...questionDescriptions,
@@ -180,10 +227,20 @@ function App() {
       }));
     };
 
-    const handleIaAnswerChange = (questionId, isSelected) => {
+    const handleIaAnswerChange = (questionId, isSelected, allIaQuestions) => {
+      const isValidIaQuestion = allIaQuestions.some(q => q.id.toString() === questionId.toString());
+
+      if (!isValidIaQuestion) {
+        console.warn(`Attempted to change answer for non-IA question ID: ${questionId}. Ignoring.`);
+        return;
+      }
+
       setIaAnswers(prevIaAnswers => ({
         ...prevIaAnswers,
-        [questionId]: isSelected,
+        [questionId]: {
+          is_answered: isSelected,
+          metric_value: prevIaAnswers[questionId]?.metric_value || '',
+        },
       }));
     };
 
@@ -243,6 +300,26 @@ function App() {
         } else {
           setCurrentDel2Step(stepKey);
         }
+      }
+    };
+
+    const handleLoginSuccess = (token, companyId) => {
+      setIsLoggedIn(true);
+      setUserCompanyId(companyId);
+      // Optionally, you might want to fetch user-specific data here, like their company_id if not in token
+    };
+
+    const handleLogout = async () => {
+      try {
+        await logoutUser();
+        setIsLoggedIn(false);
+        setUserCompanyId(null);
+        setAnswers({}); // Clear answers on logout
+        setIaAnswers({}); // Clear IA answers on logout
+        setCalculationResults({}); // Clear calculation results
+        // Optionally redirect to login page or home
+      } catch (error) {
+        console.error('Logout failed:', error);
       }
     };
 
@@ -372,7 +449,18 @@ function App() {
             marimekkoData={calculationResults.marimekkoData}
           />;
         case 'del2Results':
-          return <Del2Results finalScores={calculationResults.finalScores} totalScore={calculationResults.totalScore} indicatorPoints={calculationResults.indicatorPoints} maxScores={calculationResults.maxScores} esgLevel={calculationResults.esgLevel} polarBarChartData={calculationResults.polarBarChartData} criterionColors={criterionColors} onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])} onCapture={saveImage} />;
+          return <Del2Results
+            finalScores={calculationResults.finalScores}
+            totalScore={calculationResults.totalScore}
+            indicatorPoints={calculationResults.indicatorPoints}
+            maxScores={calculationResults.maxScores}
+            esgLevel={calculationResults.esgLevel}
+            polarBarChartData={calculationResults.polarBarChartData}
+            criterionColors={criterionColors}
+            onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])}
+            onCapture={saveImage}
+            onGeneratePdf={() => fetchPdfReport(userCompanyId, currentYear)} // New prop
+          />;
         default:
           return <StepInitiativanalyse
             activeIaGroup={currentIaGroup}
@@ -407,14 +495,21 @@ function App() {
     setIsNavOpen(!isNavOpen);
   };
 
+  if (!isLoggedIn) {
+    return <Login onLoginSuccess={handleLoginSuccess} />;
+  }
+
   return (
     <div className="esg-bg-[#0b3954] esg-min-h-screen esg-flex esg-flex-col esg-pb-4">
       <div className="esg-bg-[#0b3954] esg-p-2 esg-flex-shrink-0">
-        <div className="esg-flex esg-justify-between esg-items-center esg-mb-4 md:esg-hidden">
-          <h1 className="esg-text-xl esg-font-bold">ESG App</h1>
+        <div className="esg-flex esg-justify-between esg-items-center esg-mb-4">
+          <h1 className="esg-text-xl esg-font-bold esg-text-white">ESG App</h1>
           <div className="esg-flex esg-items-center">
             <CircularProgress percentage={newTotalCompletionPercentage} />
-            <button onClick={toggleNav} className="esg-text-gray-800 focus:esg-outline-none esg-ml-4">
+            {isLoggedIn && (
+              <button onClick={handleLogout} className="btn-primary esg-ml-4 esg-text-white esg-bg-red-600 hover:esg-bg-red-700">Logout</button>
+            )}
+            <button onClick={toggleNav} className="esg-text-white focus:esg-outline-none esg-ml-4 md:esg-hidden">
               <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isNavOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

@@ -8,7 +8,8 @@ from .views import (
     AnswerViewSet,
     DocumentViewSet,
     UserAnswersView,
-    CalculationResultsView # New import
+    CalculationResultsView,
+    PDFReportView # New import
 )
 
 router = DefaultRouter()
@@ -20,6 +21,7 @@ router.register(r'answers', AnswerViewSet)
 router.register(r'documents', DocumentViewSet)
 
 urlpatterns = [
-    path('user-answers/<int:company_id>/', UserAnswersView.as_view(), name='user-answers'),
-    path('calculation-results/<int:company_id>/', CalculationResultsView.as_view(), name='calculation-results'), # New URL pattern
+    path('user-answers/<int:company_id>/<int:year>/', UserAnswersView.as_view(), name='user-answers'),
+    path('calculation-results/<int:company_id>/<int:year>/', CalculationResultsView.as_view(), name='calculation-results'),
+    path('pdf-report/<int:company_id>/<int:year>/', PDFReportView.as_view(), name='pdf-report'), # New PDF report URL pattern
 ] + router.urls

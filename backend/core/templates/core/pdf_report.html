@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESG Report - {{ company.name }} ({{ year }})</title>
+    <style>
+        body { font-family: 'TT Commons', sans-serif; margin: 40px; }
+        h1, h2, h3 { color: #0b3954; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .section { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .score { font-size: 2em; font-weight: bold; color: #bd822e; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ESG Report</h1>
+        <h2>{{ company.name }}</h2>
+        <h3>Reporting Year: {{ year }}</h3>
+    </div>
+
+    <div class="section">
+        <h3>Overall ESG Score</h3>
+        <p class="score">{{ results.totalScore|floatformat:2 }}%</p>
+        <p>ESG Level: {{ results.esgLevel }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Detailed Scores</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Score (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for label, score in results.finalScores.items %}
+                <tr>
+                    <td>{{ label }}</td>
+                    <td>{{ score|floatformat:2 }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h3>Company Answers Overview (DVA)</h3>
+        <ul>
+            {% for question, answer in dva_answers.items %}
+                <li><strong>{{ question.text }}</strong>: {{ answer }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {# You can add more sections as needed, e.g., IA answers, Documents, etc. #}
+
+</body>
+</html>

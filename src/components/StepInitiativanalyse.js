@@ -87,7 +87,7 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
                         <input
                           type="checkbox"
                           checked={iaAnswers[q.id] || false}
-                          onChange={(e) => onIaAnswerChange(q.id, e.target.checked)}
+                          onChange={(e) => onIaAnswerChange(q.id, e.target.checked, iaQuestions)}
                           className="esg-form-checkbox esg-h-5 esg-w-5 esg-text-blue-600 esg-mt-2"
                         />
                         {q.points && (

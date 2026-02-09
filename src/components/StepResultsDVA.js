@@ -172,7 +172,7 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
                 </tr>
               </thead>
               <tbody>
-                {Object.entries(criteriaWeights).map(([label, weight]) => (
+                {Object.entries(criteriaWeights || {}).map(([label, weight]) => (
                   <tr key={label}>
                     <td className="esg-py-2 esg-px-4 esg-border-b">{label}: {groupTitles[label]}</td>
                     <td className="esg-py-2 esg-px-4 esg-border-b esg-text-right">

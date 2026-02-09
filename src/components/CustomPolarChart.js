@@ -2,6 +2,14 @@ import React, { useState, forwardRef } from 'react';
 
 
 const CustomPolarChart = forwardRef(({ data, totalScore, esgLevel, criterionColors }, ref) => {
+  if (!data || data.length === 0) {
+    return (
+      <div ref={ref} className="esg-flex esg-items-center esg-justify-center esg-h-full esg-text-gray-500">
+        No data available for polar chart.
+      </div>
+    );
+  }
+
   const viewBoxSize = 800;
   const centerX = viewBoxSize / 2;
   const centerY = viewBoxSize / 2;

@@ -1,11 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+/* Custom Fonts */
+@font-face {
+  font-family: 'TT Commons';
+  src: url('../assets/fonts/TTCommons-Thin.woff2') format('woff2'),
+       url('../assets/fonts/TTCommons-Thin.woff') format('woff');
+  font-weight: 100; /* Thin */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  src: url('../assets/fonts/TTCommons-Regular.woff2') format('woff2'),
+       url('../assets/fonts/TTCommons-Regular.woff') format('woff');
+  font-weight: normal; /* Regular (400) */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  src: url('../assets/fonts/TTCommons-Medium.woff2') format('woff2'),
+       url('../assets/fonts/TTCommons-Medium.woff') format('woff');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  src: url('../assets/fonts/TTCommons-ExtraBold.woff2') format('woff2'),
+       url('../assets/fonts/TTCommons-ExtraBold.woff') format('woff');
+  font-weight: 800; /* ExtraBold */
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'TT Commons', sans-serif; /* Apply the new font */
   /* For Firefox */
   scrollbar-width: none;
   /* For IE and Edge */

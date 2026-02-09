@@ -125,4 +125,4 @@ def calculate_esg_results(company_id, year):
         "totalScore": total_score,
         "esgLevel": esg_level,
         "indicatorPoints": indicator_points,
-    }
+    }, 200
