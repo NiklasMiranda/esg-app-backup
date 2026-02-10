@@ -1,24 +1,29 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { iaQuestions } from '../data/iaQuestions';
+
 import InfoIcon from './InfoIcon';
 import Drawer from './Drawer';
 import CustomPolarChart from './CustomPolarChart';
 import NivoLikeMarimekkoChart from './NivoLikeMarimekkoChart';
 import groupTitles from '../data/groupTitles';
+import { categoryDescriptions } from '../data/descriptions'; // Ensure this is imported
 
-function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNext, onPrev, isFirst, isLast, onShowResults, categoryDescriptions, polarBarChartData, totalScore, esgLevel, criterionColors, marimekkoData }) {
+function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNext, onPrev, isFirst, isLast, onShowResults, polarBarChartData, totalScore, esgLevel, criterionColors, marimekkoData, iaQuestions }) {
+  console.log('DEBUG StepInitiativanalyse: iaQuestions prop:', iaQuestions);
+  console.log('DEBUG StepInitiativanalyse: activeIaGroup prop:', activeIaGroup);
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [openSections, setOpenSections] = useState({});
 
-  const groupedQuestionsBySecondSubcategory = useMemo(() =>
-    iaQuestions
-      .filter(q => q.label === activeIaGroup)
+  const groupedQuestionsBySecondSubcategory = useMemo(() => {
+    const filtered = iaQuestions
+      .filter(q => q.sub_category.label === activeIaGroup) // Correct filtering logic
       .reduce((acc, question) => {
         (acc[question.secondSubcategory] = acc[question.secondSubcategory] || []).push(question);
         return acc;
-      }, {}),
-    [activeIaGroup]
-  );
+      }, {});
+    console.log('DEBUG StepInitiativanalyse: groupedQuestionsBySecondSubcategory:', filtered);
+    console.log('DEBUG StepInitiativanalyse: Object.entries(groupedQuestionsBySecondSubcategory).length:', Object.entries(filtered).length);
+    return filtered;
+  }, [activeIaGroup, iaQuestions]);
 
   useEffect(() => {
     setOpenSections(
@@ -41,9 +46,7 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
     setIsCategoryDrawerOpen(false);
   };
 
-  
-
-    return (
+  return (
     <div className="esg-flex esg-flex-col lg:esg-flex-row esg-gap-8">
       <div className="esg-w-full lg:esg-w-8/12">
         <div className="esg-bg-white esg-p-8 esg-rounded-lg esg-shadow-md">
@@ -86,8 +89,8 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
                       <div className="esg-flex esg-justify-between esg-items-center esg-w-full">
                         <input
                           type="checkbox"
-                          checked={iaAnswers[q.id] || false}
-                          onChange={(e) => onIaAnswerChange(q.id, e.target.checked, iaQuestions)}
+                          checked={iaAnswers[q.id] && iaAnswers[q.id].is_answered || false}
+                          onChange={(e) => onIaAnswerChange(q.id, e.target.checked)}
                           className="esg-form-checkbox esg-h-5 esg-w-5 esg-text-blue-600 esg-mt-2"
                         />
                         {q.points && (

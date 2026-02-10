@@ -82,6 +82,13 @@ class SubCategoryViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        question_type = self.request.query_params.get('question_type', None)
+        if question_type is not None:
+            queryset = queryset.filter(question_type=question_type)
+        return queryset
 
 class AnswerViewSet(viewsets.ModelViewSet):
     queryset = Answer.objects.all()

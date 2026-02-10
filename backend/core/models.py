@@ -61,7 +61,7 @@ class Question(models.Model):
     typical_industries = models.TextField(blank=True)
 
     # IA-specific fields
-    topic = models.CharField(max_length=255, blank=True, help_text="e.g., Co2-udledninger. From iaQuestions.secondSubcategory")
+    topic = models.CharField(max_length=255, blank=True, null=True, help_text="e.g., Co2-udledninger. From iaQuestions.secondSubcategory")
     points = models.IntegerField(null=True, blank=True)
     number = models.CharField(max_length=20, blank=True, help_text="Hierarchical number, e.g., 1.1.1")
 

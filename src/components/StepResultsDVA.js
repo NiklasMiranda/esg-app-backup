@@ -1,10 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { dvaQuestions } from '../data/dvaQuestions'; // Adjust path if necessary
 import groupTitles from '../data/groupTitles';
 
 const axisLabels = ["Ikke relevant", "Lav", "Middel", "Moderat", "Høj", "Meget høj"];
 
-function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev, criterionColors }) {
+function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev, criterionColors, dvaQuestions }) {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
@@ -68,7 +67,7 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
     console.log('Plotted Coordinates:', JSON.stringify(jitteredCoordinates, null, 2)); // Debugging line
     console.log('Plotted Coordinates:', JSON.stringify(jitteredCoordinates, null, 2)); // Debugging line
     return { plottedCoordinates: jitteredCoordinates };
-  }, [answers]);
+  }, [answers, dvaQuestions]);
 
   return (
     <>

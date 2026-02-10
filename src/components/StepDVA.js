@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { dvaQuestions } from '../data/dvaQuestions';
 import { categoryDescriptions, questionDescriptions } from '../data/descriptions';
 import QuestionCard from './QuestionCard';
 import Modal from './Modal';
@@ -9,7 +8,9 @@ import Drawer from './Drawer';
 import AnswerRatioGraph from './AnswerRatioGraph';
 
 
-function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
+function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange, dvaQuestions }) {
+  console.log('DEBUG StepDVA: dvaQuestions prop:', dvaQuestions);
+  console.log('DEBUG StepDVA: group prop:', group);
   const [modalContent, setModalContent] = useState(null);
   const [modalTitle, setModalTitle] = useState('');
   const [modalPosition, setModalPosition] = useState('center');
@@ -34,8 +35,12 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
     });
   };
 
-  const allQuestionsForGroup = useMemo(() => dvaQuestions.filter(q => q.label === group), [group]);
-
+  const allQuestionsForGroup = useMemo(() => {
+    const filtered = dvaQuestions.filter(q => q.sub_category.label === group);
+    console.log('DEBUG StepDVA: allQuestionsForGroup:', filtered);
+    return filtered;
+  }, [group, dvaQuestions]);
+  
   const { yesCount, noCount } = useMemo(() => {
     let yes = 0;
     let no = 0;
@@ -53,8 +58,16 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange }) {
     });
     return { yesCount: yes, noCount: no };
   }, [answers, allQuestionsForGroup]);
-  const impactQuestions = useMemo(() => allQuestionsForGroup.filter(q => q.purpose === 'impact'), [allQuestionsForGroup]);
-  const finansielQuestions = useMemo(() => allQuestionsForGroup.filter(q => q.purpose === 'finansiel'), [allQuestionsForGroup]);
+  const impactQuestions = useMemo(() => {
+    const filtered = allQuestionsForGroup.filter(q => q.purpose === 'impact');
+    console.log('DEBUG StepDVA: impactQuestions.length:', filtered.length);
+    return filtered;
+  }, [allQuestionsForGroup]);
+  const finansielQuestions = useMemo(() => {
+    const filtered = allQuestionsForGroup.filter(q => q.purpose === 'finansiel');
+    console.log('DEBUG StepDVA: finansielQuestions.length:', filtered.length);
+    return filtered;
+  }, [allQuestionsForGroup]);
 
   const categoryInfo = categoryDescriptions[group] || {};
 

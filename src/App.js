@@ -10,6 +10,7 @@ import { categoryDescriptions, questionDescriptions } from './data/descriptions'
 import StepESGInfo from './components/StepESGInfo';
 import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi, logoutUser, fetchPdfReport } from './api';
 import Login from './components/Login'; // Import the Login component
+import LandingPage from './components/LandingPage'; // Import the LandingPage component
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -39,6 +40,7 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken')); // Check token on init
     const [userCompanyId, setUserCompanyId] = useState(null); // Dynamic company ID
     const [currentYear, setCurrentYear] = useState(2026); // Allow year selection later
+    const [showLandingPage, setShowLandingPage] = useState(true); // New state for landing page visibility
 
     const [currentDel1Step, setCurrentDel1Step] = useState('intro');
     const [iaGroupIndex, setIaGroupIndex] = useState(0);
@@ -102,6 +104,7 @@ function App() {
         // Placeholder: Set a default company ID. This needs to come from the backend.
         // For testing, hardcode to 1. In production, this would be part of login response or a /me endpoint
         setUserCompanyId(1); 
+        setShowLandingPage(false); // If already logged in, skip landing page
       }
     }, [isLoggedIn, userCompanyId]);
 
@@ -122,21 +125,27 @@ function App() {
 
           const filteredIaQuestions = fetchedIaQuestionsRaw.filter(q => q.question_type === 'IA');
           setDvaQuestions(fetchedDvaQuestions);
-          setIaQuestions(filteredIaQuestions);
+          setIaQuestions(filteredIaQuestions); // Set iaQuestions state FIRST
+          console.log("DEBUG: filteredIaQuestions after setting iaQuestions:", filteredIaQuestions); // Add this line
 
           if (userDataRaw) {
             let processedIaAnswers = {};
+            // Now, use the filteredIaQuestions to process userDataRaw.iaAnswers
+            // This ensures iaQuestions state is stable before populating iaAnswers
             if (filteredIaQuestions.length > 0) {
                 const validIaQuestionIds = new Set(filteredIaQuestions.map(q => q.id.toString()));
                 processedIaAnswers = Object.fromEntries(
                     Object.entries(userDataRaw.iaAnswers || {}).filter(([questionId, answer]) =>
-                        validIaQuestionIds.has(questionId)
+                        validIaQuestionIds.has(questionId) &&
+                        answer && typeof answer === 'object' && answer.is_answered // <--- Changed this line!
                     )
                 );
             }
-
             if (userDataRaw.dvaAnswers) setAnswers(userDataRaw.dvaAnswers);
-            setIaAnswers(processedIaAnswers);
+            setIaAnswers(processedIaAnswers); // Then set iaAnswers state
+          } else {
+            // If no userDataRaw, ensure iaAnswers is explicitly empty
+            setIaAnswers({});
           }
           if (fetchedCalculationResults) {
             setCalculationResults(fetchedCalculationResults);
@@ -156,38 +165,43 @@ function App() {
 
     // Save answers to backend when they change
     useEffect(() => {
-        if (!isLoggedIn || !userCompanyId) return; // Only save if logged in and company ID is set
+        // Only save if logged in, company ID is set, and questions have finished loading
+        if (!isLoggedIn || !userCompanyId || loadingQuestions) return;
 
         const handler = setTimeout(async () => {
             try {
-                // Combine all relevant data to save
+                console.log("DEBUG: iaQuestions at save time:", iaQuestions); // ADD THIS LINE
+
+                // Filter iaAnswers to only include actual IA questions
+                const validIaQuestionIds = new Set(iaQuestions.map(q => q.id.toString()));
+                console.log("DEBUG: validIaQuestionIds at save time:", Array.from(validIaQuestionIds)); // ADD THIS LINE
+                const filteredIaAnswers = Object.fromEntries(
+                    Object.entries(iaAnswers).filter(([questionId, answer]) =>
+                        validIaQuestionIds.has(questionId) &&
+                        answer && typeof answer === 'object' && answer.is_answered
+                    )
+                );
+
                 const dataToSave = {
                     dvaAnswers: answers,
-                    iaAnswers: {}, // Initialize to empty
+                    iaAnswers: filteredIaAnswers, // Assign the filtered IA answers
                 };
+                console.log("DEBUG: iaAnswers state before saveUserData:", iaAnswers);
+                console.log("DEBUG: filteredIaAnswers being sent:", filteredIaAnswers); // New debug log
+                console.log("DEBUG App.js: saveUserData triggered with dataToSave:", dataToSave);
 
-                // Only process if we have IA questions
-                if (iaQuestions.length > 0) {
-                    const validIaQuestionIds = new Set(iaQuestions.map(q => q.id.toString()));
-                    const filteredIaAnswers = Object.fromEntries(
-                        Object.entries(iaAnswers).filter(([questionId, answer]) =>
-                            validIaQuestionIds.has(questionId)
-                        )
-                    );
-                    dataToSave.iaAnswers = filteredIaAnswers; // Assign filtered IA answers
-                }
-                
-                await saveUserData(userCompanyId, currentYear, dataToSave); // Pass dynamic companyId and year
+                const saveResponse = await saveUserData(userCompanyId, currentYear, dataToSave);
+                console.log('DEBUG App.js: saveUserData response:', saveResponse);
                 console.log('User data (answers) saved successfully!');
             } catch (error) {
                 console.error("Failed to save user data:", error);
             }
-        }, 1000); // Debounce by 1 second
+        }, 1000);
 
         return () => {
             clearTimeout(handler);
         };
-    }, [answers, iaAnswers, iaQuestions, saveUserData, userCompanyId, currentYear, isLoggedIn]);
+    }, [answers, iaAnswers, iaQuestions, saveUserData, userCompanyId, currentYear, isLoggedIn, loadingQuestions]);
     
     const descriptions = {
       ...categoryDescriptions,
@@ -227,21 +241,29 @@ function App() {
       }));
     };
 
-    const handleIaAnswerChange = (questionId, isSelected, allIaQuestions) => {
-      const isValidIaQuestion = allIaQuestions.some(q => q.id.toString() === questionId.toString());
+    const handleIaAnswerChange = (questionId, isSelected) => { // Removed allIaQuestions parameter
+      console.log("DEBUG: handleIaAnswerChange called for questionId:", questionId, "with isSelected:", isSelected, "and iaQuestions from scope:", iaQuestions); // Updated log message
+
+      const isValidIaQuestion = iaQuestions.some(q => q.id.toString() === questionId.toString()); // Use iaQuestions from scope directly
 
       if (!isValidIaQuestion) {
         console.warn(`Attempted to change answer for non-IA question ID: ${questionId}. Ignoring.`);
         return;
       }
 
-      setIaAnswers(prevIaAnswers => ({
-        ...prevIaAnswers,
-        [questionId]: {
-          is_answered: isSelected,
-          metric_value: prevIaAnswers[questionId]?.metric_value || '',
-        },
-      }));
+      setIaAnswers(prevIaAnswers => {
+        const newIaAnswers = { ...prevIaAnswers };
+        if (isSelected) {
+          newIaAnswers[questionId] = {
+            is_answered: true, // Only set to true when selected
+            metric_value: prevIaAnswers[questionId]?.metric_value || '',
+          };
+        } else {
+          // If unselected, remove the entry for this questionId
+          delete newIaAnswers[questionId];
+        }
+        return newIaAnswers;
+      });
     };
 
     const handleNextGroup = () => {
@@ -323,7 +345,20 @@ function App() {
       }
     };
 
+    const handleNavigateToLogin = () => {
+      setShowLandingPage(false); // Transition from landing page to login form
+    };
+
+    if (!isLoggedIn && showLandingPage) {
+      return <LandingPage onNavigateToLogin={handleNavigateToLogin} />;
+    }
+
+    if (!isLoggedIn && !showLandingPage) {
+      return <Login onLoginSuccess={handleLoginSuccess} />;
+    }
+
     const renderStep = () => {
+      console.log('DEBUG: renderStep - activeSection:', activeSection, 'currentDel1Step:', currentDel1Step, 'currentDel2Step:', currentDel2Step);
       if (activeSection === 'del1') {
         switch (currentDel1Step) {
           case 'intro':
@@ -495,7 +530,11 @@ function App() {
     setIsNavOpen(!isNavOpen);
   };
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn && showLandingPage) {
+    return <LandingPage onNavigateToLogin={handleNavigateToLogin} />;
+  }
+
+  if (!isLoggedIn && !showLandingPage) {
     return <Login onLoginSuccess={handleLoginSuccess} />;
   }
 

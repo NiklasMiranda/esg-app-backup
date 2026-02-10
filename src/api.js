@@ -115,14 +115,18 @@ export const saveUserData = async (companyId, year, dataToSave) => {
   console.log(`Saving user data to Django API for company ${companyId}, year ${year}`);
   console.log("Data being sent:", dataToSave);
   try {
+    const requestBody = JSON.stringify({ company_id: companyId, ...dataToSave });
+    console.log("DEBUG: Request body JSON string:", requestBody);
+    console.log("DEBUG: Attempting fetch PUT request...");
     const response = await fetch(`${DJANGO_API_BASE_URL}user-answers/${companyId}/${year}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         ...createAuthHeader(),
       },
-      body: JSON.stringify({ company_id: companyId, ...dataToSave }),
+      body: requestBody,
     });
+    console.log("DEBUG: Fetch response received:", response);
 
     if (!response.ok) {
         const errorText = await response.text();

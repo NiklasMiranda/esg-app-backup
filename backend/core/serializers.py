@@ -13,14 +13,23 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SubCategorySerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True) # Nested serializer for the category
+
     class Meta:
         model = SubCategory
-        fields = '__all__'
+        fields = ['id', 'category', 'label', 'title', 'description']
 
 class QuestionSerializer(serializers.ModelSerializer):
+    sub_category = SubCategorySerializer(read_only=True) # Nested serializer for the sub_category
+
     class Meta:
         model = Question
-        fields = '__all__'
+        fields = [
+            'id', 'question_type', 'sub_category', 'text', 'is_active',
+            'purpose', 'dva_description', 'typical_industries',
+            'topic', 'points', 'number',
+            'created_at', 'updated_at'
+        ]
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,11 +82,17 @@ class UserAnswerSerializer(serializers.Serializer):
         ia_answers_data = validated_data.get('iaAnswers', {})
         year = self.context.get('year')
 
+        print(f"\nDEBUG Backend: UserAnswerSerializer update method called for company {company.id}, year {year}.")
+        print(f"DEBUG Backend: Incoming dvaAnswers data: {dva_answers_data}")
+        print(f"DEBUG Backend: Incoming iaAnswers data: {ia_answers_data}")
+
         if not year:
+            print("DEBUG Backend: Year not provided in serializer context. Raising validation error.")
             raise serializers.ValidationError("Year must be provided in the serializer context for updating answers.")
 
         with transaction.atomic():
             # Process DVA answers
+            print(f"DEBUG Backend: Processing DVA answers ({len(dva_answers_data)} items).")
             for question_id_str, answer_value in dva_answers_data.items():
                 try:
                     question = Question.objects.get(id=int(question_id_str), question_type='DVA')
@@ -88,15 +103,23 @@ class UserAnswerSerializer(serializers.Serializer):
                         year=year,
                         defaults={'boolean_answer': boolean_answer, 'is_answered': False, 'metric_value': ''},
                     )
+                    print(f"DEBUG Backend: DVA Answer Q{question.id} ({year}) updated/created. boolean_answer: {boolean_answer}")
                 except Question.DoesNotExist:
-                    self.fail(f"DVA Question with id {question_id_str} not found.")
+                    print(f"DEBUG Backend: DVA Question with id {question_id_str} not found. Skipping.")
+                except Exception as e:
+                    print(f"DEBUG Backend: Error processing DVA question ID {question_id_str}: {e}")
+                    raise # Re-raise unexpected exceptions
 
             # Process IA answers
+            # First, update or create answers for checked questions
+            print(f"DEBUG Backend: Processing incoming ia_answers_data ({len(ia_answers_data)} items).")
             for question_id_str, ia_answer_data in ia_answers_data.items():
                 try:
-                    question = Question.objects.get(id=int(question_id_str)) # Get by ID only first
+                    print(f"DEBUG Backend: Processing IA Q{question_id_str}. Data: {ia_answer_data}")
+                    question = Question.objects.get(id=int(question_id_str))
                     if question.question_type != 'IA':
-                        raise serializers.ValidationError(f"Question with ID {question_id_str} is not an IA question.")
+                        print(f"DEBUG Backend: Q{question_id_str} is not an IA question. Skipping.")
+                        continue # Skip if not an IA question
                     
                     is_answered_value = ia_answer_data.get('is_answered', False)
                     metric_value = ia_answer_data.get('metric_value', '')
@@ -107,12 +130,35 @@ class UserAnswerSerializer(serializers.Serializer):
                         year=year,
                         defaults={'is_answered': is_answered_value, 'metric_value': metric_value, 'boolean_answer': None},
                     )
-                    print(f"DEBUG: IA Answer for Q{question.id} ({year}) updated/created. is_answered: {is_answered_value}, metric_value: '{metric_value}'")
+                    print(f"DEBUG Backend: IA Answer for Q{question.id} ({year}) updated/created. is_answered: {is_answered_value}, metric_value: '{metric_value}'")
                 except Question.DoesNotExist:
-                    self.fail(f"IA Question with id {question_id_str} not found.")
+                    print(f"DEBUG Backend: IA Question with id {question_id_str} not found. Skipping.")
                 except Exception as e:
-                    print(f"Unhandled exception during IA answer processing for question {question_id_str}: {e}")
-                    raise serializers.ValidationError(f"Error processing IA question {question_id_str}: {e}")
+                    print(f"DEBUG Backend: Unhandled exception during IA answer processing for Q{question_id_str}: {e}")
+                    raise # Re-raise unexpected exceptions
+
+            # Second, identify and update unchecked IA questions
+            # Get all existing IA answers for the current company and year that are currently checked
+            existing_ia_answers = Answer.objects.filter(
+                company=company,
+                year=year,
+                question__question_type='IA',
+                is_answered=True
+            )
+            
+            incoming_ia_question_ids = {int(qid_str) for qid_str in ia_answers_data.keys()}
+            print(f"DEBUG Backend: Existing IA answers ({existing_ia_answers.count()}): {[ans.question.id for ans in existing_ia_answers]}")
+            print(f"DEBUG Backend: Incoming IA question IDs: {incoming_ia_question_ids}")
+
+            for existing_answer in existing_ia_answers:
+                if existing_answer.question.id not in incoming_ia_question_ids:
+                    # This existing answer was previously checked but is no longer in the incoming data
+                    existing_answer.is_answered = False
+                    existing_answer.metric_value = '' # Clear metric value for unchecked questions
+                    existing_answer.save()
+                    print(f"DEBUG Backend: IA Answer for Q{existing_answer.question.id} ({year}) unchecked in backend.")
+                else:
+                    print(f"DEBUG Backend: IA Answer for Q{existing_answer.question.id} is still checked in incoming data.")
 
         # Ensure the company instance has the latest answers
         company.refresh_from_db()
