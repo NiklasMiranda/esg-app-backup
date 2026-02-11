@@ -12,6 +12,7 @@ import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestions
 import Login from './components/Login'; // Import the Login component
 import LandingPage from './components/LandingPage'; // Import the LandingPage component
 import Header from './components/Header'; // Import the Header component
+import DashboardHeader from './components/DashboardHeader'; // Import the DashboardHeader component
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -544,17 +545,32 @@ function App() {
 
   // No isNavOpen or toggleNav for now. Will re-add after core functionality is stable.
 
-  return (
-    <div className="esg-bg-[#0b3954] esg-min-h-screen esg-flex esg-flex-col esg-pb-4">
-      <Header
-        isLoggedIn={isLoggedIn}
-        onLogout={handleLogout}
-        onNavigateToLogin={handleNavigateToLogin}
-        onNavigateToHome={handleNavigateToHome}
-      />
-      {content}
-    </div>
-  );
-};
+    return (
+      <div className="esg-min-h-screen esg-flex esg-flex-col esg-pb-4 esg-relative"> {/* Added esg-relative to be positioning context */}
+        {isLoggedIn ? (
+          <DashboardHeader
+            isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
+            newTotalCompletionPercentage={newTotalCompletionPercentage} // Pass completion percentage to dashboard header
+          />
+        ) : (
+          <div className="esg-absolute esg-top-0 esg-left-0 esg-right-0 esg-z-20"> {/* Absolute positioning for front page header */}
+            <div className="esg-max-w-7xl esg-mx-auto"> {/* Wrapper for width and centering */}
+              <Header
+                isLoggedIn={isLoggedIn}
+                onLogout={handleLogout}
+                onNavigateToLogin={handleNavigateToLogin}
+                onNavigateToHome={handleNavigateToHome}
+              />
+            </div>
+          </div>
+        )}
+        {content}
+      </div>
+    );
 
-export default App;
+  };
+
+  
+
+  export default App;

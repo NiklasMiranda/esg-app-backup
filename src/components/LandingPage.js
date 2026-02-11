@@ -1,20 +1,47 @@
 import React from 'react';
+import Grainient from './Grainient'; // Import the Grainient component
 
 function LandingPage() {
   return (
-    <div className="esg-flex esg-flex-col esg-bg-gray-100">
+    <div className="esg-flex esg-flex-col esg-min-h-screen esg-bg-gray-100">
       {/* Hero Section */}
-      <section className="esg-bg-gradient-to-r esg-from-blue-500 esg-to-teal-500 esg-text-white esg-py-20 esg-px-4 esg-text-center esg-h-screen items-center">
-        <div className="esg-container esg-mx-auto">
-          <h1 className="esg-text-5xl esg-font-extrabold esg-mb-4">ESG Analyse - Din Partner for Bæredygtighed</h1>
-          <p className="esg-text-xl esg-mb-8">
-            Analyser, rapporter, og forbedr din virksomheds indsats inden for miljø, sociale forhold og god selskabsledelse.
+      <section className="esg-relative esg-py-20 esg-px-4 esg-text-center esg-overflow-hidden esg-h-screen esg-flex esg-items-center esg-justify-center">
+        <div className="esg-absolute esg-inset-0 esg-z-0">
+          <Grainient
+            color1="#0b3954"
+            color2="#000000"
+            color3="#0b3954"
+            timeSpeed={0.25}
+            colorBalance={0}
+            warpStrength={1}
+            warpFrequency={5}
+            warpSpeed={2}
+            warpAmplitude={50}
+            blendAngle={0}
+            blendSoftness={0.05}
+            rotationAmount={500}
+            noiseScale={2}
+            grainAmount={0.1}
+            grainScale={2}
+            grainAnimated={false}
+            contrast={1.5}
+            gamma={1}
+            saturation={1}
+            centerX={0}
+            centerY={0}
+            zoom={0.9}
+          />
+        </div>
+        <div className="esg-container esg-mx-auto esg-relative esg-z-10 esg-text-white esg-max-w-7xl">
+          <h1 className="esg-text-5xl esg-font-extrabold esg-mb-4">ESGScore.dk - forbedring af ESG for virksomheder</h1>
+          <p className="esg-text-2xl esg-mb-8">
+            Få et tal på din virksomheds ESG-profil og arbejd strategisk med bæredygtighed. Intuitivt. Dokumenteret. Fremtidsorienteret.
           </p>
           <a
             href="#intro-section" // Link to the intro section below
-            className="esg-bg-white esg-text-blue-600 esg-px-8 esg-py-3 esg-rounded-full esg-font-semibold esg-text-lg hover:esg-bg-gray-100 esg-transition-colors esg-duration-300"
+            className="esg-bg-[#fff] esg-text-black esg-px-10 esg-py-3 esg-rounded-full esg-text-xl hover:esg-bg-[#bd822e] hover:esg-text-white esg-transition-colors esg-duration-300"
           >
-            Lær mere
+            Læs mere
           </a>
         </div>
       </section>

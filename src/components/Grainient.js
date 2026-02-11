@@ -1,63 +1,9 @@
-import Grainient from './Grainient';
-
-<div style={{ width: '100%', height: '600px', position: 'relative' }}>
-  <Grainient
-    color1="#0b3954"
-    color2="#ffffff"
-    color3="#0b3954"
-    timeSpeed={0.25}
-    colorBalance={0}
-    warpStrength={1}
-    warpFrequency={5}
-    warpSpeed={2}
-    warpAmplitude={50}
-    blendAngle={0}
-    blendSoftness={0.05}
-    rotationAmount={500}
-    noiseScale={2}
-    grainAmount={0.1}
-    grainScale={2}
-    grainAnimated={false}
-    contrast={1.5}
-    gamma={1}
-    saturation={1}
-    centerX={0}
-    centerY={0}
-    zoom={0.9}
-  />
-</div>
-
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
-import './Grainient.css';
+import '../styles/Grainient.css'; // Assuming Grainient.css will be placed here
 
-interface GrainientProps {
-  timeSpeed?: number;
-  colorBalance?: number;
-  warpStrength?: number;
-  warpFrequency?: number;
-  warpSpeed?: number;
-  warpAmplitude?: number;
-  blendAngle?: number;
-  blendSoftness?: number;
-  rotationAmount?: number;
-  noiseScale?: number;
-  grainAmount?: number;
-  grainScale?: number;
-  grainAnimated?: boolean;
-  contrast?: number;
-  gamma?: number;
-  saturation?: number;
-  centerX?: number;
-  centerY?: number;
-  zoom?: number;
-  color1?: string;
-  color2?: string;
-  color3?: string;
-  className?: string;
-}
 
-const hexToRgb = (hex: string): [number, number, number] => {
+const hexToRgb = (hex) => { // Removed type annotation
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   if (!result) return [1, 1, 1];
   return [parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255];
@@ -154,7 +100,7 @@ void main(){
 }
 `;
 
-const Grainient: React.FC<GrainientProps> = ({
+const Grainient = ({ // Removed React.FC<GrainientProps>
   timeSpeed = 0.25,
   colorBalance = 0.0,
   warpStrength = 1.0,
@@ -179,7 +125,7 @@ const Grainient: React.FC<GrainientProps> = ({
   color3 = '#B19EEF',
   className = ''
 }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef(null); // Removed <HTMLDivElement | null>
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -192,7 +138,7 @@ const Grainient: React.FC<GrainientProps> = ({
     });
 
     const gl = renderer.gl;
-    const canvas = gl.canvas as HTMLCanvasElement;
+    const canvas = gl.canvas; // Removed as HTMLCanvasElement
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     canvas.style.display = 'block';
@@ -238,7 +184,7 @@ const Grainient: React.FC<GrainientProps> = ({
       const width = Math.max(1, Math.floor(rect.width));
       const height = Math.max(1, Math.floor(rect.height));
       renderer.setSize(width, height);
-      const res = (program.uniforms.iResolution as { value: Float32Array }).value;
+      const res = program.uniforms.iResolution.value; // Removed as { value: Float32Array }
       res[0] = gl.drawingBufferWidth;
       res[1] = gl.drawingBufferHeight;
     };
@@ -249,8 +195,8 @@ const Grainient: React.FC<GrainientProps> = ({
 
     let raf = 0;
     const t0 = performance.now();
-    const loop = (t: number) => {
-      (program.uniforms.iTime as { value: number }).value = (t - t0) * 0.001;
+    const loop = (t) => { // Removed : number
+      program.uniforms.iTime.value = (t - t0) * 0.001; // Removed as { value: number }
       renderer.render({ scene: mesh });
       raf = requestAnimationFrame(loop);
     };
@@ -295,10 +241,3 @@ const Grainient: React.FC<GrainientProps> = ({
 
 export default Grainient;
 
-
-.grainient-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}

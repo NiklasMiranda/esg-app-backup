@@ -1,13 +1,13 @@
 import React from 'react';
-import { FaCalculator } from "react-icons/fa6";
+import ESGLogo from '../assets/images/ESGScore logo.png'; // Import the logo image
+// FaCalculator is no longer needed, so it can be removed if not used elsewhere in this component.
 
 function Header({ isLoggedIn, onLogout, onNavigateToLogin, onNavigateToHome }) {
   return (
-    <header className="esg-bg-[#0b3954] esg-p-4 esg-text-white esg-shadow-md">
+    <header className="esg-bg-gray-400 esg-p-4 esg-text-gray-800 esg-shadow-md esg-rounded-full esg-bg-opacity-10 esg-backdrop-blur-sm esg-mt-8 esg-border esg-border-gray-400"> {/* Changed text to gray for better contrast with frosted background */}
       <div className="esg-container esg-mx-auto esg-flex esg-justify-between esg-items-center">
         <div className="esg-flex esg-items-center esg-cursor-pointer" onClick={onNavigateToHome}>
-          <FaCalculator className="esg-mr-2 esg-text-2xl" />
-          <h1 className="esg-text-2xl esg-font-bold">ESG App</h1>
+          <img src={ESGLogo} alt="ESG Score Logo" className="esg-h-14 esg-mr-2" /> {/* Adjust height as needed */}
         </div>
         <nav>
           {isLoggedIn ? (
