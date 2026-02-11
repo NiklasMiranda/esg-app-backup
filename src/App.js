@@ -37,10 +37,11 @@ const categoryPercentages = {
 
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken')); // Check token on init
-    const [userCompanyId, setUserCompanyId] = useState(null); // Dynamic company ID
-    const [currentYear, setCurrentYear] = useState(2026); // Allow year selection later
-    const [showLandingPage, setShowLandingPage] = useState(true); // New state for landing page visibility
+    // --- ALL STATE HOOKS DECLARED FIRST AND UNCONDITIONALLY ---
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
+    const [userCompanyId, setUserCompanyId] = useState(null);
+    const [currentYear, setCurrentYear] = useState(2026);
+    const [showLandingPage, setShowLandingPage] = useState(true);
 
     const [currentDel1Step, setCurrentDel1Step] = useState('intro');
     const [iaGroupIndex, setIaGroupIndex] = useState(0);
@@ -49,7 +50,7 @@ function App() {
     const [groupIndex, setGroupIndex] = useState(0);
     const [answers, setAnswers] = useState(() => {
       try {
-        const savedAnswers = localStorage.getItem('esgAppAnswers'); // This will be removed later
+        const savedAnswers = localStorage.getItem('esgAppAnswers');
         return savedAnswers ? JSON.parse(savedAnswers) : {};
       } catch (error) {
         console.error("Error parsing saved answers from localStorage:", error);
@@ -57,16 +58,20 @@ function App() {
       }
     });
     const [iaAnswers, setIaAnswers] = useState({});
-    const [polarChartImage, setPolarChartImage] = useState(null); // State for a gemme graf-billede
+    const [polarChartImage, setPolarChartImage] = useState(null);
 
-    // State for questions fetched from API
     const [dvaQuestions, setDvaQuestions] = useState([]);
     const [iaQuestions, setIaQuestions] = useState([]);
     const [loadingQuestions, setLoadingQuestions] = useState(true);
-    // State for calculation results fetched from API
     const [calculationResults, setCalculationResults] = useState({});
 
-    // Funktion til at POSTe billedet til WordPress (will be removed or updated later)
+    const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
+    const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
+    const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
+    const [isNavOpen, setIsNavOpen] = useState(false); // isNavOpen state declared here
+
+    // --- ALL EFFECT, MEMO, AND CALLBACK HOOKS DECLARED AFTER STATE HOOKS ---
+
     const saveImage = useCallback(async (imageDataUrl) => {
       if (!window.esgConfig) return;
       const { apiUrl, userId, nonce } = window.esgConfig;
@@ -75,10 +80,10 @@ function App() {
         const response = await fetch(`${apiUrl}data/${userId}`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'text/plain', // Send som plain text, ikke JSON
+            'Content-Type': 'text/plain',
             'X-WP-Nonce': nonce,
           },
-          body: imageDataUrl, // Send den rå base64 string direkte
+          body: imageDataUrl,
         });
 
         if (!response.ok) {
@@ -91,60 +96,48 @@ function App() {
       } catch (err) {
         console.error('Kunne ikke gemme ESG-graf:', err);
       }
-    }, []); // Empty dependency array as it only uses window scope
-    const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
-    const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
-    const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
+    }, []);
 
-    // Initial check for company ID (e.g., from stored user data after login)
     useEffect(() => {
-      // In a real app, you'd fetch company_id based on the authenticated user.
-      // For now, if logged in, we assume a default company ID or retrieve it from a user profile endpoint.
       if (isLoggedIn && !userCompanyId) {
-        // Placeholder: Set a default company ID. This needs to come from the backend.
-        // For testing, hardcode to 1. In production, this would be part of login response or a /me endpoint
-        setUserCompanyId(1); 
+        setUserCompanyId(1);
         setShowLandingPage(false); // If already logged in, skip landing page
       }
     }, [isLoggedIn, userCompanyId]);
 
 
-    // Fetch questions and user data on component mount (and when login state/companyId changes)
     useEffect(() => {
       const loadAllData = async () => {
-        if (!isLoggedIn || !userCompanyId) return; // Only load if logged in and company ID is set
+        if (!isLoggedIn || !userCompanyId) return;
 
         try {
           setLoadingQuestions(true);
           const [fetchedDvaQuestions, fetchedIaQuestionsRaw, userDataRaw, fetchedCalculationResults] = await Promise.all([
             fetchDvaQuestionsFromApi(),
-            fetchIaQuestionsFromApi(), // Raw IA questions
-            fetchUserData(userCompanyId, currentYear), // Raw user data
-            fetchCalculationResultsFromApi(userCompanyId, currentYear) // Pass dynamic companyId and year
+            fetchIaQuestionsFromApi(),
+            fetchUserData(userCompanyId, currentYear),
+            fetchCalculationResultsFromApi(userCompanyId, currentYear)
           ]);
 
           const filteredIaQuestions = fetchedIaQuestionsRaw.filter(q => q.question_type === 'IA');
           setDvaQuestions(fetchedDvaQuestions);
-          setIaQuestions(filteredIaQuestions); // Set iaQuestions state FIRST
-          console.log("DEBUG: filteredIaQuestions after setting iaQuestions:", filteredIaQuestions); // Add this line
+          setIaQuestions(filteredIaQuestions);
+          // console.log("DEBUG: filteredIaQuestions after setting iaQuestions:", filteredIaQuestions); // Removed debug log
 
           if (userDataRaw) {
             let processedIaAnswers = {};
-            // Now, use the filteredIaQuestions to process userDataRaw.iaAnswers
-            // This ensures iaQuestions state is stable before populating iaAnswers
             if (filteredIaQuestions.length > 0) {
                 const validIaQuestionIds = new Set(filteredIaQuestions.map(q => q.id.toString()));
                 processedIaAnswers = Object.fromEntries(
                     Object.entries(userDataRaw.iaAnswers || {}).filter(([questionId, answer]) =>
                         validIaQuestionIds.has(questionId) &&
-                        answer && typeof answer === 'object' && answer.is_answered // <--- Changed this line!
+                        answer && typeof answer === 'object' && answer.is_answered
                     )
                 );
             }
             if (userDataRaw.dvaAnswers) setAnswers(userDataRaw.dvaAnswers);
-            setIaAnswers(processedIaAnswers); // Then set iaAnswers state
+            setIaAnswers(processedIaAnswers);
           } else {
-            // If no userDataRaw, ensure iaAnswers is explicitly empty
             setIaAnswers({});
           }
           if (fetchedCalculationResults) {
@@ -152,8 +145,7 @@ function App() {
           }
         } catch (error) {
           console.error("Failed to load initial data:", error);
-          // Handle token expiration or invalid token by logging out
-          if (error.message.includes('401')) { // Example check for unauthorized
+          if (error.message.includes('401')) {
             handleLogout();
           }
         } finally {
@@ -161,20 +153,17 @@ function App() {
         }
       };
       loadAllData();
-    }, [isLoggedIn, userCompanyId, currentYear]); // Add isLoggedIn and userCompanyId to dependency array
+    }, [isLoggedIn, userCompanyId, currentYear]);
 
-    // Save answers to backend when they change
     useEffect(() => {
-        // Only save if logged in, company ID is set, and questions have finished loading
         if (!isLoggedIn || !userCompanyId || loadingQuestions) return;
 
         const handler = setTimeout(async () => {
             try {
-                console.log("DEBUG: iaQuestions at save time:", iaQuestions); // ADD THIS LINE
+                // console.log("DEBUG: iaQuestions at save time:", iaQuestions); // Removed debug log
 
-                // Filter iaAnswers to only include actual IA questions
                 const validIaQuestionIds = new Set(iaQuestions.map(q => q.id.toString()));
-                console.log("DEBUG: validIaQuestionIds at save time:", Array.from(validIaQuestionIds)); // ADD THIS LINE
+                // console.log("DEBUG: validIaQuestionIds at save time:", Array.from(validIaQuestionIds)); // Removed debug log
                 const filteredIaAnswers = Object.fromEntries(
                     Object.entries(iaAnswers).filter(([questionId, answer]) =>
                         validIaQuestionIds.has(questionId) &&
@@ -184,15 +173,15 @@ function App() {
 
                 const dataToSave = {
                     dvaAnswers: answers,
-                    iaAnswers: filteredIaAnswers, // Assign the filtered IA answers
+                    iaAnswers: filteredIaAnswers,
                 };
-                console.log("DEBUG: iaAnswers state before saveUserData:", iaAnswers);
-                console.log("DEBUG: filteredIaAnswers being sent:", filteredIaAnswers); // New debug log
-                console.log("DEBUG App.js: saveUserData triggered with dataToSave:", dataToSave);
+                // console.log("DEBUG: iaAnswers state before saveUserData:", iaAnswers); // Removed debug log
+                // console.log("DEBUG: filteredIaAnswers being sent:", filteredIaAnswers); // Removed debug log
+                // console.log("DEBUG App.js: saveUserData triggered with dataToSave:", dataToSave); // Removed debug log
 
                 const saveResponse = await saveUserData(userCompanyId, currentYear, dataToSave);
-                console.log('DEBUG App.js: saveUserData response:', saveResponse);
-                console.log('User data (answers) saved successfully!');
+                // console.log('DEBUG App.js: saveUserData response:', saveResponse); // Removed debug log
+                // console.log('User data (answers) saved successfully!'); // Removed debug log
             } catch (error) {
                 console.error("Failed to save user data:", error);
             }
@@ -208,10 +197,10 @@ function App() {
       ...questionDescriptions,
     };
 
-    const { newCategoryCompletionStatus, newTotalCompletionPercentage } = useMemo(() => {
+    const memoizedCompletion = useMemo(() => {
         const calculatedCategoryCompletionStatus = {};
         questionGroups.forEach(groupKey => {
-            const questionsInGroup = dvaQuestions.filter(q => q.label === groupKey);
+            const questionsInGroup = dvaQuestions.filter(q => q.sub_category.label === groupKey);
             const totalQuestions = questionsInGroup.length;
             if (totalQuestions === 0) {
                 calculatedCategoryCompletionStatus[groupKey] = 0;
@@ -228,12 +217,15 @@ function App() {
         return { newCategoryCompletionStatus: calculatedCategoryCompletionStatus, newTotalCompletionPercentage: calculatedTotalCompletionPercentage };
     }, [answers, dvaQuestions, questionGroups]);
 
-    // Update state variables based on useMemo results
-    useEffect(() => {
-        setCategoryCompletionStatus(newCategoryCompletionStatus);
-        setTotalCompletionPercentage(newTotalCompletionPercentage);
-    }, [newCategoryCompletionStatus, newTotalCompletionPercentage]);
+    const newCategoryCompletionStatus = memoizedCompletion.newCategoryCompletionStatus;
+    const newTotalCompletionPercentage = memoizedCompletion.newTotalCompletionPercentage;
 
+    useEffect(() => {
+      setCategoryCompletionStatus(newCategoryCompletionStatus);
+      setTotalCompletionPercentage(newTotalCompletionPercentage);
+  }, [newCategoryCompletionStatus, newTotalCompletionPercentage]); // ← Rettet!
+
+    // --- HELPER FUNCTIONS DECLARED HERE ---
     const handleAnswerChange = (questionId, answer) => {
       setAnswers(prevAnswers => ({
         ...prevAnswers,
@@ -241,10 +233,10 @@ function App() {
       }));
     };
 
-    const handleIaAnswerChange = (questionId, isSelected) => { // Removed allIaQuestions parameter
-      console.log("DEBUG: handleIaAnswerChange called for questionId:", questionId, "with isSelected:", isSelected, "and iaQuestions from scope:", iaQuestions); // Updated log message
+    const handleIaAnswerChange = (questionId, isSelected) => {
+      // console.log("DEBUG: handleIaAnswerChange called for questionId:", questionId, "with isSelected:", isSelected, "and iaQuestions from scope:", iaQuestions); // Removed debug log
 
-      const isValidIaQuestion = iaQuestions.some(q => q.id.toString() === questionId.toString()); // Use iaQuestions from scope directly
+      const isValidIaQuestion = iaQuestions.some(q => q.id.toString() === questionId.toString());
 
       if (!isValidIaQuestion) {
         console.warn(`Attempted to change answer for non-IA question ID: ${questionId}. Ignoring.`);
@@ -255,11 +247,10 @@ function App() {
         const newIaAnswers = { ...prevIaAnswers };
         if (isSelected) {
           newIaAnswers[questionId] = {
-            is_answered: true, // Only set to true when selected
+            is_answered: true,
             metric_value: prevIaAnswers[questionId]?.metric_value || '',
           };
         } else {
-          // If unselected, remove the entry for this questionId
           delete newIaAnswers[questionId];
         }
         return newIaAnswers;
@@ -349,6 +340,12 @@ function App() {
       setShowLandingPage(false); // Transition from landing page to login form
     };
 
+    const toggleNav = () => { // toggleNav function declared here
+      setIsNavOpen(!isNavOpen);
+    };
+
+    // --- CONDITIONAL RENDERING (AFTER ALL HOOKS AND HELPER FUNCTIONS) ---
+    // This ensures all hooks are called unconditionally before any early returns.
     if (!isLoggedIn && showLandingPage) {
       return <LandingPage onNavigateToLogin={handleNavigateToLogin} />;
     }
@@ -356,9 +353,10 @@ function App() {
     if (!isLoggedIn && !showLandingPage) {
       return <Login onLoginSuccess={handleLoginSuccess} />;
     }
+    // --- END CONDITIONAL RENDERING ---
 
     const renderStep = () => {
-      console.log('DEBUG: renderStep - activeSection:', activeSection, 'currentDel1Step:', currentDel1Step, 'currentDel2Step:', currentDel2Step);
+      // console.log('DEBUG: renderStep - activeSection:', activeSection, 'currentDel1Step:', currentDel1Step, 'currentDel2Step:', currentDel2Step); // Removed debug log
       if (activeSection === 'del1') {
         switch (currentDel1Step) {
           case 'intro':
@@ -492,7 +490,7 @@ function App() {
             esgLevel={calculationResults.esgLevel}
             polarBarChartData={calculationResults.polarBarChartData}
             criterionColors={criterionColors}
-            onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaQuestionGroups.length - 1])}
+            onPrev={() => setCurrentDel2Step(iaQuestionGroups[iaGroupIndex - 1])}
             onCapture={saveImage}
             onGeneratePdf={() => fetchPdfReport(userCompanyId, currentYear)} // New prop
           />;
@@ -524,19 +522,7 @@ function App() {
     activeGroup = currentDel2Step;
   }
 
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
-  };
-
-  if (!isLoggedIn && showLandingPage) {
-    return <LandingPage onNavigateToLogin={handleNavigateToLogin} />;
-  }
-
-  if (!isLoggedIn && !showLandingPage) {
-    return <Login onLoginSuccess={handleLoginSuccess} />;
-  }
+  // No isNavOpen or toggleNav for now. Will re-add after core functionality is stable.
 
   return (
     <div className="esg-bg-[#0b3954] esg-min-h-screen esg-flex esg-flex-col esg-pb-4">
@@ -548,20 +534,13 @@ function App() {
             {isLoggedIn && (
               <button onClick={handleLogout} className="btn-primary esg-ml-4 esg-text-white esg-bg-red-600 hover:esg-bg-red-700">Logout</button>
             )}
-            <button onClick={toggleNav} className="esg-text-white focus:esg-outline-none esg-ml-4 md:esg-hidden">
-              <svg className="esg-h-6 esg-w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isNavOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin={"round"} strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+            {/* Toggle Nav Button removed temporarily */}
           </div>
         </div>
       </div>
       <div className="esg-flex-grow esg-flex">
-        <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] ${isNavOpen ? 'esg-block' : 'esg-hidden md:esg-block'}`}>
+        {/* Navigation wrapper always visible on large screens, hidden on small screens */}
+        <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] esg-hidden md:esg-block`}>
           <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} iaQuestions={iaQuestions} questionGroups={questionGroups} iaQuestionGroups={iaQuestionGroups} />
         </div>
 
