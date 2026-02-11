@@ -11,6 +11,7 @@ import StepESGInfo from './components/StepESGInfo';
 import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi, logoutUser, fetchPdfReport } from './api';
 import Login from './components/Login'; // Import the Login component
 import LandingPage from './components/LandingPage'; // Import the LandingPage component
+import Header from './components/Header'; // Import the Header component
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -68,7 +69,6 @@ function App() {
     const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
-    const [isNavOpen, setIsNavOpen] = useState(false); // isNavOpen state declared here
 
     // --- ALL EFFECT, MEMO, AND CALLBACK HOOKS DECLARED AFTER STATE HOOKS ---
 
@@ -319,7 +319,7 @@ function App() {
     const handleLoginSuccess = (token, companyId) => {
       setIsLoggedIn(true);
       setUserCompanyId(companyId);
-      // Optionally, you might want to fetch user-specific data here, like their company_id if not in token
+      setShowLandingPage(false); // Hide landing page on successful login
     };
 
     const handleLogout = async () => {
@@ -330,7 +330,7 @@ function App() {
         setAnswers({}); // Clear answers on logout
         setIaAnswers({}); // Clear IA answers on logout
         setCalculationResults({}); // Clear calculation results
-        // Optionally redirect to login page or home
+        setShowLandingPage(true); // Go back to landing page after logout
       } catch (error) {
         console.error('Logout failed:', error);
       }
@@ -340,20 +340,23 @@ function App() {
       setShowLandingPage(false); // Transition from landing page to login form
     };
 
-    const toggleNav = () => { // toggleNav function declared here
-      setIsNavOpen(!isNavOpen);
+    const handleNavigateToHome = () => {
+      setShowLandingPage(true); // Go to the landing page
+      setIsLoggedIn(false); // Ensure not logged in state
+      setUserCompanyId(null); // Clear user company ID
     };
 
-    // --- CONDITIONAL RENDERING (AFTER ALL HOOKS AND HELPER FUNCTIONS) ---
-    // This ensures all hooks are called unconditionally before any early returns.
-    if (!isLoggedIn && showLandingPage) {
-      return <LandingPage onNavigateToLogin={handleNavigateToLogin} />;
-    }
 
-    if (!isLoggedIn && !showLandingPage) {
-      return <Login onLoginSuccess={handleLoginSuccess} />;
+  let activeGroup;
+  if (activeSection === 'del1') {
+    if (['intro', 'dvaResults', 'dvaInfo'].includes(currentDel1Step)) {
+      activeGroup = currentDel1Step;
+    } else {
+      activeGroup = questionGroups[groupIndex];
     }
-    // --- END CONDITIONAL RENDERING ---
+  } else if (activeSection === 'del2') {
+    activeGroup = currentDel2Step;
+  }
 
     const renderStep = () => {
       // console.log('DEBUG: renderStep - activeSection:', activeSection, 'currentDel1Step:', currentDel1Step, 'currentDel2Step:', currentDel2Step); // Removed debug log
@@ -511,43 +514,45 @@ function App() {
     return null;
   };
 
-  let activeGroup;
-  if (activeSection === 'del1') {
-    if (['intro', 'dvaResults', 'dvaInfo'].includes(currentDel1Step)) {
-      activeGroup = currentDel1Step;
+
+    // --- CONDITIONAL RENDERING (AFTER ALL HOOKS AND HELPER FUNCTIONS) ---
+    // This ensures all hooks are called unconditionally before any early returns.
+    // The Header will always be rendered.
+    let content;
+    if (!isLoggedIn && showLandingPage) {
+      content = <LandingPage onNavigateToLogin={handleNavigateToLogin} />;
+    } else if (!isLoggedIn && !showLandingPage) {
+      content = <Login onLoginSuccess={handleLoginSuccess} />;
     } else {
-      activeGroup = questionGroups[groupIndex];
+      content = (
+        <div className="esg-flex-grow esg-flex">
+          {/* Navigation wrapper always visible on large screens, hidden on small screens */}
+          <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] esg-hidden md:esg-block`}>
+            <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} iaQuestions={iaQuestions} questionGroups={questionGroups} iaQuestionGroups={iaQuestionGroups} />
+          </div>
+
+          <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">
+            {renderStep()}
+          </div>
+        </div>
+      );
     }
-  } else if (activeSection === 'del2') {
-    activeGroup = currentDel2Step;
-  }
+    // --- END CONDITIONAL RENDERING ---
+
+
+
 
   // No isNavOpen or toggleNav for now. Will re-add after core functionality is stable.
 
   return (
     <div className="esg-bg-[#0b3954] esg-min-h-screen esg-flex esg-flex-col esg-pb-4">
-      <div className="esg-bg-[#0b3954] esg-p-2 esg-flex-shrink-0">
-        <div className="esg-flex esg-justify-between esg-items-center esg-mb-4">
-          <h1 className="esg-text-xl esg-font-bold esg-text-white">ESG App</h1>
-          <div className="esg-flex esg-items-center">
-            <CircularProgress percentage={newTotalCompletionPercentage} />
-            {isLoggedIn && (
-              <button onClick={handleLogout} className="btn-primary esg-ml-4 esg-text-white esg-bg-red-600 hover:esg-bg-red-700">Logout</button>
-            )}
-            {/* Toggle Nav Button removed temporarily */}
-          </div>
-        </div>
-      </div>
-      <div className="esg-flex-grow esg-flex">
-        {/* Navigation wrapper always visible on large screens, hidden on small screens */}
-        <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] esg-hidden md:esg-block`}>
-          <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} iaQuestions={iaQuestions} questionGroups={questionGroups} iaQuestionGroups={iaQuestionGroups} />
-        </div>
-
-        <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">
-          {renderStep()}
-        </div>
-      </div>
+      <Header
+        isLoggedIn={isLoggedIn}
+        onLogout={handleLogout}
+        onNavigateToLogin={handleNavigateToLogin}
+        onNavigateToHome={handleNavigateToHome}
+      />
+      {content}
     </div>
   );
 };
