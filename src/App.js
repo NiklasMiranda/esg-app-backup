@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import Navigation from './components/Navigation';
+import ESGCalculatorNav from './components/ESGCalculatorNav';
 import StepDVA from './components/StepDVA';
 import StepResultsDVA from './components/StepResultsDVA';
 import StepInitiativanalyse from './components/StepInitiativanalyse';
@@ -13,6 +13,8 @@ import Login from './components/Login'; // Import the Login component
 import LandingPage from './components/LandingPage'; // Import the LandingPage component
 import Header from './components/Header'; // Import the Header component
 import DashboardHeader from './components/DashboardHeader'; // Import the DashboardHeader component
+import DashboardSidebar from './components/DashboardSidebar'; // Import the DashboardSidebar component
+import CompanyFigures from './components/CompanyFigures'; // Import the CompanyFigures component
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -70,8 +72,23 @@ function App() {
     const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
+    const [isNavOpen, setIsNavOpen] = useState(false); // State to control sidebar visibility
+    const [activeView, setActiveView] = useState('dashboard'); // New state for main content view
 
     // --- ALL EFFECT, MEMO, AND CALLBACK HOOKS DECLARED AFTER STATE HOOKS ---
+
+    // Callback to toggle sidebar visibility
+    const toggleNav = useCallback(() => setIsNavOpen(prev => !prev), []);
+
+    const handleMainNavigation = useCallback((view) => {
+      setActiveView(view);
+      // If navigating to ESG Calculator, set activeSection to 'del1' as default
+      if (view === 'esgCalculator') {
+        setActiveSection('del1');
+      }
+      // Optionally close the sidebar after navigation on smaller screens
+      // setIsNavOpen(false);
+    }, [setActiveSection]);
 
     const saveImage = useCallback(async (imageDataUrl) => {
       if (!window.esgConfig) return;
@@ -525,16 +542,49 @@ function App() {
     } else if (!isLoggedIn && !showLandingPage) {
       content = <Login onLoginSuccess={handleLoginSuccess} />;
     } else {
-      content = (
-        <div className="esg-flex-grow esg-flex">
-          {/* Navigation wrapper always visible on large screens, hidden on small screens */}
-          <div className={`navigation-wrapper md:esg-w-1/4 lg:esg-w-1/5 esg-bg-[#0b3954] esg-hidden md:esg-block`}>
-            <Navigation activeGroup={activeGroup} onNavigate={navigateTo} categoryCompletionStatus={categoryCompletionStatus} esgCategoryCompletionStatus={esgCategoryCompletionStatus} activeSection={activeSection} onSectionChange={setActiveSection} iaQuestions={iaQuestions} questionGroups={questionGroups} iaQuestionGroups={iaQuestionGroups} />
+      let mainContent;
+      if (activeView === 'dashboard') {
+        mainContent = (
+          <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg esg-p-4">
+            <h1 className="esg-text-3xl esg-font-bold esg-mb-4">Velkommen til dit Dashboard</h1>
+            <p className="esg-text-gray-700">Her kan du se en oversigt over dine ESG-data.</p>
           </div>
+        );
+      } else if (activeView === 'companyFigures') {
+        mainContent = (
+          <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
+            <CompanyFigures />
+          </div>
+        );
+      } else if (activeView === 'esgCalculator') {
+        mainContent = (
+          <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
+            <ESGCalculatorNav
+              availableYears={[2024, 2025, 2026]} // Placeholder, need to fetch actual years
+              currentYear={currentYear}
+              onSelectYear={setCurrentYear}
+              onAddNewYear={() => console.log('Add new year')} // Placeholder
+              activeGroup={activeGroup}
+              onNavigate={navigateTo}
+              categoryCompletionStatus={categoryCompletionStatus}
+              questionGroups={questionGroups}
+            />
+            <div className="esg-p-4">
+              {renderStep()}
+            </div>
+          </div>
+        );
+      }
 
-          <div className="esg-flex-1 esg-p-4 esg-bg-[#f4f4f4] esg-rounded-lg">
-            {renderStep()}
-          </div>
+      content = (
+        <div className="esg-flex-grow esg-flex esg-relative">
+          <DashboardSidebar
+            isNavOpen={isNavOpen}
+            onNavigate={handleMainNavigation}
+            activeView={activeView}
+            onSectionChange={setActiveSection}
+          />
+          {mainContent}
         </div>
       );
     }
@@ -546,12 +596,14 @@ function App() {
   // No isNavOpen or toggleNav for now. Will re-add after core functionality is stable.
 
     return (
-      <div className="esg-min-h-screen esg-flex esg-flex-col esg-pb-4 esg-relative"> {/* Added esg-relative to be positioning context */}
+      <div className="esg-min-h-screen esg-flex esg-flex-col esg-relative"> {/* Added esg-relative to be positioning context */}
         {isLoggedIn ? (
           <DashboardHeader
             isLoggedIn={isLoggedIn}
             onLogout={handleLogout}
             newTotalCompletionPercentage={newTotalCompletionPercentage} // Pass completion percentage to dashboard header
+            onToggleNav={toggleNav} // Pass toggle function
+            userCompanyName={"Din Virksomhed"} // Placeholder for company name
           />
         ) : (
           <div className="esg-absolute esg-top-0 esg-left-0 esg-right-0 esg-z-20"> {/* Absolute positioning for front page header */}
