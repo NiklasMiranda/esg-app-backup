@@ -68,12 +68,12 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, alt = 'Before and After Co
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       />
       <div
-        className="esg-absolute esg-top-0 esg-bottom-0 esg-w-1 esg-bg-black esg-cursor-ew-resize esg-shadow-lg"
+        className="esg-absolute esg-top-0 esg-bottom-0 esg-w-1 esg-bg-black esg-cursor-pointer esg-shadow-lg"
         style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
       >
         <div className="esg-absolute esg-top-1/2 esg-left-1/2 esg-transform -esg-translate-x-1/2 -esg-translate-y-1/2 esg-w-8 esg-h-8 esg-bg-black esg-rounded-full esg-flex esg-items-center esg-justify-center esg-shadow-md">
           <svg className="esg-w-5 esg-h-5 esg-text-gray-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18m-7-7l7 7m-7 7l7-7" />
           </svg>
         </div>
       </div>

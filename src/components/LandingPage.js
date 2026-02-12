@@ -38,7 +38,7 @@ function LandingPage() {
         </div>
         <div className="esg-container esg-mx-auto esg-relative esg-z-10 esg-text-white esg-max-w-7xl esg-flex esg-items-center">
           <div className="esg-w-1/2 esg-text-left esg-pr-8">
-            <h1 className="esg-text-5xl esg-font-extrabold esg-mb-4">Det perfekte styringsværktøj til ESG</h1>
+            <h1 className="esg-text-5xl esg-font-extrabold esg-mb-4">Det komplette styringsværktøj til ESG</h1>
             <p className="esg-text-2xl esg-mb-8">
               Dan dig et overblik over din ESG-profil og arbejd strategisk med bæredygtighed. Intuitivt. Dokumenteret. Fremtidsorienteret.
             </p>
@@ -85,7 +85,7 @@ function LandingPage() {
       {/* Before/After Slider Section */}
       <section className="esg-min-h-screen esg-py-16 esg-px-4 esg-bg-gray-50">
         <div className="esg-container esg-mx-auto esg-text-center">
-          <h2 className="esg-text-4xl esg-font-bold esg-text-gray-800 esg-mb-8">Se forskellen: Før og efter vores ESG-indsats</h2>
+          <h2 className="esg-text-4xl esg-font-bold esg-text-gray-800 esg-mb-8">Sammenlign ESG-indsatser og opnå reel forbedring</h2>
           <BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />
         </div>
       </section>
