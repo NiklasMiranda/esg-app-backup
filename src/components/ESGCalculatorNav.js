@@ -27,14 +27,10 @@ function ESGCalculatorNav({
     { key: 'dvaResults', title: 'Resultater' },
   ];
 
-  // Create placeholders for the year selection
   const yearPlaceholders = Array.from({ length: Math.max(0, 10 - availableYears.length) });
-  
-  // Redefine active and inactive content styles (without borders)
+
   const activeContentStyles = 'esg-bg-white esg-text-black esg-font-extrabold';
   const inactiveContentStyles = 'hover:esg-bg-white esg-text-gray-700';
-
-  // Define border colors
   const activeBorderColor = 'esg-border-[#0b3954]';
   const inactiveBorderColor = 'esg-border-gray-300';
   const baseButtonFlex = 'esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center esg-gap-1';
@@ -45,19 +41,28 @@ function ESGCalculatorNav({
       <div className={`esg-flex esg-items-center esg-border-b-[1px] ${inactiveBorderColor}`}>
         <span className={`esg-text-lg esg-font-semibold esg-px-2 esg-flex-shrink-0 esg-border-r-[1px] ${inactiveBorderColor}`}>År:</span>
         <div className="esg-flex esg-flex-grow">
-          {availableYears.map((year, index) => (
-            <button
-              key={year}
-              onClick={() => onSelectYear(year)}
-              className={`${baseButtonFlex} esg-border-t-0 esg-border-b-0 esg-border-l-0 ${
-                year === currentYear ? activeContentStyles + ' ' + activeBorderColor : inactiveContentStyles + ' ' + inactiveBorderColor
-              } ${index < availableYears.length - 1 || yearPlaceholders.length > 0 ? `esg-border-r-[1px] ${year === currentYear ? activeBorderColor : inactiveBorderColor}` : ''}`}
-            >
-              {year}
-            </button>
-          ))}
+          {availableYears.map((year, index) => {
+            const isActive = year === currentYear;
+            const hasRightNeighbour = index < availableYears.length - 1 || yearPlaceholders.length > 0;
+            return (
+              <button
+                key={year}
+                onClick={() => onSelectYear(year)}
+                className={`
+                  ${baseButtonFlex}
+                  ${isActive
+                    ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
+                    : inactiveContentStyles
+                  }
+                  ${!isActive && hasRightNeighbour ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}
+                `}
+              >
+                {year}
+              </button>
+            );
+          })}
           {yearPlaceholders.map((_, index) => (
-            <div key={`placeholder-${index}`} className={`esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 esg-border-t-0 esg-border-b-0 esg-border-l-0 ${index < yearPlaceholders.length - 1 ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}`}></div>
+            <div key={`placeholder-${index}`} className={`esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 ${index < yearPlaceholders.length - 1 ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}`}></div>
           ))}
         </div>
         <button
@@ -73,16 +78,20 @@ function ESGCalculatorNav({
         <div className={`esg-grid esg-grid-cols-2 esg-border-b-[1px] ${inactiveBorderColor}`}>
           <button
             onClick={() => onNavigate('del1', 'dvaInfo')}
-            className={`esg-py-2 esg-px-3 esg-flex esg-items-center esg-justify-center esg-gap-2 esg-border-t-0 esg-border-b-0 esg-border-l-0 ${
-              activeSection === 'del1' ? activeContentStyles + ' ' + activeBorderColor : inactiveContentStyles + ' ' + inactiveBorderColor
-            } esg-border-r-[1px] ${activeSection === 'del1' ? activeBorderColor : inactiveBorderColor}`}
+            className={`esg-py-2 esg-px-3 esg-flex esg-items-center esg-justify-center esg-gap-2 ${
+              activeSection === 'del1'
+                ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
+                : `${inactiveContentStyles} esg-border-r-[1px] ${inactiveBorderColor}`
+            }`}
           >
             <LuWeight /> DOBBELTVÆSENTLIGHEDSANALYSE
           </button>
           <button
             onClick={() => onNavigate('del2', 'esgInfo')}
-            className={`esg-py-2 esg-px-3 esg-flex esg-items-center esg-justify-center esg-gap-2 esg-border-t-0 esg-border-b-0 esg-border-l-0 ${
-              activeSection === 'del2' ? activeContentStyles + ' ' + activeBorderColor : inactiveContentStyles + ' ' + inactiveBorderColor
+            className={`esg-py-2 esg-px-3 esg-flex esg-items-center esg-justify-center esg-gap-2 ${
+              activeSection === 'del2'
+                ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
+                : inactiveContentStyles
             }`}
           >
             <LuFileText /> INITIATIVANALYSE
@@ -92,37 +101,53 @@ function ESGCalculatorNav({
         {/* Question Groups */}
         <div className={`esg-grid esg-grid-cols-2 esg-border-b-[1px] ${inactiveBorderColor}`}>
           {/* DVA Question Groups */}
-          <div className={`esg-flex esg-flex-row esg-items-center esg-overflow-x-auto esg-border-t-[1px] ${activeSection === 'del1' ? activeBorderColor : inactiveBorderColor} esg-border-r-[1px] ${activeSection === 'del1' ? activeBorderColor : inactiveBorderColor}`}>
+          <div className={`esg-flex esg-flex-row esg-items-center esg-overflow-x-auto esg-border-r-[1px] ${activeSection === 'del1' ? activeBorderColor : inactiveBorderColor}`}>
             <div className="esg-flex esg-justify-start esg-flex-grow">
-              {del1Steps.filter(step => questionGroups.includes(step.key)).map((step, index, arr) => (
-                <button
-                  key={step.key}
-                  onClick={() => onNavigate('del1', step.key)}
-                  className={`${baseButtonFlex} esg-border-t-0 esg-border-b-0 esg-border-l-0 ${
-                    activeGroup === step.key && activeSection ==='del1' ? activeContentStyles + ' ' + activeBorderColor : inactiveContentStyles + ' ' + inactiveBorderColor
-                  } ${index < arr.length - 1 ? `esg-border-r-[1px] ${activeGroup === step.key && activeSection ==='del1' ? activeBorderColor : inactiveBorderColor}` : ''}`}
-                >
-                  <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={24} />
-                  {step.key}
-                </button>
-              ))}
+              {del1Steps.filter(step => questionGroups.includes(step.key)).map((step, index, arr) => {
+                const isActive = activeGroup === step.key && activeSection === 'del1';
+                const hasRight = index < arr.length - 1;
+                return (
+                  <button
+                    key={step.key}
+                    onClick={() => onNavigate('del1', step.key)}
+                    className={`
+                      ${baseButtonFlex}
+                      ${isActive
+                        ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
+                        : `${inactiveContentStyles} ${hasRight ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}`
+                      }
+                    `}
+                  >
+                    <CircularProgress percentage={categoryCompletionStatus[step.key] || 0} size={24} />
+                    {step.key}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* IA Question Groups */}
-          <div className={`esg-flex esg-flex-row esg-items-center esg-overflow-x-auto esg-border-t-[1px] ${activeSection === 'del2' ? activeBorderColor : inactiveBorderColor}`}>
+          <div className="esg-flex esg-flex-row esg-items-center esg-overflow-x-auto">
             <div className="esg-flex esg-justify-start esg-flex-grow">
-              {del2NavSteps.filter(step => questionGroups.includes(step.key)).map((step, index, arr) => (
-                <button
-                  key={step.key}
-                  onClick={() => onNavigate('del2', step.key)}
-                  className={`${baseButtonFlex} esg-border-t-0 esg-border-b-0 esg-border-l-0 ${
-                    activeGroup === step.key && activeSection === 'del2' ? activeContentStyles + ' ' + activeBorderColor : inactiveContentStyles + ' ' + inactiveBorderColor
-                  } ${index < arr.length - 1 ? `esg-border-r-[1px] ${activeGroup === step.key && activeSection ==='del2' ? activeBorderColor : inactiveBorderColor}` : ''}`}
-                >
-                  {step.key}
-                </button>
-              ))}
+              {del2NavSteps.filter(step => questionGroups.includes(step.key)).map((step, index, arr) => {
+                const isActive = activeGroup === step.key && activeSection === 'del2';
+                const hasRight = index < arr.length - 1;
+                return (
+                  <button
+                    key={step.key}
+                    onClick={() => onNavigate('del2', step.key)}
+                    className={`
+                      ${baseButtonFlex}
+                      ${isActive
+                        ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
+                        : `${inactiveContentStyles} ${hasRight ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}`
+                      }
+                    `}
+                  >
+                    {step.key}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -131,17 +156,21 @@ function ESGCalculatorNav({
         <div className="esg-grid esg-grid-cols-2">
           <button
             onClick={() => onNavigate('del1', 'dvaResults')}
-            className={`esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center esg-border-l-0 ${
-              activeGroup === 'dvaResults' ? activeContentStyles + ' ' + activeBorderColor : inactiveContentStyles + ' ' + inactiveBorderColor
-            } esg-border-t-[1px] esg-border-b-[1px] esg-border-r-[1px] ${activeGroup === 'dvaResults' ? activeBorderColor : inactiveBorderColor}`}
+            className={`esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center ${
+              activeGroup === 'dvaResults'
+                ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
+                : `${inactiveContentStyles} esg-border-r-[1px] ${inactiveBorderColor}`
+            }`}
           >
             DVA Resultater
           </button>
           <button
             onClick={() => onNavigate('del2', 'del2Results')}
-            className={`esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center esg-border-l-0 ${
-              activeGroup === 'del2Results' ? activeContentStyles + ' ' + activeBorderColor : inactiveContentStyles + ' ' + inactiveBorderColor
-            } esg-border-t-[1px] esg-border-b-[1px] ${activeGroup === 'del2Results' ? activeBorderColor : inactiveBorderColor}`}
+            className={`esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center ${
+              activeGroup === 'del2Results'
+                ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
+                : inactiveContentStyles
+            }`}
           >
             IA Resultater
           </button>
