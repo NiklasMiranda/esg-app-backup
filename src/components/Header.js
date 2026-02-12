@@ -4,7 +4,7 @@ import ESGLogo from '../assets/images/ESGScore logo.png'; // Import the logo ima
 
 function Header({ isLoggedIn, onLogout, onNavigateToLogin, onNavigateToHome }) {
   return (
-    <header className="esg-bg-gray-400 esg-p-4 esg-text-gray-800 esg-shadow-md esg-rounded-full esg-bg-opacity-10 esg-backdrop-blur-sm esg-mt-8 esg-border esg-border-gray-400"> {/* Changed text to gray for better contrast with frosted background */}
+    <header className="esg-w-full esg-max-w-[1080] esg-mx-auto esg-bg-gray-400 esg-p-4 esg-text-gray-800 esg-shadow-md esg-rounded-full esg-bg-opacity-10 esg-backdrop-blur-sm esg-mt-8 esg-border esg-border-gray-400"> {/* Changed text to gray for better contrast with frosted background */}
       <div className="esg-container esg-mx-auto esg-flex esg-justify-between esg-items-center">
         <div className="esg-flex esg-items-center esg-cursor-pointer" onClick={onNavigateToHome}>
           <img src={ESGLogo} alt="ESG Score Logo" className="esg-h-14 esg-mr-2" /> {/* Adjust height as needed */}

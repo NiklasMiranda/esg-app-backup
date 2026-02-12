@@ -6,7 +6,7 @@ from django.http import HttpResponse # Import HttpResponse
 from django.template.loader import get_template # Import get_template
 from xhtml2pdf import pisa # Import the pisa library
 
-from .models import Company, Category, SubCategory, Question, Answer, Document
+from .models import Company, Category, SubCategory, Question, Answer, Document, CompanyBasismodulData
 from .serializers import (
     CompanySerializer,
     CategorySerializer,
@@ -15,9 +15,14 @@ from .serializers import (
     AnswerSerializer,
     DocumentSerializer,
     UserAnswerSerializer,
-    CalculationResultSerializer # New import
+    CalculationResultSerializer,
+    CompanyBasismodulDataSerializer
 )
-from .services import calculate_esg_results # New import
+from .services import calculate_esg_results
+
+class CompanyBasismodulDataViewSet(viewsets.ModelViewSet):
+    queryset = CompanyBasismodulData.objects.all()
+    serializer_class = CompanyBasismodulDataSerializer
 
 class PDFReportView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated] # Ensure only authenticated users can generate reports

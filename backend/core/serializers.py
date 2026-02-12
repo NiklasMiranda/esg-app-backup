@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Category, SubCategory, Question, Answer, Document
+from .models import Company, Category, SubCategory, Question, Answer, Document, CompanyBasismodulData
 from django.db import transaction
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -44,6 +44,11 @@ class DocumentSerializer(serializers.ModelSerializer):
 class IaAnswerDetailSerializer(serializers.Serializer):
     is_answered = serializers.BooleanField(required=False, default=False)
     metric_value = serializers.CharField(allow_blank=True, required=False, default='')
+
+class CompanyBasismodulDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyBasismodulData
+        fields = '__all__'
 
 class UserAnswerSerializer(serializers.Serializer):
     company_id = serializers.PrimaryKeyRelatedField(queryset=Company.objects.all(), source='company')

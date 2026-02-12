@@ -1,5 +1,9 @@
 import React from 'react';
 import Grainient from './Grainient'; // Import the Grainient component
+import esgMockup from '../assets/images/ESGScore mockup.webp'; // Import the image
+import BeforeAfterSlider from './BeforeAfterSlider'; // Import the new BeforeAfterSlider component
+import beforeImage from '../assets/images/ESG-resultat før bæredygtighedsindsats.webp';
+import afterImage from '../assets/images/ESG-resultat efter bæredygtighedsindsats.webp';
 
 function LandingPage() {
   return (
@@ -32,17 +36,22 @@ function LandingPage() {
             zoom={0.9}
           />
         </div>
-        <div className="esg-container esg-mx-auto esg-relative esg-z-10 esg-text-white esg-max-w-7xl">
-          <h1 className="esg-text-5xl esg-font-extrabold esg-mb-4">ESGScore.dk - forbedring af ESG for virksomheder</h1>
-          <p className="esg-text-2xl esg-mb-8">
-            Få et tal på din virksomheds ESG-profil og arbejd strategisk med bæredygtighed. Intuitivt. Dokumenteret. Fremtidsorienteret.
-          </p>
-          <a
-            href="#intro-section" // Link to the intro section below
-            className="esg-bg-[#fff] esg-text-black esg-px-10 esg-py-3 esg-rounded-full esg-text-xl hover:esg-bg-[#bd822e] hover:esg-text-white esg-transition-colors esg-duration-300"
-          >
-            Læs mere
-          </a>
+        <div className="esg-container esg-mx-auto esg-relative esg-z-10 esg-text-white esg-max-w-7xl esg-flex esg-items-center">
+          <div className="esg-w-1/2 esg-text-left esg-pr-8">
+            <h1 className="esg-text-5xl esg-font-extrabold esg-mb-4">Det perfekte styringsværktøj til ESG</h1>
+            <p className="esg-text-2xl esg-mb-8">
+              Dan dig et overblik over din ESG-profil og arbejd strategisk med bæredygtighed. Intuitivt. Dokumenteret. Fremtidsorienteret.
+            </p>
+            <a
+              href="#intro-section" // Link to the intro section below
+              className="esg-bg-[#fff] esg-text-black esg-px-10 esg-py-3 esg-rounded-full esg-text-xl hover:esg-bg-[#bd822e] hover:esg-text-white esg-transition-colors esg-duration-300"
+            >
+              Læs mere
+            </a>
+          </div>
+          <div className="esg-w-2/3">
+            <img src={esgMockup} alt="ESGScore Mockup" className="esg-w-full esg-h-auto" />
+          </div>
         </div>
       </section>
 
@@ -70,6 +79,14 @@ function LandingPage() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Before/After Slider Section */}
+      <section className="esg-min-h-screen esg-py-16 esg-px-4 esg-bg-gray-50">
+        <div className="esg-container esg-mx-auto esg-text-center">
+          <h2 className="esg-text-4xl esg-font-bold esg-text-gray-800 esg-mb-8">Se forskellen: Før og efter vores ESG-indsats</h2>
+          <BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />
         </div>
       </section>
 

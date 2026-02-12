@@ -28,7 +28,7 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
                 activeView === 'companyFigures' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
               }`}
             >
-              <FaBuilding className="esg-mr-3" /> Virksomhedstal
+              <FaBuilding className="esg-mr-3" /> Basismodul
             </button>
           </li>
           <li className="esg-mb-2">

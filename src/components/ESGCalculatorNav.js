@@ -167,23 +167,23 @@ function ESGCalculatorNav({
         <div className="esg-grid esg-grid-cols-2">
           <button
             onClick={() => onNavigate('del1', 'dvaResults')}
-            className={`esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center ${
+            className={`esg-py-2 esg-px-3 esg-flex esg-items-center esg-justify-center ${
               activeGroup === 'dvaResults'
                 ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
                 : `${inactiveContentStyles} esg-border-r-[1px] ${inactiveBorderColor}`
             }`}
           >
-            DVA Resultater
+            DVA-RESULTATER
           </button>
           <button
             onClick={() => onNavigate('del2', 'del2Results')}
-            className={`esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center ${
+            className={`esg-py-2 esg-px-3 esg-flex esg-items-center esg-justify-center ${
               activeGroup === 'del2Results'
                 ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
                 : inactiveContentStyles
             }`}
           >
-            IA Resultater
+            IA-RESULTATER
           </button>
         </div>
       </div>
