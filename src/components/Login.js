@@ -58,7 +58,7 @@ const Login = ({ onLoginSuccess }) => {
           </div>
           <button
             type="submit"
-            className="esg-bg-blue-500 hover:esg-bg-blue-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded focus:esg-outline-none focus:esg-shadow-outline esg-w-full"
+            className="esg-bg-blue-500 hover:esg-bg-blue-700 esg-text-white esg-font-bold esg-pt-2.5 esg-pb-1.5 esg-px-4 esg-rounded focus:esg-outline-none focus:esg-shadow-outline esg-w-full esg-flex esg-items-center esg-justify-center"
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}

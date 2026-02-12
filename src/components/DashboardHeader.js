@@ -25,7 +25,7 @@ function DashboardHeader({ isLoggedIn, onLogout, newTotalCompletionPercentage, o
         <div className="esg-relative">
           <button
             onClick={handleDropdownToggle}
-            className="esg-flex esg-items-center esg-text-white esg-px-4 esg-py-2 esg-rounded-md hover:esg-bg-blue-700 focus:esg-outline-none"
+            className="esg-flex esg-items-center esg-text-white esg-px-4 esg-pt-2.5 esg-pb-1.5 esg-rounded-md hover:esg-bg-blue-700 focus:esg-outline-none"
           >
             <span className="esg-mr-2">{userCompanyName || 'Din Virksomhed'}</span> {/* Company Name */}
             <svg

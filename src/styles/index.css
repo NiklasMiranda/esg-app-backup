@@ -60,28 +60,28 @@ body::-webkit-scrollbar {
 }
 
 #esg-root .btn-primary {
-  @apply esg-bg-[#0b3954] hover:esg-bg-[#bd822e] esg-text-white esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full esg-leading-none;
+  @apply esg-bg-[#0b3954] hover:esg-bg-[#bd822e] esg-text-white esg-pt-2.5 esg-pb-1.5 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .btn-secondary {
-  @apply esg-bg-[#0b3954] hover:esg-bg-[#bd822e] esg-text-white esg-py-2 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full esg-leading-none;
+  @apply esg-bg-[#0b3954] hover:esg-bg-[#bd822e] esg-text-white esg-pt-2.5 esg-pb-1.5 esg-px-4 disabled:esg-opacity-50 disabled:esg-cursor-not-allowed esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .btn-nav {
-  @apply esg-px-4 esg-py-2 esg-transition-colors esg-duration-200 esg-bg-[#0b3954] esg-text-white hover:esg-bg-[#bd822e] hover:esg-text-white esg-rounded-full esg-leading-none;
+  @apply esg-px-4 esg-pt-2.5 esg-pb-1.5 esg-transition-colors esg-duration-200 esg-bg-[#0b3954] esg-text-white hover:esg-bg-[#bd822e] hover:esg-text-white esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .btn-nav-active {
-  @apply esg-bg-[#bd822e] esg-text-white esg-rounded-full esg-leading-none;
+  @apply esg-bg-[#bd822e] esg-text-white esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center esg-pt-2.5 esg-pb-1.5;
 }
 #esg-root .btn-icon {
-  @apply esg-text-blue-500 hover:esg-text-blue-700 esg-leading-none;
+  @apply esg-text-blue-500 hover:esg-text-blue-700 esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .btn-green {
-  @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-py-2 esg-px-4 esg-rounded-full esg-leading-none;
+  @apply esg-bg-[#0b3954] hover:esg-bg-black esg-text-white esg-pt-2.5 esg-pb-1.5 esg-px-4 esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .btn-red {
-  @apply esg-bg-[#ffffff] hover:esg-bg-[#f4f4f4] esg-text-black esg-py-2 esg-px-4 esg-rounded-full esg-leading-none;
+  @apply esg-bg-[#ffffff] hover:esg-bg-[#f4f4f4] esg-text-black esg-pt-2.5 esg-pb-1.5 esg-px-4 esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .btn-sm {
-  @apply esg-px-2 esg-py-1 esg-text-sm esg-leading-none;
+  @apply esg-px-2 esg-pt-1.5 esg-pb-0.5 esg-text-sm esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .esg-form-checkbox {
   @apply esg-appearance-none esg-h-5 esg-w-5 esg-border esg-border-gray-300 esg-rounded-xl esg-bg-white esg-transition-all esg-duration-200 esg-cursor-pointer;
