@@ -313,6 +313,7 @@ function App() {
     };
 
     const navigateTo = (section, stepKey) => {
+      console.log('navigateTo called:', { section, stepKey });
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setActiveSection(section);
       if (section === 'del1') {
@@ -560,14 +561,15 @@ function App() {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
             <ESGCalculatorNav
-              availableYears={[2024, 2025, 2026]} // Placeholder, need to fetch actual years
+              availableYears={[2024, 2025, 2026]}
               currentYear={currentYear}
               onSelectYear={setCurrentYear}
-              onAddNewYear={() => console.log('Add new year')} // Placeholder
+              onAddNewYear={() => console.log('Add new year')}
               activeGroup={activeGroup}
               onNavigate={navigateTo}
               categoryCompletionStatus={categoryCompletionStatus}
               questionGroups={questionGroups}
+              activeSection={activeSection}  // ← tilføj denne
             />
             <div className="esg-p-4">
               {renderStep()}

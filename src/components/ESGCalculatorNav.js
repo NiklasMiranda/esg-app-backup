@@ -15,6 +15,10 @@ function ESGCalculatorNav({
   questionGroups = [],
   activeSection,
 }) {
+  console.log('ESGCalculatorNav Render:');
+  console.log('activeSection:', activeSection);
+  console.log('activeGroup:', activeGroup);
+
   const del2NavSteps = [
     { key: 'esgInfo', title: 'Introduktion til Initiativanalyse' },
     ...questionGroups.map(groupKey => ({ key: groupKey, title: `${groupKey}: ${groupTitles[groupKey] || ''}` })),
@@ -34,6 +38,11 @@ function ESGCalculatorNav({
   const activeBorderColor = 'esg-border-[#0b3954]';
   const inactiveBorderColor = 'esg-border-gray-300';
   const baseButtonFlex = 'esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center esg-gap-1';
+
+  const isDVAActive = activeSection === 'del1';
+  const isIAActive = activeSection === 'del2';
+  console.log('isDVAActive (DOBBELTVÆSENTLIGHEDSANALYSE):', isDVAActive);
+  console.log('isIAActive (INITIATIVANALYSE):', isIAActive);
 
   return (
     <nav className="esg-bg-[#f4f4f4] esg-text-gray-800 esg-shadow-md">
@@ -105,6 +114,7 @@ function ESGCalculatorNav({
             <div className="esg-flex esg-justify-start esg-flex-grow">
               {del1Steps.filter(step => questionGroups.includes(step.key)).map((step, index, arr) => {
                 const isActive = activeGroup === step.key && activeSection === 'del1';
+                console.log(`DVA Subcategory: ${step.key}, isActive: ${isActive}`);
                 const hasRight = index < arr.length - 1;
                 return (
                   <button
@@ -131,6 +141,7 @@ function ESGCalculatorNav({
             <div className="esg-flex esg-justify-start esg-flex-grow">
               {del2NavSteps.filter(step => questionGroups.includes(step.key)).map((step, index, arr) => {
                 const isActive = activeGroup === step.key && activeSection === 'del2';
+                console.log(`IA Subcategory: ${step.key}, isActive: ${isActive}`);
                 const hasRight = index < arr.length - 1;
                 return (
                   <button

@@ -69,7 +69,7 @@ body::-webkit-scrollbar {
   @apply esg-px-4 esg-pt-2.5 esg-pb-1.5 esg-transition-colors esg-duration-200 esg-bg-[#0b3954] esg-text-white hover:esg-bg-[#bd822e] hover:esg-text-white esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center;
 }
 #esg-root .btn-nav-active {
-  @apply esg-bg-[#bd822e] esg-text-white esg-rounded-full esg-leading-none esg-flex esg-items-center esg-justify-center esg-pt-2.5 esg-pb-1.5;
+  @apply esg-leading-none esg-flex esg-items-center esg-justify-center esg-pt-2.5 esg-pb-1.5;
 }
 #esg-root .btn-icon {
   @apply esg-text-blue-500 hover:esg-text-blue-700 esg-leading-none esg-flex esg-items-center esg-justify-center;
