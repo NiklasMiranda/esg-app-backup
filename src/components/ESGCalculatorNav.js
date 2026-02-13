@@ -9,6 +9,12 @@ function ESGCalculatorNav({
   currentYear,
   onSelectYear,
   onAddNewYear,
+  showAddYearInput,       
+  newYearValue,           
+  handleYearInputChange,  
+  handleYearInputConfirm, 
+  handleYearInputCancel,  
+  addYearError,           
   activeGroup,
   onNavigate,
   categoryCompletionStatus = {},
@@ -31,8 +37,6 @@ function ESGCalculatorNav({
     { key: 'dvaResults', title: 'Resultater' },
   ];
 
-  const yearPlaceholders = Array.from({ length: Math.max(0, 10 - availableYears.length) });
-
   const activeContentStyles = 'esg-bg-white esg-text-black esg-font-extrabold';
   const inactiveContentStyles = 'hover:esg-bg-white esg-text-gray-700';
   const activeBorderColor = 'esg-border-[#0b3954]';
@@ -47,11 +51,12 @@ function ESGCalculatorNav({
   return (
     <nav className="esg-bg-[#f4f4f4] esg-text-gray-800 esg-shadow-md">
       {/* Year Selection */}
-      <div className={`esg-flex esg-items-center esg-border-b-[1px] ${inactiveBorderColor}`}>
+      <div className={`esg-flex esg-items-center esg-border-b-[1px] ${inactiveBorderColor} esg-relative`}> {/* Added esg-relative for error positioning */}
         <div className="esg-flex esg-flex-grow">
           {availableYears.map((year, index) => {
             const isActive = year === currentYear;
-            const hasRightNeighbour = index < availableYears.length - 1 || yearPlaceholders.length > 0;
+            const isLastAvailableYear = index === availableYears.length - 1;
+            const hasRightBorder = !isLastAvailableYear || showAddYearInput; // Border to the right if not last, or if add year input is shown
             return (
               <button
                 key={year}
@@ -62,33 +67,44 @@ function ESGCalculatorNav({
                     ? `${activeContentStyles} esg-border-[1px] ${activeBorderColor}`
                     : inactiveContentStyles
                   }
-                  ${!isActive && hasRightNeighbour ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}
+                  ${hasRightBorder ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}
                 `}
               >
                 {year}
               </button>
             );
           })}
-          {yearPlaceholders.map((_, index) => {
-            if (index === 0) { // Place the add new year button in the first placeholder
-              return (
-                <button
-                  key={`add-year-btn-${index}`}
-                  onClick={onAddNewYear}
-                  className={`
-                    ${baseButtonFlex}
-                    esg-text-gray-700 hover:esg-bg-gray-100
-                    ${index < yearPlaceholders.length - 1 ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}
-                  `}
-                >
-                  <FaPlus />
-                </button>
-              );
-            }
-            return (
-              <div key={`placeholder-${index}`} className={`esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 ${index < yearPlaceholders.length - 1 ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}`}></div>
-            );
-          })}
+          {/* Add Year Input / Button */}
+          {showAddYearInput ? (
+            <div className={`
+              ${baseButtonFlex}
+              esg-flex-nowrap esg-justify-start esg-relative 
+              esg-border-r-[1px] ${inactiveBorderColor} 
+              ${addYearError ? 'esg-border-red-500' : ''}
+            `}>
+              <input
+                type="number"
+                value={newYearValue}
+                onChange={handleYearInputChange}
+                placeholder="Indtast år"
+                className="esg-w-24 esg-p-1 esg-border esg-border-gray-300 esg-rounded-md esg-text-center"
+              />
+              <button onClick={handleYearInputConfirm} className="esg-text-green-600 hover:esg-text-green-800 esg-ml-2">✓</button>
+              <button onClick={handleYearInputCancel} className="esg-text-red-600 hover:esg-text-red-800">✕</button>
+              {addYearError && <p className="esg-text-red-500 esg-text-xs esg-absolute esg-left-0 esg-right-0 esg-bottom-[-1.5rem] esg-text-center">{addYearError}</p>}
+            </div>
+          ) : (
+            // Original "Add Year" button
+            <button
+              onClick={onAddNewYear}
+              className={`
+                ${baseButtonFlex}
+                esg-text-gray-700 hover:esg-bg-gray-100
+              `}
+            >
+              <FaPlus />
+            </button>
+          )}
         </div>
       </div>
 

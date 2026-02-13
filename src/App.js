@@ -45,8 +45,13 @@ function App() {
     // --- ALL STATE HOOKS DECLARED FIRST AND UNCONDITIONALLY ---
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
     const [userCompanyId, setUserCompanyId] = useState(null);
-    const [currentYear, setCurrentYear] = useState(2026);
+    const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // Set current year to actual current year
+    const [availableYears, setAvailableYears] = useState([currentYear]); // Initialize with current year
     const [showLandingPage, setShowLandingPage] = useState(true);
+
+    const [showAddYearInput, setShowAddYearInput] = useState(false);
+    const [newYearValue, setNewYearValue] = useState('');
+    const [addYearError, setAddYearError] = useState('');
 
     const [currentDel1Step, setCurrentDel1Step] = useState('intro');
     const [iaGroupIndex, setIaGroupIndex] = useState(0);
@@ -115,6 +120,53 @@ function App() {
       } catch (err) {
         console.error('Kunne ikke gemme ESG-graf:', err);
       }
+    }, []);
+
+    const onAddNewYear = useCallback(() => {
+      setShowAddYearInput(true);
+      setNewYearValue(''); // Clear previous input
+      setAddYearError(''); // Clear previous error
+    }, []);
+
+    const handleYearInputChange = useCallback((e) => {
+      setNewYearValue(e.target.value);
+      setAddYearError(''); // Clear error on input change
+    }, []);
+
+    const handleYearInputConfirm = useCallback(() => {
+      const year = parseInt(newYearValue, 10);
+      const currentActualYear = new Date().getFullYear(); // Get current actual year
+
+      if (isNaN(year) || year < 1000 || year > 9999) { // Basic year validation
+        setAddYearError('Indtast venligst et gyldigt årstal (f.eks. 2023).');
+        return;
+      }
+
+      const minYear = currentActualYear - 5;
+      const maxYear = currentActualYear + 5;
+
+      if (year < minYear || year > maxYear) {
+        setAddYearError(`Årstal skal være mellem ${minYear} og ${maxYear}.`);
+        return;
+      }
+
+      if (availableYears.includes(year)) {
+        setAddYearError('Årstal findes allerede.');
+        return;
+      }
+
+      const updatedYears = [...availableYears, year].sort((a, b) => a - b);
+      setAvailableYears(updatedYears);
+      setCurrentYear(year); // Set the newly added year as current
+      setShowAddYearInput(false); // Hide input
+      setNewYearValue('');
+      setAddYearError('');
+    }, [newYearValue, availableYears, setCurrentYear]);
+
+    const handleYearInputCancel = useCallback(() => {
+      setShowAddYearInput(false);
+      setNewYearValue('');
+      setAddYearError('');
     }, []);
 
     const fetchAndSetCalculationResults = useCallback(async (companyId, year) => {
@@ -574,10 +626,16 @@ function App() {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
             <ESGCalculatorNav
-              availableYears={[2024, 2025, 2026]}
+              availableYears={availableYears}
               currentYear={currentYear}
               onSelectYear={setCurrentYear}
-              onAddNewYear={() => console.log('Add new year')}
+              onAddNewYear={onAddNewYear}
+              showAddYearInput={showAddYearInput}
+              newYearValue={newYearValue}
+              handleYearInputChange={handleYearInputChange}
+              handleYearInputConfirm={handleYearInputConfirm}
+              handleYearInputCancel={handleYearInputCancel}
+              addYearError={addYearError}
               activeGroup={activeGroup}
               onNavigate={navigateTo}
               categoryCompletionStatus={categoryCompletionStatus}
