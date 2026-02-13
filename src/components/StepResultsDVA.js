@@ -1,41 +1,34 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import groupTitles from '../data/groupTitles';
 
 const axisLabels = ["Ikke relevant", "Lav", "Middel", "Moderat", "Høj", "Meget høj"];
 
 function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNext, onPrev, criterionColors, dvaQuestions }) {
-  const [hoveredItem, setHoveredItem] = useState(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  console.log('StepResultsDVA: dvaQuestions prop:', dvaQuestions);
 
-  const handleMouseEnter = (e, item) => {
-    setHoveredItem(item);
-    setTooltipPosition({ x: e.clientX, y: e.clientY });
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredItem(null);
-  };
-
-  const { plottedCoordinates } = useMemo(() => {
-    const results = {};
-    [...new Set(dvaQuestions.map(q => q.label))].forEach(label => {
-      results[label] = { impact: 0, finansiel: 0, label };
-    });
-
-    const selectedQuestions = new Set();
-    for (const questionId in answers) {
-      if (answers[questionId] === 'yes') {
-        selectedQuestions.add(parseInt(questionId));
+      const { plottedCoordinates } = useMemo(() => {
+      const results = {};
+      [...new Set(dvaQuestions.map(q => q.sub_category.label))].forEach(label => {
+        results[label] = { impact: 0, finansiel: 0, label };
+      });
+  
+      console.log('Results object after initialization:', JSON.stringify(results, null, 2));
+  
+      const selectedQuestions = new Set();
+      for (const questionId in answers) {
+        if (answers[questionId] === 'yes') {
+          selectedQuestions.add(parseInt(questionId));
+        }
       }
-    }
-
-    dvaQuestions.forEach(q => {
-      if (selectedQuestions.has(q.id)) {
-        if (q.purpose === 'impact') results[q.label].impact++;
-        else if (q.purpose === 'finansiel') results[q.label].finansiel++;
-      }
-    });
-
+  
+      dvaQuestions.forEach(q => {
+        if (selectedQuestions.has(q.id)) {
+          if (q.purpose === 'impact') results[q.sub_category.label].impact++;
+          else if (q.purpose === 'finansiel') results[q.sub_category.label].finansiel++;
+        }
+      });
+  
+      console.log('Results object after processing answers:', JSON.stringify(results, null, 2));
     const rawCoordinates = [];
     Object.entries(results).forEach(([label, d]) => {
       rawCoordinates.push({
@@ -44,6 +37,8 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
         finansiel: Math.min(d.finansiel, 5),
       });
     });
+
+    console.log('Raw coordinates:', JSON.stringify(rawCoordinates, null, 2));
 
     // Jitter logic to handle overlapping points
     const jitteredCoordinates = rawCoordinates.map((coord, index, self) => {
@@ -64,8 +59,7 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
       };
     });
 
-    console.log('Plotted Coordinates:', JSON.stringify(jitteredCoordinates, null, 2)); // Debugging line
-    console.log('Plotted Coordinates:', JSON.stringify(jitteredCoordinates, null, 2)); // Debugging line
+    console.log('Plotted Coordinates after jitter:', JSON.stringify(jitteredCoordinates, null, 2));
     return { plottedCoordinates: jitteredCoordinates };
   }, [answers, dvaQuestions]);
 
@@ -113,7 +107,7 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
                 {plottedCoordinates.map(item => (
                   <div
                     key={item.label}
-                    className="esg-absolute esg-flex esg-items-center esg-justify-center esg-text-white esg-rounded-full esg-cursor-pointer"
+                    className="esg-absolute esg-flex esg-items-center esg-justify-center esg-text-white esg-rounded-full"
                     style={{
                       backgroundColor: criterionColors[item.originalLabels[0]] || '#ccc',
                       left: `calc(${(item.impact + 0.5) * (100 / 6)}%)`,
@@ -123,8 +117,6 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
                       fontSize: '12px',
                       transform: 'translate(-50%, -50%)',
                     }}
-                    onMouseEnter={e => handleMouseEnter(e, item)}
-                    onMouseLeave={handleMouseLeave}
                   >
                     {item.displayLabel}
                   </div>
@@ -136,18 +128,6 @@ function StepResultsDVA({ answers, criteriaWeights, impactFinansielCounts, onNex
                 Finansiel væsentlighed
               </div>
             </div>
-
-            {/* Tooltip */}
-            {hoveredItem && (
-              <div
-                className="esg-absolute esg-bg-gray-800 esg-text-white esg-text-xs esg-p-2 esg-rounded esg-shadow-lg esg-z-50"
-                style={{ left: tooltipPosition.x + 10, top: tooltipPosition.y + 10 }}
-              >
-                {hoveredItem.originalLabels.map((label, idx) => (
-                  <div key={idx}>{label}</div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
 
