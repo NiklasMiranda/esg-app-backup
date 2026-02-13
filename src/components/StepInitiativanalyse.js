@@ -46,6 +46,27 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
     setIsCategoryDrawerOpen(false);
   };
 
+  const filteredMarimekkoData = useMemo(() => {
+    if (!marimekkoData || marimekkoData.length === 0 || !iaQuestions || iaQuestions.length === 0) {
+      return [];
+    }
+
+    // Build a map from topic (e.g., "1.1 CO2 udledninger") to sub_category.label (e.g., "E1")
+    const topicToSubCategoryMap = {};
+    iaQuestions.forEach(q => {
+      if (q.topic && q.sub_category && q.sub_category.label) {
+        topicToSubCategoryMap[q.topic] = q.sub_category.label;
+      }
+    });
+
+    const filtered = marimekkoData.filter(item => {
+      const subCategoryLabelForTopic = topicToSubCategoryMap[item.subcategory];
+      return subCategoryLabelForTopic === activeIaGroup;
+    });
+    
+    return filtered;
+  }, [marimekkoData, activeIaGroup, iaQuestions]);
+
   return (
     <div className="esg-flex esg-flex-col lg:esg-flex-row esg-gap-8">
       <div className="esg-w-full lg:esg-w-8/12">
@@ -148,7 +169,7 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
             />
           </div>
           <div className="esg-bg-white esg-p-4 esg-rounded-lg esg-shadow-md esg-mt-8">
-            <NivoLikeMarimekkoChart data={marimekkoData} />
+            <NivoLikeMarimekkoChart data={filteredMarimekkoData} />
           </div>
         </div>
       </div>

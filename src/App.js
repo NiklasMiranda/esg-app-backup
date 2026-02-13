@@ -117,6 +117,18 @@ function App() {
       }
     }, []);
 
+    const fetchAndSetCalculationResults = useCallback(async (companyId, year) => {
+      if (!companyId || !year) return;
+      try {
+        const results = await fetchCalculationResultsFromApi(companyId, year);
+        if (results) {
+          setCalculationResults(results);
+        }
+      } catch (error) {
+        console.error("Failed to fetch calculation results:", error);
+      }
+    }, []);
+
     useEffect(() => {
       if (isLoggedIn && !userCompanyId) {
         setUserCompanyId(1);
@@ -131,12 +143,13 @@ function App() {
 
         try {
           setLoadingQuestions(true);
-          const [fetchedDvaQuestions, fetchedIaQuestionsRaw, userDataRaw, fetchedCalculationResults] = await Promise.all([
+          const [fetchedDvaQuestions, fetchedIaQuestionsRaw, userDataRaw] = await Promise.all([
             fetchDvaQuestionsFromApi(),
             fetchIaQuestionsFromApi(),
             fetchUserData(userCompanyId, currentYear),
-            fetchCalculationResultsFromApi(userCompanyId, currentYear)
           ]);
+          // After fetching basic data, fetch calculation results
+          await fetchAndSetCalculationResults(userCompanyId, currentYear);
 
           const filteredIaQuestions = fetchedIaQuestionsRaw.filter(q => q.question_type === 'IA');
           setDvaQuestions(fetchedDvaQuestions);
@@ -159,9 +172,6 @@ function App() {
           } else {
             setIaAnswers({});
           }
-          if (fetchedCalculationResults) {
-            setCalculationResults(fetchedCalculationResults);
-          }
         } catch (error) {
           console.error("Failed to load initial data:", error);
           if (error.message.includes('401')) {
@@ -172,17 +182,15 @@ function App() {
         }
       };
       loadAllData();
-    }, [isLoggedIn, userCompanyId, currentYear]);
+    }, [isLoggedIn, userCompanyId, currentYear, fetchAndSetCalculationResults]);
 
     useEffect(() => {
         if (!isLoggedIn || !userCompanyId || loadingQuestions) return;
 
         const handler = setTimeout(async () => {
             try {
-                // console.log("DEBUG: iaQuestions at save time:", iaQuestions); // Removed debug log
-
+                // ... filter iaAnswers ...
                 const validIaQuestionIds = new Set(iaQuestions.map(q => q.id.toString()));
-                // console.log("DEBUG: validIaQuestionIds at save time:", Array.from(validIaQuestionIds)); // Removed debug log
                 const filteredIaAnswers = Object.fromEntries(
                     Object.entries(iaAnswers).filter(([questionId, answer]) =>
                         validIaQuestionIds.has(questionId) &&
@@ -194,13 +202,11 @@ function App() {
                     dvaAnswers: answers,
                     iaAnswers: filteredIaAnswers,
                 };
-                // console.log("DEBUG: iaAnswers state before saveUserData:", iaAnswers); // Removed debug log
-                // console.log("DEBUG: filteredIaAnswers being sent:", filteredIaAnswers); // Removed debug log
-                // console.log("DEBUG App.js: saveUserData triggered with dataToSave:", dataToSave); // Removed debug log
 
-                const saveResponse = await saveUserData(userCompanyId, currentYear, dataToSave);
-                // console.log('DEBUG App.js: saveUserData response:', saveResponse); // Removed debug log
-                // console.log('User data (answers) saved successfully!'); // Removed debug log
+                await saveUserData(userCompanyId, currentYear, dataToSave);
+                // After saving, re-fetch calculation results to update charts
+                await fetchAndSetCalculationResults(userCompanyId, currentYear);
+                
             } catch (error) {
                 console.error("Failed to save user data:", error);
             }
@@ -209,7 +215,7 @@ function App() {
         return () => {
             clearTimeout(handler);
         };
-    }, [answers, iaAnswers, iaQuestions, saveUserData, userCompanyId, currentYear, isLoggedIn, loadingQuestions]);
+    }, [answers, iaAnswers, iaQuestions, saveUserData, userCompanyId, currentYear, isLoggedIn, loadingQuestions, fetchAndSetCalculationResults]);
     
     const descriptions = {
       ...categoryDescriptions,

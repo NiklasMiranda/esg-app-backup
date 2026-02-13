@@ -185,3 +185,5 @@ class CalculationResultSerializer(serializers.Serializer):
     totalScore = serializers.FloatField()
     esgLevel = serializers.CharField()
     indicatorPoints = serializers.DictField(child=serializers.IntegerField())
+    marimekkoData = serializers.ListField(child=serializers.DictField()) # Simplified child type, more flexible
+    polarBarChartData = serializers.ListField(child=serializers.DictField()) # Simplified child type, more flexible
