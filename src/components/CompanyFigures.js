@@ -193,9 +193,9 @@ function CompanyFigures({ currentYear }) {
         {/* Generelle oplysninger (B1) */}
         <div className="esg-mb-8">
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">1. Generelle oplysninger (B1)</h3>
-          <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+          <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
             <div>
-              <label htmlFor="basis_for_preparation" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="basis_for_preparation" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Grundlag for udarbejdelse:
               </label>
               <input
@@ -210,7 +210,7 @@ function CompanyFigures({ currentYear }) {
               {errors.basis_for_preparation && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.basis_for_preparation}</p>}
             </div>
             <div>
-              <label htmlFor="legal_form" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="legal_form" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Virksomhedens juridiske form:
               </label>
               <input
@@ -225,8 +225,8 @@ function CompanyFigures({ currentYear }) {
               {errors.legal_form && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.legal_form}</p>}
             </div>
             {/* NACE Sektor Koder */}
-            <div className="md:esg-col-span-2">
-              <label className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+            <div className="md:esg-col-span-3"> {/* NACE codes block spans across 3 columns */}
+              <label className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 NACE sektor kode(r):
               </label>
               {formData.nace_sector_codes.map((code, index) => (
@@ -258,7 +258,7 @@ function CompanyFigures({ currentYear }) {
               {errors.nace_sector_codes && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.nace_sector_codes}</p>}
             </div>
             <div>
-              <label htmlFor="balance_sheet_total" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="balance_sheet_total" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Balancesum (DKK):
               </label>
               <input
@@ -273,7 +273,7 @@ function CompanyFigures({ currentYear }) {
               {errors.balance_sheet_total && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.balance_sheet_total}</p>}
             </div>
             <div>
-              <label htmlFor="revenue" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="revenue" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Omsætning (DKK):
               </label>
               <input
@@ -288,7 +288,7 @@ function CompanyFigures({ currentYear }) {
               {errors.revenue && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.revenue}</p>}
             </div>
             <div>
-              <label htmlFor="employees" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="employees" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Antal ansatte:
               </label>
               <input
@@ -302,8 +302,8 @@ function CompanyFigures({ currentYear }) {
               />
               {errors.employees && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.employees}</p>}
             </div>
-            <div className="md:esg-col-span-2">
-              <label htmlFor="asset_locations" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+            <div className="md:esg-col-span-3"> {/* Textarea spans across 3 columns */}
+              <label htmlFor="asset_locations" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Adresser og geolokation på væsentlige aktiver og anlæg:
               </label>
               <textarea
@@ -317,8 +317,8 @@ function CompanyFigures({ currentYear }) {
               ></textarea>
               {errors.asset_locations && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.asset_locations}</p>}
             </div>
-            <div className="md:esg-col-span-2">
-              <label htmlFor="confidentiality_exclusions" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+            <div className="md:esg-col-span-3"> {/* Textarea spans across 3 columns */}
+              <label htmlFor="confidentiality_exclusions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Eventuelle udeladelser grundet fortrolighed (valgfri):
               </label>
               <textarea
@@ -331,8 +331,8 @@ function CompanyFigures({ currentYear }) {
                 placeholder="Indtast udeladelser"
               ></textarea>
             </div>
-            <div className="md:esg-col-span-2">
-              <label htmlFor="esg_certificate_description" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+            <div className="md:esg-col-span-3"> {/* Textarea spans across 3 columns */}
+              <label htmlFor="esg_certificate_description" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Kort beskrivelse af din virksomheds eventuelle ESG-certifikat eller miljømærker (valgfri):
               </label>
               <textarea
@@ -360,7 +360,7 @@ function CompanyFigures({ currentYear }) {
               onChange={handleChange}
               className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
             />
-            <label htmlFor="has_initiatives" className="esg-text-gray-700 esg-text-sm esg-font-bold">
+            <label htmlFor="has_initiatives" className="esg-text-gray-700 esg-text-md esg-font-bold">
               Har din virksomhed allerede konkrete indsatser, politikker eller initiativer, der understøtter omstilling til en mere bæredygtig økonomi? (valgfri)
             </label>
           </div>
@@ -369,9 +369,9 @@ function CompanyFigures({ currentYear }) {
         {/* E-Data: Energiforbrug (B3) */}
         <div className="esg-mb-8">
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">3. E-Data: Energiforbrug (B3)</h3>
-          <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+          <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
             <div>
-              <label htmlFor="electricity_renewable" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="electricity_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Elektricitet: Vedvarende:
               </label>
               <input
@@ -386,7 +386,7 @@ function CompanyFigures({ currentYear }) {
               {errors.electricity_renewable && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.electricity_renewable}</p>}
             </div>
             <div>
-              <label htmlFor="electricity_non_renewable" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="electricity_non_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Elektricitet: Ikke-vedvarende:
               </label>
               <input
@@ -401,7 +401,7 @@ function CompanyFigures({ currentYear }) {
               {errors.electricity_non_renewable && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.electricity_non_renewable}</p>}
             </div>
             <div>
-              <label htmlFor="fuel_renewable" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="fuel_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Brændstoffer: Vedvarende:
               </label>
               <input
@@ -416,7 +416,7 @@ function CompanyFigures({ currentYear }) {
               {errors.fuel_renewable && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.fuel_renewable}</p>}
             </div>
             <div>
-              <label htmlFor="fuel_non_renewable" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="fuel_non_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Brændstoffer: Ikke-vedvarende:
               </label>
               <input
@@ -436,9 +436,9 @@ function CompanyFigures({ currentYear }) {
         {/* E-Data: CO₂e-udledninger (B3) - continued */}
         <div className="esg-mb-8">
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">4. E-Data: CO₂e-udledninger (B3)</h3>
-          <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+          <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
             <div>
-              <label htmlFor="scope1_emissions" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="scope1_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Scope 1 CO₂e udledninger:
               </label>
               <input
@@ -453,7 +453,7 @@ function CompanyFigures({ currentYear }) {
               {errors.scope1_emissions && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.scope1_emissions}</p>}
             </div>
             <div>
-              <label htmlFor="scope2_emissions" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="scope2_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Scope 2 CO₂e udledninger:
               </label>
               <input
@@ -468,7 +468,7 @@ function CompanyFigures({ currentYear }) {
               {errors.scope2_emissions && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.scope2_emissions}</p>}
             </div>
             <div>
-              <label htmlFor="co2e_intensity" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="co2e_intensity" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 CO₂e-intensitet:
               </label>
               <input
@@ -483,7 +483,7 @@ function CompanyFigures({ currentYear }) {
               {errors.co2e_intensity && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.co2e_intensity}</p>}
             </div>
             <div>
-              <label htmlFor="scope3_emissions" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="scope3_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Scope 3 CO₂e udledninger (valgfri):
               </label>
               <input
@@ -503,7 +503,7 @@ function CompanyFigures({ currentYear }) {
         <div className="esg-mb-8">
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">5. E-Data: Forurening af luft, vand og jord (B4)</h3>
           <div className="md:esg-col-span-2">
-            <label htmlFor="pollution_reporting" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+            <label htmlFor="pollution_reporting" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
               Rapportering om forurening (obligatorisk hvis relevant):
             </label>
             <textarea
@@ -521,9 +521,9 @@ function CompanyFigures({ currentYear }) {
         {/* E-Data: Biodiversitet (B5) */}
         <div className="esg-mb-8">
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">6. E-Data: Biodiversitet (B5)</h3>
-          <div className="esg-grid esg-grid-cols-1 esg-gap-4">
+          <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
             <div>
-              <label htmlFor="biodiversity_sensitive_areas" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="biodiversity_sensitive_areas" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Opgørelse af virksomhedens områder i nærheden af eller i 'biodiversitetsfølsomme områder’ (obligatorisk hvis relevant):
               </label>
               <textarea
@@ -537,7 +537,7 @@ function CompanyFigures({ currentYear }) {
               ></textarea>
             </div>
             <div>
-              <label htmlFor="land_area_usage" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="land_area_usage" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Virksomhedens arealforbrug (valgfri):
               </label>
               <input
@@ -558,7 +558,7 @@ function CompanyFigures({ currentYear }) {
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">7. E-Data: Vand (B6)</h3>
           <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
             <div>
-              <label htmlFor="water_withdrawal" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="water_withdrawal" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Udtagning af vand:
               </label>
               <input
@@ -573,7 +573,7 @@ function CompanyFigures({ currentYear }) {
               {errors.water_withdrawal && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.water_withdrawal}</p>}
             </div>
             <div>
-              <label htmlFor="water_consumption" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="water_consumption" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Vandforbrug (obligatorisk hvis relevant):
               </label>
               <input
@@ -602,13 +602,13 @@ function CompanyFigures({ currentYear }) {
                 onChange={handleChange}
                 className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
               />
-              <label htmlFor="uses_circular_economy_principles" className="esg-text-gray-700 esg-text-sm esg-font-bold">
+              <label htmlFor="uses_circular_economy_principles" className="esg-text-gray-700 esg-text-md esg-font-bold">
                 Anvendelse af principper fra cirkulær økonomi (JA/NEJ):
               </label>
             </div>
             {formData.uses_circular_economy_principles && (
               <div className="md:esg-col-span-2 esg-mb-4">
-                <label htmlFor="circular_economy_description" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+                <label htmlFor="circular_economy_description" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                   Beskrivelse af, hvordan der arbejdes med principper fra cirkulær økonomi:
                 </label>
                 <textarea
@@ -623,7 +623,7 @@ function CompanyFigures({ currentYear }) {
               </div>
             )}
             <div>
-              <label htmlFor="total_waste_hazardous" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="total_waste_hazardous" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Total mængde farligt affald årligt:
               </label>
               <input
@@ -638,7 +638,7 @@ function CompanyFigures({ currentYear }) {
               {errors.total_waste_hazardous && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.total_waste_hazardous}</p>}
             </div>
             <div>
-              <label htmlFor="total_waste_non_hazardous" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="total_waste_non_hazardous" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Total mængde ikke-farligt affald årligt:
               </label>
               <input
@@ -653,7 +653,7 @@ function CompanyFigures({ currentYear }) {
               {errors.total_waste_non_hazardous && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.total_waste_non_hazardous}</p>}
             </div>
             <div>
-              <label htmlFor="waste_recycled" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="waste_recycled" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Total mængde affald, der sendes til genbrug eller genanvendelse:
               </label>
               <input
@@ -668,7 +668,7 @@ function CompanyFigures({ currentYear }) {
               {errors.waste_recycled && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.waste_recycled}</p>}
             </div>
             <div className="md:esg-col-span-2">
-              <label htmlFor="mass_flow_materials" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="mass_flow_materials" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Årlige masse-flow for virksomhedens centrale materialer (obligatorisk hvis relevant):
               </label>
               <textarea
@@ -689,7 +689,7 @@ function CompanyFigures({ currentYear }) {
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">9. S-Data: Egen arbejdsstyrke (B8)</h3>
           <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
             <div>
-              <label htmlFor="contract_type" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="contract_type" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Kontrakttype:
               </label>
               <input
@@ -703,7 +703,7 @@ function CompanyFigures({ currentYear }) {
               />
             </div>
             <div>
-              <label htmlFor="gender_composition" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="gender_composition" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Kønssammensætning:
               </label>
               <input
@@ -717,7 +717,7 @@ function CompanyFigures({ currentYear }) {
               />
             </div>
             <div className="md:esg-col-span-2">
-              <label htmlFor="employees_abroad" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="employees_abroad" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Ansættelseskontrakter i andre lande udover Danmark (obligatorisk hvis relevant):
               </label>
               <textarea
@@ -731,7 +731,7 @@ function CompanyFigures({ currentYear }) {
               ></textarea>
             </div>
             <div>
-              <label htmlFor="employee_turnover" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="employee_turnover" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Medarbejderomsætning (oplyses kun ved mere end 50 ansatte, valgfri):
               </label>
               <input
@@ -752,7 +752,7 @@ function CompanyFigures({ currentYear }) {
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">10. S-Data: Sundhed og sikkerhed (B9)</h3>
           <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
             <div>
-              <label htmlFor="work_accidents" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="work_accidents" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Egen arbejdsstyrke: Registrerede arbejdsulykker:
               </label>
               <input
@@ -767,7 +767,7 @@ function CompanyFigures({ currentYear }) {
               {errors.work_accidents && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.work_accidents}</p>}
             </div>
             <div>
-              <label htmlFor="work_related_deaths" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="work_related_deaths" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Egen arbejdsstyrke: Arbejdsrelaterede dødsfald:
               </label>
               <input
@@ -789,7 +789,7 @@ function CompanyFigures({ currentYear }) {
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">11. S-Data: Vederlag, overenskomster og uddannelse (B10)</h3>
           <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
             <div>
-              <label htmlFor="salary_below_minimum" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="salary_below_minimum" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Oplysning om aflønning over/under minimumsløn:
               </label>
               <select
@@ -807,7 +807,7 @@ function CompanyFigures({ currentYear }) {
               {errors.salary_below_minimum && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.salary_below_minimum}</p>}
             </div>
             <div>
-              <label htmlFor="gender_pay_gap" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="gender_pay_gap" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Lønforskel mellem mandlige og kvindelige ansatte (oplyses kun ved over 150 ansatte, valgfri):
               </label>
               <input
@@ -821,7 +821,7 @@ function CompanyFigures({ currentYear }) {
               />
             </div>
             <div>
-              <label htmlFor="collective_bargaining_coverage" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="collective_bargaining_coverage" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Procentvis ansatte, der er dækket af en kollektiv overenskomst:
               </label>
               <input
@@ -836,7 +836,7 @@ function CompanyFigures({ currentYear }) {
               {errors.collective_bargaining_coverage && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.collective_bargaining_coverage}</p>}
             </div>
             <div>
-              <label htmlFor="avg_training_hours" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="avg_training_hours" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Uddannelsestimer i gennemsnit pr. ansat:
               </label>
               <input
@@ -858,7 +858,7 @@ function CompanyFigures({ currentYear }) {
           <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-gray-700">12. G-Data: Virksomhedsledelse (B11)</h3>
           <div className="esg-grid esg-grid-cols-1 esg-gap-4">
             <div>
-              <label htmlFor="corruption_bribery_cases" className="esg-block esg-text-gray-700 esg-text-sm esg-font-bold esg-mb-2">
+              <label htmlFor="corruption_bribery_cases" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                 Antal domme og bøder i relation til korruption & bestikkelse (obligatorisk hvis relevant):
               </label>
               <input

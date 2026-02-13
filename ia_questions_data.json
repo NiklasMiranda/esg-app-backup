@@ -1,0 +1,1092 @@
+[
+    {
+        "id": 1001,
+        "label": "E1",
+        "text": "Virksomheden har udregnet og dokumenteret sine CO2e-udledninger for Scope 1 og 2.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.1 CO2 udledninger",
+        "points": 10,
+        "number": "1.1.1"
+    },
+    {
+        "id": 1002,
+        "label": "E1",
+        "text": "Virksomheden har udregnet og dokumenteret sine CO2e-udledninger for Scope 1, 2 og 3.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.1 CO2 udledninger",
+        "points": 5,
+        "number": "1.1.2"
+    },
+    {
+        "id": 1003,
+        "label": "E1",
+        "text": "Virksomheden har en politik for reduktion af sine CO2e-udledninger.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.1 CO2 udledninger",
+        "points": 5,
+        "number": "1.1.3"
+    },
+    {
+        "id": 1004,
+        "label": "E1",
+        "text": "Virksomheden har konkrete mål for reduktion af sine CO2e-udledninger.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.1 CO2 udledninger",
+        "points": 5,
+        "number": "1.1.4"
+    },
+    {
+        "id": 1005,
+        "label": "E1",
+        "text": "Virksomheden har en strategi for, hvordan de vil opnå deres CO2e-reduktionsmål.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.1 CO2 udledninger",
+        "points": 10,
+        "number": "1.1.5"
+    },
+    {
+        "id": 1006,
+        "label": "E1",
+        "text": "Virksomheden har udpeget ansvarlige for energiledelse og fastlagt, hvordan ansvaret er organiseret på den pågældende lokation.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.2 Energiledelse og energiforbrug",
+        "points": 10,
+        "number": "1.2.1"
+    },
+    {
+        "id": 1007,
+        "label": "E1",
+        "text": "Virksomheden har en politik for at håndtere energiforbrug og energimiks.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.2 Energiledelse og energiforbrug",
+        "points": 5,
+        "number": "1.2.2"
+    },
+    {
+        "id": 1008,
+        "label": "E1",
+        "text": "Virksomheden har konkrete målsætninger for at øge andelen af vedvarende energi og reducere energiforbruget.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.2 Energiledelse og energiforbrug",
+        "points": 5,
+        "number": "1.2.3"
+    },
+    {
+        "id": 1009,
+        "label": "E1",
+        "text": "Virksomheden har en handlingsplan/strategi for, hvordan de vil opnå deres energimål.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.2 Energiledelse og energiforbrug",
+        "points": 10,
+        "number": "1.2.4"
+    },
+    {
+        "id": 1010,
+        "label": "E1",
+        "text": "Virksomheden overvåger systematisk og følger op på sit energiforbrug",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.2 Energiledelse og energiforbrug",
+        "points": 5,
+        "number": "1.2.5"
+    },
+    {
+        "id": 1011,
+        "label": "E1",
+        "text": "Mindst 20% af virksomhedens energiforbrug stammer fra vedvarende energikilder",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.3 Vedvarende energi",
+        "points": null,
+        "number": "1.3.1"
+    },
+    {
+        "id": 1012,
+        "label": "E1",
+        "text": "Mindst 50% af virksomhedens energiforbrug stammer fra vedvarende energikilder",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.3 Vedvarende energi",
+        "points": null,
+        "number": "1.3.2"
+    },
+    {
+        "id": 1013,
+        "label": "E1",
+        "text": "Hele virksomhedens energiforbrug stammer fra vedvarende energikilder",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.3 Vedvarende energi",
+        "points": 5,
+        "number": "1.3.3"
+    },
+    {
+        "id": 1014,
+        "label": "E1",
+        "text": "Virksomheden kan dokumentere oprindelsen af den energi, som hævdes at være grøn, uanset andel.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.3 Vedvarende energi",
+        "points": 5,
+        "number": "1.3.4"
+    },
+    {
+        "id": 1015,
+        "label": "E1",
+        "text": "Virksomheden har dokumenteret energimærkningen af størstedelen af sine bygninger.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.4 Energimærke",
+        "points": 5,
+        "number": "1.4.1"
+    },
+    {
+        "id": 1016,
+        "label": "E1",
+        "text": "Størstedelen af virksomhedens bygninger har energimærke B eller bedre.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.4 Energimærke",
+        "points": 2,
+        "number": "1.4.2"
+    },
+    {
+        "id": 1017,
+        "label": "E1",
+        "text": "Størstedelen af virksomhedens bygninger har energimærke A2010 eller bedre.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.4 Energimærke",
+        "points": 2,
+        "number": "1.4.3"
+    },
+    {
+        "id": 1018,
+        "label": "E1",
+        "text": "Størstedelen af virksomhedens bygninger har energimærke A2015 eller bedre.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.4 Energimærke",
+        "points": 2,
+        "number": "1.4.4"
+    },
+    {
+        "id": 1019,
+        "label": "E1",
+        "text": "Størstedelen af virksomhedens bygninger har energimærke A2020.",
+        "category": "E",
+        "subcategory": "Klimaforandringer",
+        "secondSubcategory": "1.4 Energimærke",
+        "points": 4,
+        "number": "1.4.5"
+    },
+    {
+        "id": 1020,
+        "label": "E2",
+        "text": "Virksomheden har taget stilling til, hvor den har risiko for at bidrage til miljøforurening.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.1 Kortlægning og strategi for forurening",
+        "points": 15,
+        "number": "2.1.1"
+    },
+    {
+        "id": 1021,
+        "label": "E2",
+        "text": "Virksomheden har en politik for forurening.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.1 Kortlægning og strategi for forurening",
+        "points": 10,
+        "number": "2.1.2"
+    },
+    {
+        "id": 1022,
+        "label": "E2",
+        "text": "Virksomheden har konkrete mål for reduktion af deres forurening.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.1 Kortlægning og strategi for forurening",
+        "points": 5,
+        "number": "2.1.3"
+    },
+    {
+        "id": 1023,
+        "label": "E2",
+        "text": "Virksomheden har en handlingsplan/strategi for, hvordan de vil opnå deres mål om mindre forurening.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.1 Kortlægning og strategi for forurening",
+        "points": 10,
+        "number": "2.1.4"
+    },
+    {
+        "id": 1024,
+        "label": "E2",
+        "text": "Virksomheden registrerer og rapporterer sine NOX-, SO2- og partikeludledninger.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.2 Luftforurening",
+        "points": null,
+        "number": "2.2.1"
+    },
+    {
+        "id": 1025,
+        "label": "E2",
+        "text": "Virksomheden har målsætninger for reduktion af disse emissioner inden for 3 år.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.2 Luftforurening",
+        "points": null,
+        "number": "2.2.2"
+    },
+    {
+        "id": 1026,
+        "label": "E2",
+        "text": "Halvdelen af virksomhedens transport er emissionsfri.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.2 Luftforurening",
+        "points": null,
+        "number": "2.2.3"
+    },
+    {
+        "id": 1027,
+        "label": "E2",
+        "text": "Over 90% af virksomhedens transport er emissionsfri.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.2 Luftforurening",
+        "points": null,
+        "number": "2.2.4"
+    },
+    {
+        "id": 1028,
+        "label": "E2",
+        "text": "Virksomheden har dokumenteret spildevandshåndtering, inkl. Rensning.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.3 Vandforurening",
+        "points": 5,
+        "number": "2.3.1"
+    },
+    {
+        "id": 1029,
+        "label": "E2",
+        "text": "Halvdelen af virksomhedens spildevand renses før det ledes til kloak/natur.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.3 Vandforurening",
+        "points": null,
+        "number": "2.3.2"
+    },
+    {
+        "id": 1030,
+        "label": "E2",
+        "text": "Hele virksomhedens spildevand renses før det ledes til kloak/natur.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.3 Vandforurening",
+        "points": null,
+        "number": "2.3.3"
+    },
+    {
+        "id": 1031,
+        "label": "E2",
+        "text": "Virksomheden opbevarer alle potentielt forurenende stoffer på forsvarlig vis.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.4 Jordbundsforurening",
+        "points": 5,
+        "number": "2.4.1"
+    },
+    {
+        "id": 1032,
+        "label": "E2",
+        "text": "Virksomheden har en plan for spildhåndtering og nødberedskab ved udslip.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.4 Jordbundsforurening",
+        "points": 5,
+        "number": "2.4.2"
+    },
+    {
+        "id": 1033,
+        "label": "E2",
+        "text": "Virksomheden har målsætninger for udfasning af skadelige stoffer eller praksisser med negativ indvirkning på biodiversitet.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.5 Forurening af levende organismer og fødevareressourcer",
+        "points": 10,
+        "number": "2.5.1"
+    },
+    {
+        "id": 1034,
+        "label": "E2",
+        "text": "Virksomheden har en liste over anvendte kemikalier og har identificeret stoffer, der er omfattet af REACH og SVCH.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.6 Problematiske og særligt problematiske stoffer",
+        "points": 5,
+        "number": "2.6.1"
+    },
+    {
+        "id": 1035,
+        "label": "E2",
+        "text": "Over 90% af virksomhedens anvendte stoffer er klassificeret som ufarlige eller lavrisiko.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.6 Problematiske og særligt problematiske stoffer",
+        "points": 5,
+        "number": "2.6.2"
+    },
+    {
+        "id": 1036,
+        "label": "E2",
+        "text": "Virksomheden har teknologier eller metoder til at minimere mikroplast.",
+        "category": "E",
+        "subcategory": "Forurening",
+        "secondSubcategory": "2.7 Mikroplast",
+        "points": 10,
+        "number": "2.7.1"
+    },
+    {
+        "id": 1037,
+        "label": "E3",
+        "text": "Virksomheden har dokumenteret sit vandforbrug og vandudtag.",
+        "category": "E",
+        "subcategory": "Vand- og havressourcer",
+        "secondSubcategory": "3.1 Vandforbrug og vandudtag",
+        "points": 15,
+        "number": "3.1.1"
+    },
+    {
+        "id": 1038,
+        "label": "E3",
+        "text": "Virksomheden har en politik for vandforbrug.",
+        "category": "E",
+        "subcategory": "Vand- og havressourcer",
+        "secondSubcategory": "3.1 Vandforbrug og vandudtag",
+        "points": 40,
+        "number": "3.1.2"
+    },
+    {
+        "id": 1039,
+        "label": "E3",
+        "text": "Virksomheden har konkrete mål for reduktion af vandudtag og vandforbrug.",
+        "category": "E",
+        "subcategory": "Vand- og havressourcer",
+        "secondSubcategory": "3.1 Vandforbrug og vandudtag",
+        "points": 15,
+        "number": "3.1.3"
+    },
+    {
+        "id": 1040,
+        "label": "E3",
+        "text": "Virksomheden har en handlingsplan/strategi for, hvordan de vil opnå deres vandreduktionsmål.",
+        "category": "E",
+        "subcategory": "Vand- og havressourcer",
+        "secondSubcategory": "3.1 Vandforbrug og vandudtag",
+        "points": 30,
+        "number": "3.1.4"
+    },
+    {
+        "id": 1041,
+        "label": "E4",
+        "text": "Virksomheden har dokumenteret det samlede arealforbrug, herunder andele af befæstet areal og naturbaserede arealer, både på og uden for virksomhedens matrikel.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.1 Arealforbrug",
+        "points": 5,
+        "number": "4.1.1"
+    },
+    {
+        "id": 1042,
+        "label": "E4",
+        "text": "Virksomheden har identificeret, om den opererer i eller tæt på biodiversitetsfølsomme områder, og i så fald angivet hvilke og hvor stort et areal der er påvirket.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.1 Arealforbrug",
+        "points": 5,
+        "number": "4.1.2"
+    },
+    {
+        "id": 1043,
+        "label": "E4",
+        "text": "Virksomheden arbejder aktivt for at minimere negativ arealpåvirkning, fx ved grønne tage, regn bede, ubefæstede områder eller naturgenopretning.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.1 Arealforbrug",
+        "points": 10,
+        "number": "4.1.3"
+    },
+    {
+        "id": 1044,
+        "label": "E4",
+        "text": "Virksomheden har vurderet sin påvirkning på biodiversitet gennem f.eks. lys, støj, forurening, invasive arter eller kemikalier.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.2 Indvirkning på biodiversitet og økosystemtjenester",
+        "points": 10,
+        "number": "4.2.1"
+    },
+    {
+        "id": 1045,
+        "label": "E4",
+        "text": "Virksomheden bidrager til at beskytte eller forbedre lokal biodiversitet gennem konkrete tiltag som fx beplantning af hjemmehørende arter, levesteder for insekter og fugle, eller partnerskaber med naturorganisationer.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.2 Indvirkning på biodiversitet og økosystemtjenester",
+        "points": 10,
+        "number": "4.2.2"
+    },
+    {
+        "id": 1046,
+        "label": "E4",
+        "text": "Virksomheden har vurderet, om dens aktiviteter påvirker truede arter eller økosystemtjenester (fx bestøvning, rensning af luft/vand) og dokumenteret eventuelle indsatser.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.2 Indvirkning på biodiversitet og økosystemtjenester",
+        "points": 10,
+        "number": "4.2.3"
+    },
+    {
+        "id": 1047,
+        "label": "E4",
+        "text": "Virksomheden har en politik for biodiversitet, som tager hensyn til biodiversiteten og økosystemerne som virksomheden påvirker.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.3 Strategi og dokumentation",
+        "points": 20,
+        "number": "4.3.1"
+    },
+    {
+        "id": 1048,
+        "label": "E4",
+        "text": "Virksomheden har konkrete målsætninger for biodiversitet.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.3 Strategi og dokumentation",
+        "points": 10,
+        "number": "4.3.2"
+    },
+    {
+        "id": 1049,
+        "label": "E4",
+        "text": "Virksomheden har en handlingsplan/strategi for at opnå disse mål.",
+        "category": "E",
+        "subcategory": "Biodiversitet og økosystemer",
+        "secondSubcategory": "4.3 Strategi og dokumentation",
+        "points": 20,
+        "number": "4.3.3"
+    },
+    {
+        "id": 1050,
+        "label": "E5",
+        "text": "Virksomheden har en politik for ressourceanvendelse og cirkulær økonomi.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.1 Cirkulær økonomi",
+        "points": 20,
+        "number": "5.1.1"
+    },
+    {
+        "id": 1051,
+        "label": "E5",
+        "text": "Virksomheden har konkrete mål for at forbedre ressourceeffektivitet og cirkulær økonomi.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.1 Cirkulær økonomi",
+        "points": 10,
+        "number": "5.1.2"
+    },
+    {
+        "id": 1052,
+        "label": "E5",
+        "text": "Virksomheden har en handlingsplan/strategi for at opnå disse mål.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.1 Cirkulær økonomi",
+        "points": 20,
+        "number": "5.1.3"
+    },
+    {
+        "id": 1053,
+        "label": "E5",
+        "text": "Virksomheden har dokumenteret sin samlede årlige affaldsmængde.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.2 Affaldshåndtering",
+        "points": 15,
+        "number": "5.2.1"
+    },
+    {
+        "id": 1054,
+        "label": "E5",
+        "text": "Hvis virksomheden arbejder i en materialetung sektor, har den dokumenteret mængden af forskellige materialetyper i ton/m³.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.2 Affaldshåndtering",
+        "points": 10,
+        "number": "5.2.2"
+    },
+    {
+        "id": 1055,
+        "label": "E5",
+        "text": "Virksomheden har en politik for affaldshåndtering.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.2 Affaldshåndtering",
+        "points": 10,
+        "number": "5.2.3"
+    },
+    {
+        "id": 1056,
+        "label": "E5",
+        "text": "Virksomheden har konkrete mål for at reducere affaldsmængden og øge genbrug/genanvendelse.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.2 Affaldshåndtering",
+        "points": 5,
+        "number": "5.2.4"
+    },
+    {
+        "id": 1057,
+        "label": "E5",
+        "text": "Virksomheden har en handlingsplan/strategi for at opnå disse mål.",
+        "category": "E",
+        "subcategory": "Ressourceanvendelse og cirkulær økonomi",
+        "secondSubcategory": "5.2 Affaldshåndtering",
+        "points": 10,
+        "number": "5.2.5"
+    },
+    {
+        "id": 1058,
+        "label": "S1",
+        "text": "Virksomheden har dokumenteret antallet af arbejdsulykker og deres frekvens.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.1 Arbejdsulykker",
+        "points": 5,
+        "number": "1.1.1"
+    },
+    {
+        "id": 1059,
+        "label": "S1",
+        "text": "Virksomheden har en politik for sundhed og sikkerhed, der sigter mod at forebygge arbejdsulykker.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.1 Arbejdsulykker",
+        "points": 10,
+        "number": "1.1.2"
+    },
+    {
+        "id": 1060,
+        "label": "S1",
+        "text": "Virksomheden har registreret arbejdsrelaterede dødsfald og arbejder på at reducere sådanne hændelser.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.1 Arbejdsulykker",
+        "points": 5,
+        "number": "1.1.3"
+    },
+    {
+        "id": 1061,
+        "label": "S1",
+        "text": "Virksomheden sikrer, at alle ansatte modtager en løn, der lever op til lovgivning eller overenskomster.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.2 Vederlag og overenskomster",
+        "points": 5,
+        "number": "1.2.1"
+    },
+    {
+        "id": 1062,
+        "label": "S1",
+        "text": "Virksomheden har dokumenteret lønforskellen mellem mandlige og kvindelige ansatte, hvis relevant.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.2 Vederlag og overenskomster",
+        "points": 5,
+        "number": "1.2.2"
+    },
+    {
+        "id": 1063,
+        "label": "S1",
+        "text": "Virksomheden har en strategi for lønstruktur og ansættelsesvilkår.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.2 Vederlag og overenskomster",
+        "points": 5,
+        "number": "1.2.3"
+    },
+    {
+        "id": 1064,
+        "label": "S1",
+        "text": "Virksomheden har angivet procentdelen af medarbejderne er dækket af kollektive overenskomster.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.2 Vederlag og overenskomster",
+        "points": 5,
+        "number": "1.2.4"
+    },
+    {
+        "id": 1065,
+        "label": "S1",
+        "text": "Virksomheden tilbyder uddannelse til sine ansatte og har dokumenteret uddannelsestimer pr. ansat.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.3 Uddannelse",
+        "points": 5,
+        "number": "1.3.1"
+    },
+    {
+        "id": 1066,
+        "label": "S1",
+        "text": "Uddannelsestimerne er opdelt efter køn og relevante medarbejdergrupper.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.3 Uddannelse",
+        "points": 5,
+        "number": "1.3.2"
+    },
+    {
+        "id": 1067,
+        "label": "S1",
+        "text": "Virksomheden har en strategi for medarbejderudvikling og kompetenceopbygning.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.3 Uddannelse",
+        "points": 5,
+        "number": "1.3.3"
+    },
+    {
+        "id": 1068,
+        "label": "S1",
+        "text": "Virksomheden har en Code of Conduct eller en menneskerettighedspolitik, der dækker nøgleområder som børnearbejde, tvangsarbejde og diskrimination.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.4 Menneskerettigheder og etiske retningslinjer",
+        "points": 5,
+        "number": "1.4.1"
+    },
+    {
+        "id": 1069,
+        "label": "S1",
+        "text": "Virksomheden har en strategi for at håndtere medarbejderklager og sikre et etisk arbejdsmiljø.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.4 Menneskerettigheder og etiske retningslinjer",
+        "points": 5,
+        "number": "1.4.2"
+    },
+    {
+        "id": 1070,
+        "label": "S1",
+        "text": "Virksomheden har tidligere håndteret hændelser relateret til menneskerettigheder og har dokumenteret de skridt, der blev taget.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.4 Menneskerettigheder og etiske retningslinjer",
+        "points": 5,
+        "number": "1.4.3"
+    },
+    {
+        "id": 1071,
+        "label": "S1",
+        "text": "Virksomheden har dokumenteret antal ansatte og opdelingen mellem midlertidige og fastansatte.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.5 Demografiske data",
+        "points": null,
+        "number": "1.5.1"
+    },
+    {
+        "id": 1072,
+        "label": "S1",
+        "text": "Der er dokumenteret kønsfordeling blandt medarbejderne.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.5 Demografiske data",
+        "points": null,
+        "number": "1.5.2"
+    },
+    {
+        "id": 1073,
+        "label": "S1",
+        "text": "Virksomheden har registreret ansatte i henhold til ansættelseskontrakter fordelt på lande.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.5 Demografiske data",
+        "points": null,
+        "number": "1.5.3"
+    },
+    {
+        "id": 1074,
+        "label": "S1",
+        "text": "Hvis relevant, er medarbejderomsætningen dokumenteret og angivet i procent.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.5 Demografiske data",
+        "points": null,
+        "number": "1.5.4"
+    },
+    {
+        "id": 1075,
+        "label": "S1",
+        "text": "Virksomheden har en politik for arbejdsmiljø, der inkluderer tiltag for at sikre et sundt og sikkert arbejdsmiljø.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.6 Sundhed og arbejdsmiljø",
+        "points": 5,
+        "number": "1.6.1"
+    },
+    {
+        "id": 1076,
+        "label": "S1",
+        "text": "Virksomheden gennemfører regelmæssigt arbejdspladsvurdering (APV) for at identificere risici og forbedre arbejdsmiljøet.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.6 Sundhed og arbejdsmiljø",
+        "points": 5,
+        "number": "1.6.2"
+    },
+    {
+        "id": 1077,
+        "label": "S1",
+        "text": "Virksomheden har konkrete målsætninger for at forbedre arbejdsmiljøet og arbejdstageres sundhed.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.6 Sundhed og arbejdsmiljø",
+        "points": 5,
+        "number": "1.6.3"
+    },
+    {
+        "id": 1078,
+        "label": "S1",
+        "text": "Virksomheden har en handlingsplan/strategi for at opnå forbedringer i arbejdsmiljøet og sundhed.",
+        "category": "S",
+        "subcategory": "Egen arbejdsstyrke",
+        "secondSubcategory": "1.6 Sundhed og arbejdsmiljø",
+        "points": 5,
+        "number": "1.6.4"
+    },
+    {
+        "id": 1079,
+        "label": "S2",
+        "text": "Virksomheden har identificeret og kortlagt sine væsentligste leverandører og samarbejdspartnere.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.1 Kortlægning og risikovurdering",
+        "points": 15,
+        "number": "2.1.1"
+    },
+    {
+        "id": 1080,
+        "label": "S2",
+        "text": "Virksomheden har foretaget en risikovurdering af arbejdsforholdene hos disse aktører, herunder brug af børnearbejde, tvangsarbejde, uformel arbejdskraft og manglende sikkerhed.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.1 Kortlægning og risikovurdering",
+        "points": 15,
+        "number": "2.1.2"
+    },
+    {
+        "id": 1081,
+        "label": "S2",
+        "text": "Virksomheden har særlig opmærksomhed på risikolande eller brancher med historisk dårlige arbejdsvilkår.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.1 Kortlægning og risikovurdering",
+        "points": 10,
+        "number": "2.1.3"
+    },
+    {
+        "id": 1082,
+        "label": "S2",
+        "text": "Virksomheden har en politik for arbejdsforhold i værdikæden, som stiller krav om fx foreningsfrihed, overenskomster og rimelig løn.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.2 Politik og forpligtelser",
+        "points": 15,
+        "number": "2.2.1"
+    },
+    {
+        "id": 1083,
+        "label": "S2",
+        "text": "Virksomheden kræver, at leverandører skriver under på en adfærdskodeks (Code of Conduct), der dækker menneskerettigheder og arbejdsforhold.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.2 Politik og forpligtelser",
+        "points": 5,
+        "number": "2.2.2"
+    },
+    {
+        "id": 1084,
+        "label": "S2",
+        "text": "Virksomheden samarbejder aktivt med leverandører om at forbedre arbejdsforholdene (fx ved at tilbyde støtte, træning eller krav til forbedringer).",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.2 Politik og forpligtelser",
+        "points": 10,
+        "number": "2.2.3"
+    },
+    {
+        "id": 1085,
+        "label": "S2",
+        "text": "Virksomheden prioriterer samarbejde med leverandører og underleverandører, der er certificerede (fx ISO 45001, SA8000, B Corp, Fairtrade e.l.).",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.3 Ansvarlige samarbejdspartnere",
+        "points": 10,
+        "number": "2.3.1"
+    },
+    {
+        "id": 1086,
+        "label": "S2",
+        "text": "Virksomheden har en politik eller strategi for at vælge partnere ud fra deres arbejde med bæredygtighed og/eller ESG.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.3 Ansvarlige samarbejdspartnere",
+        "points": 5,
+        "number": "2.3.2"
+    },
+    {
+        "id": 1087,
+        "label": "S2",
+        "text": "Virksomheden vurderer løbende sine væsentlige samarbejdspartneres praksis inden for arbejdsvilkår og sociale forhold.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.3 Ansvarlige samarbejdspartnere",
+        "points": 5,
+        "number": "2.3.3"
+    },
+    {
+        "id": 1088,
+        "label": "S2",
+        "text": "Over 50 % af virksomhedens leverandører har implementeret ESG-politikker, certificeringer eller tilsvarende dokumenterede initiativer.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.3 Ansvarlige samarbejdspartnere",
+        "points": 5,
+        "number": "2.3.4"
+    },
+    {
+        "id": 1089,
+        "label": "S2",
+        "text": "Over 90 % af virksomhedens leverandører har implementeret ESG-politikker, certificeringer eller tilsvarende dokumenterede initiativer.",
+        "category": "S",
+        "subcategory": "Arbejdstagere i værdikæden",
+        "secondSubcategory": "2.3 Ansvarlige samarbejdspartnere",
+        "points": 5,
+        "number": "2.3.5"
+    },
+    {
+        "id": 1090,
+        "label": "S3",
+        "text": "Virksomheden vurderer de økonomiske, sociale og kulturelle virkninger af sine aktiviteter på de lokalsamfund, den opererer i.",
+        "category": "S",
+        "subcategory": "Berørte samfund",
+        "secondSubcategory": "3.1 Samfundsbaserede rettigheder og påvirkning",
+        "points": 20,
+        "number": "3.1.1"
+    },
+    {
+        "id": 1091,
+        "label": "S3",
+        "text": "Virksomheden sikrer ordentlige boligforhold, adgang til passende fødevarer, vand og sanitet for de samfund, der påvirkes af virksomhedens aktiviteter.",
+        "category": "S",
+        "subcategory": "Berørte samfund",
+        "secondSubcategory": "3.1 Samfundsbaserede rettigheder og påvirkning",
+        "points": 10,
+        "number": "3.1.2"
+    },
+    {
+        "id": 1092,
+        "label": "S3",
+        "text": "Virksomheden respekterer og beskytter borgerlige og politiske rettigheder, herunder ytrings- og forsamlingsfrihed.",
+        "category": "S",
+        "subcategory": "Berørte samfund",
+        "secondSubcategory": "3.1 Samfundsbaserede rettigheder og påvirkning",
+        "points": 10,
+        "number": "3.1.3"
+    },
+    {
+        "id": 1093,
+        "label": "S3",
+        "text": "Virksomheden sponsorerer lokale aktiviteter og initiativer, der fremmer samfundets udvikling, såsom sport, kultur og velgørenhed.",
+        "category": "S",
+        "subcategory": "Berørte samfund",
+        "secondSubcategory": "3.2 Samfudnsengagement og sponsorater",
+        "points": 20,
+        "number": "3.2.1"
+    },
+    {
+        "id": 1094,
+        "label": "S3",
+        "text": "Virksomheden har en politik for at understøtte samfundets økonomiske og sociale udvikling gennem samarbejde med lokale aktører.",
+        "category": "S",
+        "subcategory": "Berørte samfund",
+        "secondSubcategory": "3.2 Samfudnsengagement og sponsorater",
+        "points": 20,
+        "number": "3.2.2"
+    },
+    {
+        "id": 1095,
+        "label": "S3",
+        "text": "Virksomheden engagerer sig aktivt i at fremme kulturel og social udvikling i de samfund, den er en del af, gennem langsigtede partnerskaber.",
+        "category": "S",
+        "subcategory": "Berørte samfund",
+        "secondSubcategory": "3.2 Samfudnsengagement og sponsorater",
+        "points": 20,
+        "number": "3.2.3"
+    },
+    {
+        "id": 1096,
+        "label": "S4",
+        "text": "Virksomheden sikrer, at forbrugere og slutbrugere har adgang til klare og fyldestgørende oplysninger om produkter og tjenester – herunder sundhed, sikkerhed og miljøpåvirkninger.",
+        "category": "S",
+        "subcategory": "Forbrugere og slutbrugere",
+        "secondSubcategory": "4.1 Beskyttelse af forbrugerens rettigheder og sikkerhed",
+        "points": 20,
+        "number": "4.1.1"
+    },
+    {
+        "id": 1097,
+        "label": "S4",
+        "text": "Virksomheden beskytter privatlivets fred og behandler personoplysninger ansvarligt og i overensstemmelse med gældende lovgivning.",
+        "category": "S",
+        "subcategory": "Forbrugere og slutbrugere",
+        "secondSubcategory": "4.1 Beskyttelse af forbrugerens rettigheder og sikkerhed",
+        "points": 10,
+        "number": "4.1.2"
+    },
+    {
+        "id": 1098,
+        "label": "S4",
+        "text": "Virksomheden tager aktive skridt til at beskytte brugeres personlige sikkerhed, herunder særlig beskyttelse af børn mod skadelige produkter og markedsføring.",
+        "category": "S",
+        "subcategory": "Forbrugere og slutbrugere",
+        "secondSubcategory": "4.1 Beskyttelse af forbrugerens rettigheder og sikkerhed",
+        "points": 20,
+        "number": "4.1.3"
+    },
+    {
+        "id": 1099,
+        "label": "S4",
+        "text": "Virksomheden anvender en ansvarlig markedsføringspraksis, der undgår vildledning og respekterer forbrugernes ret til oplyst valg.",
+        "category": "S",
+        "subcategory": "Forbrugere og slutbrugere",
+        "secondSubcategory": "4.2 Ansvarlig markedsføring og social inklusion",
+        "points": 20,
+        "number": "4.2.1"
+    },
+    {
+        "id": 1100,
+        "label": "S4",
+        "text": "Virksomheden fremmer inklusion ved at sikre, at produkter og tjenester er tilgængelige for alle og ikke diskriminerer på baggrund af fx køn, alder, handicap eller etnicitet.",
+        "category": "S",
+        "subcategory": "Forbrugere og slutbrugere",
+        "secondSubcategory": "4.2 Ansvarlig markedsføring og social inklusion",
+        "points": 15,
+        "number": "4.2.2"
+    },
+    {
+        "id": 1101,
+        "label": "S4",
+        "text": "Virksomheden arbejder aktivt for at tilpasse produkter og tjenester, så de imødekommer forskellige forbrugeres behov og understøtter lige adgang.",
+        "category": "S",
+        "subcategory": "Forbrugere og slutbrugere",
+        "secondSubcategory": "4.2 Ansvarlig markedsføring og social inklusion",
+        "points": 15,
+        "number": "4.2.3"
+    },
+    {
+        "id": 1102,
+        "label": "G1",
+        "text": "Virksomheden har implementeret politikker, der støtter virksomhedens værdier og overholder relevante lovgivningskrav.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.1 Politikker",
+        "points": 15,
+        "number": "1.1.1"
+    },
+    {
+        "id": 1103,
+        "label": "G1",
+        "text": "Virksomheden har integrerede politikker med målsætninger og handlingsplaner for at sikre ansvarlig adfærd og bæredygtighed.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.1 Politikker",
+        "points": 20,
+        "number": "1.1.2"
+    },
+    {
+        "id": 1104,
+        "label": "G1",
+        "text": "Virksomheden har politikker, der dækker alle relevante ESG-emner, med specifikke målsætninger og handlingsplaner for hvert område.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.1 Politikker",
+        "points": 20,
+        "number": "1.1.3"
+    },
+    {
+        "id": 1105,
+        "label": "G1",
+        "text": "Virksomheden har en opfølgningsmekanisme for at sikre, at politikkerne bliver overholdt og opdateret regelmæssigt.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.1 Politikker",
+        "points": 15,
+        "number": "1.1.4"
+    },
+    {
+        "id": 1106,
+        "label": "G1",
+        "text": "Virksomheden har dokumenteret antal domme og den samlede bødesum i sager relateret til korruption og bestikkelse.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.2 Korruption og bestikkelse",
+        "points": 5,
+        "number": "1.2.1"
+    },
+    {
+        "id": 1107,
+        "label": "G1",
+        "text": "Virksomheden har en politik for at forebygge korruption og bestikkelse, som er integreret i virksomhedens etiske retningslinjer.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.2 Korruption og bestikkelse",
+        "points": 10,
+        "number": "1.2.2"
+    },
+    {
+        "id": 1108,
+        "label": "G1",
+        "text": "Virksomheden har gennemført interne revisioner og træning for at forhindre korruption og bestikkelse.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.2 Korruption og bestikkelse",
+        "points": 5,
+        "number": "1.2.3"
+    },
+    {
+        "id": 1109,
+        "label": "G1",
+        "text": "Hvis virksomheden er involveret i eller genererer indtægter fra kontroversielle sektorer som våbenproduktion (inkl. antipersonelminer og klyngeammunition), tobaksproduktion, fossilt brændsel, kemikalieproduktion, eller er ekskluderet fra EU-referencerammer i overensstemmelse med Parisaftalen, skal virksomheden dokumentere størrelsen af disse indtægter eller aktivitet og være transparent omkring disse aktiviteter.",
+        "category": "G",
+        "subcategory": "God forretningsskik",
+        "secondSubcategory": "1.3 Aktivitet i kontroversielle sektorer",
+        "points": 10,
+        "number": "1.3.1"
+    }
+]

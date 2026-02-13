@@ -1,0 +1,153 @@
+E1	Klimaforandringer					100	100	5,0	5
+	1.1	CO2 udledninger							
+		1.1.1	Virksomheden har udregnet og dokumenteret sine CO2e-udledninger for Scope 1 og 2.	10	SAND	35	35	0,5	
+		1.1.2	Virksomheden har udregnet og dokumenteret sine CO2e-udledninger for Scope 1, 2 og 3.	5	SAND			0,3	
+		1.1.3	Virksomheden har en politik for reduktion af sine CO2e-udledninger.	5	SAND			0,3	
+		1.1.4	Virksomheden har konkrete mål for reduktion af sine CO2e-udledninger.	5	SAND			0,3	
+		1.1.5	Virksomheden har en strategi for, hvordan de vil opnå deres CO2e-reduktionsmål.	10	SAND			0,5	
+	1.2	Energiledelse og energiforbrug							
+		1.2.1	"Virksomheden har udpeget ansvarlige for energiledelse og fastlagt, hvordan ansvaret er organiseret på den pågældende lokation. 
+"	10	SAND	35	35	0,5	
+		1.2.2	Virksomheden har en politik for at håndtere energiforbrug og energimiks.	5	SAND			0,3	
+		1.2.3	Virksomheden har konkrete målsætninger for at øge andelen af vedvarende energi og reducere energiforbruget.	5	SAND			0,3	
+		1.2.4	Virksomheden har en handlingsplan/strategi for, hvordan de vil opnå deres energimål.	10	SAND			0,5	
+		1.2.5	Virksomheden overvåger systematisk og følger op på sit energiforbrug 	5	SAND			0,3	
+	1.3	Vedvarende energi							
+		1.3.1	Mindst 20% af virksomhedens energiforbrug stammer fra vedvarende energikilder	2,5	SAND	15	15	0,1	
+		1.3.2	Mindst 50% af virksomhedens energiforbrug stammer fra vedvarende energikilder	2,5	SAND			0,1	
+		1.3.3	Hele virksomhedens energiforbrug stammer fra vedvarende energikilder	5	SAND			0,3	
+		1.3.4	Virksomheden kan dokumentere oprindelsen af den energi, som hævdes at være grøn, uanset andel.	5	SAND			0,3	
+	1.4	Energimærke							
+		1.4.1	Virksomheden har dokumenteret energimærkningen af størstedelen af sine bygninger.	5	SAND	15	15	0,3	
+		1.4.2	Størstedelen af virksomhedens bygninger har energimærke B eller bedre.	2	SAND			0,1	
+		1.4.3	Størstedelen af virksomhedens bygninger har energimærke A2010 eller bedre.	2	SAND			0,1	
+		1.4.4	Størstedelen af virksomhedens bygninger har energimærke A2015 eller bedre.	2	SAND			0,1	
+		1.4.5	Størstedelen af virksomhedens bygninger har energimærke A2020.	4	SAND			0,2	
+E2	Forurening					100	100	0,0	0
+	2.1	Kortlægning og strategi for forurening							
+		2.1.1	Virksomheden har taget stilling til, hvor den har risiko for at bidrage til miljøforurening.	15	SAND	40	40	0,0	
+		2.1.2	Virksomheden har en politik for forurening.	10	SAND			0,0	
+		2.1.3	Virksomheden har konkrete mål for reduktion af deres forurening.	5	SAND			0,0	
+		2.1.4	Virksomheden har en handlingsplan/strategi for, hvordan de vil opnå deres mål om mindre forurening.	10	SAND			0,0	
+	2.2	Luftforurening							
+		2.2.1	Virksomheden registrerer og rapporterer sine NOX-, SO2- og partikeludledninger.	2,5	SAND	10	10	0,0	
+		2.2.2	Virksomheden har målsætninger for reduktion af disse emissioner inden for 3 år.	2,5	SAND			0,0	
+		2.2.3	Halvdelen af virksomhedens transport er emissionsfri.	2,5	SAND			0,0	
+		2.2.4	Over 90% af virksomhedens transport er emissionsfri.	2,5	SAND			0,0	
+	2.3	Vandforurening							
+		2.3.1	Virksomheden har dokumenteret spildevandshåndtering, inkl. Rensning.	5	SAND	10	10	0,0	
+		2.3.2	Halvdelen af virksomhedens spildevand renses før det ledes til kloak/natur.	2,5	SAND			0,0	
+		2.3.3	Hele virksomhedens spildevand renses før det ledes til kloak/natur.	2,5	SAND			0,0	
+	2.4	Jordbundsforurening							
+		2.4.1	Virksomheden opbevarer alle potentielt forurenende stoffer på forsvarlig vis.	5	SAND	10	10	0,0	
+		2.4.2	Virksomheden har en plan for spildhåndtering og nødberedskab ved udslip.	5	SAND			0,0	
+	2.5	Forurening af levende organismer og fødevareressourcer							
+		2.5.1	Virksomheden har målsætninger for udfasning af skadelige stoffer eller praksisser med negativ indvirkning på biodiversitet.	10	SAND	10	10	0,0	
+	2.6	Problematiske og særligt problematiske stoffer							
+		2.6.1	Virksomheden har en liste over anvendte kemikalier og har identificeret stoffer, der er omfattet af REACH og SVCH.	5	SAND	10	10	0,0	
+		2.6.2	Over 90% af virksomhedens anvendte stoffer er klassificeret som ufarlige eller lavrisiko.	5	SAND			0,0	
+	2.7	Mikroplast							
+		2.7.1	Virksomheden har teknologier eller metoder til at minimere mikroplast.	10	SAND	10	10	0,0	
+E3	Vand- og havressourcer					100	100	5,0	5
+	3.1	Vandforbrug og vandudtag							
+		3.1.1	Virksomheden har dokumenteret sit vandforbrug og vandudtag.	15	SAND	100	100	0,8	
+		3.1.2	Virksomheden har en politik for vandforbrug.	40	SAND			2,0	
+		3.1.3	Virksomheden har konkrete mål for reduktion af vandudtag og vandforbrug.	15	SAND			0,8	
+		3.1.4	Virksomheden har en handlingsplan/strategi for, hvordan de vil opnå deres vandreduktionsmål.	30	SAND			1,5	
+E4	Biodiversitet og økosystemer					0	100	0,0	10
+	4.1	Arealforbrug							
+		4.1.1	Virksomheden har dokumenteret det samlede arealforbrug, herunder andele af befæstet areal og naturbaserede arealer, både på og uden for virksomhedens matrikel.	5	FALSK	0	20	0,0	
+		4.1.2	Virksomheden har identificeret, om den opererer i eller tæt på biodiversitetsfølsomme områder, og i så fald angivet hvilke og hvor stort et areal der er påvirket.	5	FALSK			0,0	
+		4.1.3	Virksomheden arbejder aktivt for at minimere negativ arealpåvirkning, fx ved grønne tage, regn bede, ubefæstede områder eller naturgenopretning.	10	FALSK			0,0	
+	4.2	Indvirkning på biodiversitet og økosystemtjenester							
+		4.2.1	Virksomheden har vurderet sin påvirkning på biodiversitet gennem f.eks. lys, støj, forurening, invasive arter eller kemikalier.	10	FALSK	0	30	0,0	
+		4.2.2	Virksomheden bidrager til at beskytte eller forbedre lokal biodiversitet gennem konkrete tiltag som fx beplantning af hjemmehørende arter, levesteder for insekter og fugle, eller partnerskaber med naturorganisationer.	10	FALSK			0,0	
+		4.2.3	Virksomheden har vurderet, om dens aktiviteter påvirker truede arter eller økosystemtjenester (fx bestøvning, rensning af luft/vand) og dokumenteret eventuelle indsatser.	10	FALSK			0,0	
+	4.3	Strategi og dokumentation							
+		4.3.1	Virksomheden har en politik for biodiversitet, som tager hensyn til biodiversiteten og økosystemerne som virksomheden påvirker.	20	FALSK	0	50	0,0	
+		4.3.2	Virksomheden har konkrete målsætninger for biodiversitet.	10	FALSK			0,0	
+		4.3.3	Virksomheden har en handlingsplan/strategi for at opnå disse mål.	20	FALSK			0,0	
+E5	Ressourceanvendelse og cirkulær økonomi					0	100	0,0	20
+	5.1	Cirkulær økonomi							
+		5.1.1	Virksomheden har en politik for ressourceanvendelse og cirkulær økonomi.	20	FALSK	0	50	0,0	
+		5.1.2	Virksomheden har konkrete mål for at forbedre ressourceeffektivitet og cirkulær økonomi.	10	FALSK			0,0	
+		5.1.3	Virksomheden har en handlingsplan/strategi for at opnå disse mål.	20	FALSK			0,0	
+	5.2	Affaldshåndtering							
+		5.2.1	Virksomheden har dokumenteret sin samlede årlige affaldsmængde.	15	FALSK	0	50	0,0	
+		5.2.2	Hvis virksomheden arbejder i en materialetung sektor, har den dokumenteret mængden af forskellige materialetyper i ton/m³.	10	FALSK			0,0	
+		5.2.3	Virksomheden har en politik for affaldshåndtering.	10	FALSK			0,0	
+		5.2.4	Virksomheden har konkrete mål for at reducere affaldsmængden og øge genbrug/genanvendelse.	5	FALSK			0,0	
+		5.2.5	Virksomheden har en handlingsplan/strategi for at opnå disse mål.	10	FALSK			0,0	
+S1	Egen arbejdsstyrke					65	100	4,5	7
+	1.1	Arbejdsulykker							
+		1.1.1	Virksomheden har dokumenteret antallet af arbejdsulykker og deres frekvens.	5	SAND	20	20	0,3	
+		1.1.2	Virksomheden har en politik for sundhed og sikkerhed, der sigter mod at forebygge arbejdsulykker.	10	SAND			0,7	
+		1.1.3	Virksomheden har registreret arbejdsrelaterede dødsfald og arbejder på at reducere sådanne hændelser.	5	SAND			0,3	
+	1.2	Vederlag og overenskomster							
+		1.2.1	Virksomheden sikrer, at alle ansatte modtager en løn, der lever op til lovgivning eller overenskomster.	5	SAND	10	20	0,3	
+		1.2.2	Virksomheden har dokumenteret lønforskellen mellem mandlige og kvindelige ansatte, hvis relevant.	5	FALSK			0,0	
+		1.2.3	Virksomheden har en strategi for lønstruktur og ansættelsesvilkår.	5	SAND			0,3	
+		1.2.4	Virksomheden har angivet procentdelen af medarbejderne er dækket af kollektive overenskomster.	5	FALSK			0,0	
+	1.3	Uddannelse							
+		1.3.1	Virksomheden tilbyder uddannelse til sine ansatte og har dokumenteret uddannelsestimer pr. ansat.	5	SAND	5	15	0,3	
+		1.3.2	Uddannelsestimerne er opdelt efter køn og relevante medarbejdergrupper.	5	FALSK			0,0	
+		1.3.3	Virksomheden har en strategi for medarbejderudvikling og kompetenceopbygning.	5	FALSK			0,0	
+	1.4	Menneskerettigheder og etiske retningslinjer							
+		1.4.1	Virksomheden har en Code of Conduct eller en menneskerettighedspolitik, der dækker nøgleområder som børnearbejde, tvangsarbejde og diskrimination.	5	FALSK	10	15	0,0	
+		1.4.2	Virksomheden har en strategi for at håndtere medarbejderklager og sikre et etisk arbejdsmiljø.	5	SAND			0,3	
+		1.4.3	Virksomheden har tidligere håndteret hændelser relateret til menneskerettigheder og har dokumenteret de skridt, der blev taget.	5	SAND			0,3	
+	1.5	Demografiske data							
+		1.5.1	Virksomheden har dokumenteret antal ansatte og opdelingen mellem midlertidige og fastansatte.	2,5	SAND	10	10	0,2	
+		1.5.2	Der er dokumenteret kønsfordeling blandt medarbejderne.	2,5	SAND			0,2	
+		1.5.3	Virksomheden har registreret ansatte i henhold til ansættelseskontrakter fordelt på lande.	2,5	SAND			0,2	
+		1.5.4	Hvis relevant, er medarbejderomsætningen dokumenteret og angivet i procent.	2,5	SAND			0,2	
+	1.6	Sundhed og arbejdsmiljø							
+		1.6.1	Virksomheden har en politik for arbejdsmiljø, der inkluderer tiltag for at sikre et sundt og sikkert arbejdsmiljø.	5	SAND	10	20	0,3	
+		1.6.2	Virksomheden gennemfører regelmæssigt arbejdspladsvurdering (APV) for at identificere risici og forbedre arbejdsmiljøet.	5	SAND			0,3	
+		1.6.3	Virksomheden har konkrete målsætninger for at forbedre arbejdsmiljøet og arbejdstageres sundhed.	5	FALSK			0,0	
+		1.6.4	Virksomheden har en handlingsplan/strategi for at opnå forbedringer i arbejdsmiljøet og sundhed.	5	FALSK			0,0	
+S2	Arbejdstagere i værdikæden					45	100	3,1	7
+	2.1	Kortlægning og risikovurdering							
+		2.1.1	Virksomheden har identificeret og kortlagt sine væsentligste leverandører og samarbejdspartnere.	15	SAND	30	40	1,0	
+		2.1.2	Virksomheden har foretaget en risikovurdering af arbejdsforholdene hos disse aktører, herunder brug af børnearbejde, tvangsarbejde, uformel arbejdskraft og manglende sikkerhed.	15	SAND			1,0	
+		2.1.3	Virksomheden har særlig opmærksomhed på risikolande eller brancher med historisk dårlige arbejdsvilkår.	10	FALSK			0,0	
+	2.2	Politik og forpligtelser							
+		2.2.1	Virksomheden har en politik for arbejdsforhold i værdikæden, som stiller krav om fx foreningsfrihed, overenskomster og rimelig løn.	15	FALSK	15	30	0,0	
+		2.2.2	Virksomheden kræver, at leverandører skriver under på en adfærdskodeks (Code of Conduct), der dækker menneskerettigheder og arbejdsforhold.	5	SAND			0,3	
+		2.2.3	Virksomheden samarbejder aktivt med leverandører om at forbedre arbejdsforholdene (fx ved at tilbyde støtte, træning eller krav til forbedringer).	10	SAND			0,7	
+	2.3	Ansvarlige samarbejdspartnere							
+		2.3.1	Virksomheden prioriterer samarbejde med leverandører og underleverandører, der er certificerede (fx ISO 45001, SA8000, B Corp, Fairtrade e.l.).	10	FALSK	0	30	0,0	
+		2.3.2	Virksomheden har en politik eller strategi for at vælge partnere ud fra deres arbejde med bæredygtighed og/eller ESG.	5	FALSK			0,0	
+		2.3.3	Virksomheden vurderer løbende sine væsentlige samarbejdspartneres praksis inden for arbejdsvilkår og sociale forhold.	5	FALSK			0,0	
+		2.3.4	Over 50 % af virksomhedens leverandører har implementeret ESG-politikker, certificeringer eller tilsvarende dokumenterede initiativer.	5	FALSK			0,0	
+		2.3.5	Over 90 % af virksomhedens leverandører har implementeret ESG-politikker, certificeringer eller tilsvarende dokumenterede initiativer.	5	FALSK			0,0	
+S3	Berørte samfund					100	100	6,9	7
+	3.1	Samfundsbaserede rettigheder og påvirkning							
+		3.1.1	Virksomheden vurderer de økonomiske, sociale og kulturelle virkninger af sine aktiviteter på de lokalsamfund, den opererer i.	20	SAND	40	40	1,4	
+		3.1.2	Virksomheden sikrer ordentlige boligforhold, adgang til passende fødevarer, vand og sanitet for de samfund, der påvirkes af virksomhedens aktiviteter.	10	SAND			0,7	
+		3.1.3	Virksomheden respekterer og beskytter borgerlige og politiske rettigheder, herunder ytrings- og forsamlingsfrihed.	10	SAND			0,7	
+	3.2	Samfudnsengagement og sponsorater							
+		3.2.1	Virksomheden sponsorerer lokale aktiviteter og initiativer, der fremmer samfundets udvikling, såsom sport, kultur og velgørenhed.	20	SAND	60	60	1,4	
+		3.2.2	Virksomheden har en politik for at understøtte samfundets økonomiske og sociale udvikling gennem samarbejde med lokale aktører.	20	SAND			1,4	
+		3.2.3	Virksomheden engagerer sig aktivt i at fremme kulturel og social udvikling i de samfund, den er en del af, gennem langsigtede partnerskaber.	20	SAND			1,4	
+S4	Forbrugere og slutbrugere					70	100	6,5	9
+	4.1	Beskyttelse af forbrugerens rettigheder og sikkerhed							
+		4.1.1	Virksomheden sikrer, at forbrugere og slutbrugere har adgang til klare og fyldestgørende oplysninger om produkter og tjenester – herunder sundhed, sikkerhed og miljøpåvirkninger.	20	SAND	20	50	2	
+		4.1.2	Virksomheden beskytter privatlivets fred og behandler personoplysninger ansvarligt og i overensstemmelse med gældende lovgivning.	10	FALSK			0	
+		4.1.3	Virksomheden tager aktive skridt til at beskytte brugeres personlige sikkerhed, herunder særlig beskyttelse af børn mod skadelige produkter og markedsføring.	20	FALSK			0	
+	4.2	Ansvarlig markedsføring og social inklusion							
+		4.2.1	Virksomheden anvender en ansvarlig markedsføringspraksis, der undgår vildledning og respekterer forbrugernes ret til oplyst valg.	20	SAND	50	50	2	
+		4.2.2	Virksomheden fremmer inklusion ved at sikre, at produkter og tjenester er tilgængelige for alle og ikke diskriminerer på baggrund af fx køn, alder, handicap eller etnicitet.	15	SAND			1	
+		4.2.3	Virksomheden arbejder aktivt for at tilpasse produkter og tjenester, så de imødekommer forskellige forbrugeres behov og understøtter lige adgang.	15	SAND			1	
+G1	God forretningsskik					70	100	21,0	30
+	1.1	Politikker							
+		1.1.1	Virksomheden har implementeret politikker, der støtter virksomhedens værdier og overholder relevante lovgivningskrav.	15	SAND	70	80	4,5	
+		1.1.2	Virksomheden har integrerede politikker med målsætninger og handlingsplaner for at sikre ansvarlig adfærd og bæredygtighed.	20	SAND			6,0	
+		1.1.3	Virksomheden har politikker, der dækker alle relevante ESG-emner, med specifikke målsætninger og handlingsplaner for hvert område.	20	SAND			6,0	
+		1.1.4	Virksomheden har en opfølgningsmekanisme for at sikre, at politikkerne bliver overholdt og opdateret regelmæssigt.	15	SAND			4,5	
+	1.2	Korruption og bestikkelse							
+		1.2.1	Virksomheden har dokumenteret antal domme og den samlede bødesum i sager relateret til korruption og bestikkelse.	5	FALSK	0	10	0,0	
+		1.2.2	Virksomheden har en politik for at forebygge korruption og bestikkelse, som er integreret i virksomhedens etiske retningslinjer.	10	FALSK			0,0	
+		1.2.3	Virksomheden har gennemført interne revisioner og træning for at forhindre korruption og bestikkelse.	5	FALSK			0,0	
+	1.3	Aktivitet i kontroversielle sektorer							
+		1.3.1	Hvis virksomheden er involveret i eller genererer indtægter fra kontroversielle sektorer som våbenproduktion (inkl. antipersonelminer og klyngeammunition), tobaksproduktion, fossilt brændsel, kemikalieproduktion, eller er ekskluderet fra EU-referencerammer i overensstemmelse med Parisaftalen, skal virksomheden dokumentere størrelsen af disse indtægter eller aktivitet og være transparent omkring disse aktiviteter. 	10	FALSK	0	10	0,0	

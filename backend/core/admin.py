@@ -81,7 +81,7 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('question', 'company', 'year', 'boolean_answer', 'is_answered')
-    list_filter = ('year', 'company', 'question__sub_category')
+    list_filter = ('company', 'year', 'question__question_type', 'question__sub_category',)
     search_fields = ('question__text', 'company__name')
 
 @admin.register(Document)

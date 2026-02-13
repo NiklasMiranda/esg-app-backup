@@ -17,7 +17,7 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
     const filtered = iaQuestions
       .filter(q => q.sub_category.label === activeIaGroup) // Correct filtering logic
       .reduce((acc, question) => {
-        (acc[question.secondSubcategory] = acc[question.secondSubcategory] || []).push(question);
+        (acc[question.topic] = acc[question.topic] || []).push(question);
         return acc;
       }, {});
     console.log('DEBUG StepInitiativanalyse: groupedQuestionsBySecondSubcategory:', filtered);
@@ -55,16 +55,16 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
             <InfoIcon onClick={handleCategoryInfoClick} />
           </h1>
 
-          {Object.entries(groupedQuestionsBySecondSubcategory).map(([secondSubcategory, questions]) => (
-            <div key={secondSubcategory} className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg">
+          {Object.entries(groupedQuestionsBySecondSubcategory).map(([topic, questions]) => (
+            <div key={topic} className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg">
               <button
                 className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-4 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg focus:esg-outline-none"
-                onClick={() => toggleSection(secondSubcategory)}
+                onClick={() => toggleSection(topic)}
               >
-                <span>{secondSubcategory}</span>
+                <span>{topic}</span>
                 <svg
                   className={`esg-w-5 esg-h-5 esg-transition-transform esg-duration-300 ${
-                    openSections[secondSubcategory] ? 'esg-rotate-180' : ''
+                    openSections[topic] ? 'esg-rotate-180' : ''
                   }`}
                   fill="none"
                   stroke="currentColor"
@@ -76,7 +76,7 @@ function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNe
               </button>
               <div
                 className={`esg-overflow-hidden esg-transition-all esg-duration-500 esg-ease-in-out ${
-                  openSections[secondSubcategory] ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
+                  openSections[topic] ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'
                 }`}
               >
                 <div className="esg-p-4 esg-grid esg-grid-cols-1 md:esg-grid-cols-2 xl:esg-grid-cols-3 esg-gap-6">
