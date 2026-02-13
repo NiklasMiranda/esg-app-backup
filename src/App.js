@@ -72,7 +72,7 @@ function App() {
     const [categoryCompletionStatus, setCategoryCompletionStatus] = useState({});
     const [esgCategoryCompletionStatus, setEsgCategoryCompletionStatus] = useState({});
     const [totalCompletionPercentage, setTotalCompletionPercentage] = useState(0);
-    const [isNavOpen, setIsNavOpen] = useState(false); // State to control sidebar visibility
+    const [isNavOpen, setIsNavOpen] = useState(true); // State to control sidebar visibility
     const [activeView, setActiveView] = useState('dashboard'); // New state for main content view
 
     // --- ALL EFFECT, MEMO, AND CALLBACK HOOKS DECLARED AFTER STATE HOOKS ---
@@ -606,6 +606,7 @@ function App() {
             newTotalCompletionPercentage={newTotalCompletionPercentage} // Pass completion percentage to dashboard header
             onToggleNav={toggleNav} // Pass toggle function
             userCompanyName={"Din Virksomhed"} // Placeholder for company name
+            isNavOpen={isNavOpen} // Pass isNavOpen state
           />
         ) : (
           <div className="esg-absolute esg-top-0 esg-left-0 esg-right-0 esg-z-20"> {/* Absolute positioning for front page header */}

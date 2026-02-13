@@ -8,7 +8,7 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
   };
 
   return (
-    <div className={`esg-bg-[#0b3954] esg-text-white esg-h-full esg-flex-shrink-0 esg-p-4 ${isNavOpen ? 'esg-block esg-w-64' : 'esg-hidden'}`}>
+    <div className={`esg-bg-[#0b3954] esg-text-white esg-h-full esg-flex-shrink-0 esg-transition-[width] esg-duration-300 esg-ease-in-out ${isNavOpen ? 'esg-w-64 esg-p-4' : 'esg-w-0 esg-overflow-hidden esg-p-0'}`}>
       <nav className="esg-mt-5">
         <ul>
           <li className="esg-mb-2">

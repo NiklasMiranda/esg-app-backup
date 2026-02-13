@@ -1,9 +1,9 @@
 import React, { useState } from 'react'; // Added useState
 import ESGLogo from '../assets/images/ESGScore logo.png';
 import CircularProgress from './CircularProgress';
-import { HiMenu } from 'react-icons/hi'; // Added HiMenu icon
+import { HiMenu, HiX } from 'react-icons/hi'; // Added HiX icon
 
-function DashboardHeader({ isLoggedIn, onLogout, newTotalCompletionPercentage, onToggleNav, userCompanyName }) { // Added onToggleNav, userCompanyName
+function DashboardHeader({ isLoggedIn, onLogout, newTotalCompletionPercentage, onToggleNav, userCompanyName, isNavOpen }) { // Added onToggleNav, userCompanyName, isNavOpen
   const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown
 
   const handleDropdownToggle = () => {
@@ -16,8 +16,8 @@ function DashboardHeader({ isLoggedIn, onLogout, newTotalCompletionPercentage, o
         {/* Left section: Logo and Toggle Button */}
         <div className="esg-flex esg-items-center">
           <img src={ESGLogo} alt="ESG Score Logo" className="esg-h-14 esg-mr-4" /> {/* Logo */}
-          <button onClick={onToggleNav} className="esg-text-white focus:esg-outline-none">
-            <HiMenu className="esg-h-6 esg-w-6" /> {/* Hamburger menu icon */}
+          <button onClick={onToggleNav} className="esg-text-white focus:esg-outline-none esg-transition-transform esg-duration-300 esg-ease-in-out">
+            {isNavOpen ? <HiX className="esg-h-6 esg-w-6" /> : <HiMenu className="esg-h-6 esg-w-6" />} {/* Hamburger/Cross menu icon */}
           </button>
         </div>
 

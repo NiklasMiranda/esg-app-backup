@@ -94,7 +94,8 @@ function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange, dvaQu
   };
 
   const handleQuestionInfoClick = (questionId) => {
-    const questionInfo = questionDescriptions[questionId] || {};
+    const adjustedQuestionId = questionId - 1000; // Adjust questionId to match keys in descriptions.js
+    const questionInfo = questionDescriptions[adjustedQuestionId] || {};
     openModal(
       <div className="esg-flex esg-gap-4">
         <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-p-4 esg-rounded-lg">

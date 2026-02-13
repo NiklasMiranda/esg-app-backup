@@ -48,7 +48,6 @@ function ESGCalculatorNav({
     <nav className="esg-bg-[#f4f4f4] esg-text-gray-800 esg-shadow-md">
       {/* Year Selection */}
       <div className={`esg-flex esg-items-center esg-border-b-[1px] ${inactiveBorderColor}`}>
-        <span className={`esg-text-lg esg-font-semibold esg-px-2 esg-flex-shrink-0 esg-border-r-[1px] ${inactiveBorderColor}`}>År:</span>
         <div className="esg-flex esg-flex-grow">
           {availableYears.map((year, index) => {
             const isActive = year === currentYear;
@@ -70,16 +69,27 @@ function ESGCalculatorNav({
               </button>
             );
           })}
-          {yearPlaceholders.map((_, index) => (
-            <div key={`placeholder-${index}`} className={`esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 ${index < yearPlaceholders.length - 1 ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}`}></div>
-          ))}
+          {yearPlaceholders.map((_, index) => {
+            if (index === 0) { // Place the add new year button in the first placeholder
+              return (
+                <button
+                  key={`add-year-btn-${index}`}
+                  onClick={onAddNewYear}
+                  className={`
+                    ${baseButtonFlex}
+                    esg-text-gray-700 hover:esg-bg-gray-100
+                    ${index < yearPlaceholders.length - 1 ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}
+                  `}
+                >
+                  <FaPlus />
+                </button>
+              );
+            }
+            return (
+              <div key={`placeholder-${index}`} className={`esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 ${index < yearPlaceholders.length - 1 ? `esg-border-r-[1px] ${inactiveBorderColor}` : ''}`}></div>
+            );
+          })}
         </div>
-        <button
-          onClick={onAddNewYear}
-          className="esg-px-3 esg-py-2 esg-bg-green-600 hover:esg-bg-green-700 esg-text-white esg-text-sm esg-flex esg-items-center esg-flex-shrink-0"
-        >
-          <FaPlus className="esg-mr-1" /> Nyt år
-        </button>
       </div>
 
       <div className="esg-flex esg-flex-col">
@@ -110,7 +120,7 @@ function ESGCalculatorNav({
         {/* Question Groups */}
         <div className={`esg-grid esg-grid-cols-2 esg-border-b-[1px] ${inactiveBorderColor}`}>
           {/* DVA Question Groups */}
-          <div className={`esg-flex esg-flex-row esg-items-center esg-overflow-x-auto esg-border-r-[1px] ${activeSection === 'del1' ? activeBorderColor : inactiveBorderColor}`}>
+          <div className={`esg-flex esg-flex-row esg-items-center esg-overflow-x-auto ${activeSection === 'del1' ? activeBorderColor : inactiveBorderColor}`}>
             <div className="esg-flex esg-justify-start esg-flex-grow">
               {del1Steps.filter(step => questionGroups.includes(step.key)).map((step, index, arr) => {
                 const isActive = activeGroup === step.key && activeSection === 'del1';
