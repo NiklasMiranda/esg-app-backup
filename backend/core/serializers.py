@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Category, SubCategory, Question, Answer, Document, CompanyBasismodulData
+from .models import Company, Category, SubCategory, Question, Answer, Document, CompanyBasismodulData, CompanyExtendedModuleData # New Import
 from django.db import transaction
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -48,6 +48,11 @@ class IaAnswerDetailSerializer(serializers.Serializer):
 class CompanyBasismodulDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyBasismodulData
+        fields = '__all__'
+
+class CompanyExtendedModuleDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyExtendedModuleData
         fields = '__all__'
 
 class UserAnswerSerializer(serializers.Serializer):

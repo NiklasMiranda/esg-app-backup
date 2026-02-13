@@ -6,7 +6,7 @@ from django.http import HttpResponse # Import HttpResponse
 from django.template.loader import get_template # Import get_template
 from xhtml2pdf import pisa # Import the pisa library
 
-from .models import Company, Category, SubCategory, Question, Answer, Document, CompanyBasismodulData
+from .models import Company, Category, SubCategory, Question, Answer, Document, CompanyBasismodulData, CompanyExtendedModuleData # New Import
 from .serializers import (
     CompanySerializer,
     CategorySerializer,
@@ -16,13 +16,182 @@ from .serializers import (
     DocumentSerializer,
     UserAnswerSerializer,
     CalculationResultSerializer,
-    CompanyBasismodulDataSerializer
+    CompanyBasismodulDataSerializer,
+    CompanyExtendedModuleDataSerializer # New Import
 )
 from .services import calculate_esg_results
 
 class CompanyBasismodulDataViewSet(viewsets.ModelViewSet):
     queryset = CompanyBasismodulData.objects.all()
     serializer_class = CompanyBasismodulDataSerializer
+    lookup_field = 'company_id' # We'll use company_id for the primary lookup
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+
+        if company_id and year:
+            queryset = queryset.filter(company_id=company_id, year=year)
+        elif company_id: # Allow listing all years for a company
+            queryset = queryset.filter(company_id=company_id)
+        return queryset
+
+    def get_object(self):
+        # This method is used for retrieve, update, destroy operations
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+        
+        obj = get_object_or_404(
+            self.get_queryset(),
+            company_id=company_id,
+            year=year
+        )
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def create(self, request, *args, **kwargs):
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+        data = request.data.copy() # Make a mutable copy
+
+        if not company_id or not year:
+            return Response(
+                {"detail": "company_id and year must be provided in the URL."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        data['company'] = company_id
+        data['year'] = year
+
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+
+        # Use update_or_create for handling existing data for the same company and year
+        instance, created = CompanyBasismodulData.objects.update_or_create(
+            company_id=company_id,
+            year=year,
+            defaults=serializer.validated_data
+        )
+
+        headers = self.get_success_headers(serializer.data)
+        if created:
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers) # Return 200 for update via POST
+
+    def update(self, request, *args, **kwargs):
+        # Update logic is similar to create, but for an existing instance
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object() # get_object will retrieve based on company_id and year
+        data = request.data.copy()
+
+        # Ensure company and year from URL are in data for validation, even if not sent in body
+        data['company'] = instance.company_id
+        data['year'] = instance.year
+
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied, refresh the instance itself to update the cache.
+            instance = self.get_object()
+        
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def perform_create(self, serializer):
+        # This will not be directly called if 'create' method is overridden, but good practice
+        serializer.save()
+
+
+class CompanyExtendedModuleDataViewSet(viewsets.ModelViewSet):
+    queryset = CompanyExtendedModuleData.objects.all()
+    serializer_class = CompanyExtendedModuleDataSerializer
+    lookup_field = 'company_id' # We'll use company_id for the primary lookup
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+
+        if company_id and year:
+            queryset = queryset.filter(company_id=company_id, year=year)
+        elif company_id: # Allow listing all years for a company
+            queryset = queryset.filter(company_id=company_id)
+        return queryset
+
+    def get_object(self):
+        # This method is used for retrieve, update, destroy operations
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+        
+        obj = get_object_or_404(
+            self.get_queryset(),
+            company_id=company_id,
+            year=year
+        )
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def create(self, request, *args, **kwargs):
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+        data = request.data.copy() # Make a mutable copy
+
+        if not company_id or not year:
+            return Response(
+                {"detail": "company_id and year must be provided in the URL."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        data['company'] = company_id
+        data['year'] = year
+
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+
+        # Use update_or_create for handling existing data for the same company and year
+        instance, created = CompanyExtendedModuleData.objects.update_or_create(
+            company_id=company_id,
+            year=year,
+            defaults=serializer.validated_data
+        )
+
+        headers = self.get_success_headers(serializer.data)
+        if created:
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers) # Return 200 for update via POST
+
+    def update(self, request, *args, **kwargs):
+        # Update logic is similar to create, but for an existing instance
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object() # get_object will retrieve based on company_id and year
+        data = request.data.copy()
+
+        # Ensure company and year from URL are in data for validation, even if not sent in body
+        data['company'] = instance.company_id
+        data['year'] = instance.year
+
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied, refresh the instance itself to update the cache.
+            instance = self.get_object()
+        
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def perform_create(self, serializer):
+        # This will not be directly called if 'create' method is overridden, but good practice
+        serializer.save()
+
 
 class PDFReportView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated] # Ensure only authenticated users can generate reports

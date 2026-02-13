@@ -15,6 +15,7 @@ import Header from './components/Header'; // Import the Header component
 import DashboardHeader from './components/DashboardHeader'; // Import the DashboardHeader component
 import DashboardSidebar from './components/DashboardSidebar'; // Import the DashboardSidebar component
 import CompanyFigures from './components/CompanyFigures'; // Import the CompanyFigures component
+import ExtendedModule from './components/ExtendedModule'; // Import the ExtendedModule component
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -557,6 +558,12 @@ function App() {
             <CompanyFigures />
           </div>
         );
+      } else if (activeView === 'extendedModule') {
+        mainContent = (
+          <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
+            <ExtendedModule />
+          </div>
+        );
       } else if (activeView === 'esgCalculator') {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
@@ -569,7 +576,7 @@ function App() {
               onNavigate={navigateTo}
               categoryCompletionStatus={categoryCompletionStatus}
               questionGroups={questionGroups}
-              activeSection={activeSection}  // ← tilføj denne
+              activeSection={activeSection}
             />
             <div className="esg-p-4">
               {renderStep()}

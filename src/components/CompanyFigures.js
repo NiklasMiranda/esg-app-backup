@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function CompanyFigures() {
+function CompanyFigures({ currentYear }) {
   const [formData, setFormData] = useState({
     // Generelle oplysninger (B1)
     basis_for_preparation: '',
@@ -75,18 +75,28 @@ function CompanyFigures() {
   useEffect(() => {
     const fetchCompanyBasismodulData = async () => {
       try {
-        const response = await axios.get(`/api/company-basismodul-data/${COMPANY_ID}/`);
+        const response = await axios.get(`/api/company-basismodul-data/${COMPANY_ID}/${currentYear}/`);
         setFormData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.log("No existing Basismodul data for this company. Starting with empty form.");
+          console.log(`No existing Basismodul data for company ${COMPANY_ID} for year ${currentYear}. Starting with empty form.`);
+          setFormData({ // Reset form data to empty when no data is found for the year
+            basis_for_preparation: '', legal_form: '', nace_sector_codes: [], balance_sheet_total: '', revenue: '', employees: '', asset_locations: '',
+            confidentiality_exclusions: '', esg_certificate_description: '', has_initiatives: null, electricity_renewable: '', electricity_non_renewable: '',
+            fuel_renewable: '', fuel_non_renewable: '', scope1_emissions: '', scope2_emissions: '', co2e_intensity: '', scope3_emissions: '',
+            pollution_reporting: '', biodiversity_sensitive_areas: '', land_area_usage: '', water_withdrawal: '', water_consumption: '',
+            uses_circular_economy_principles: null, circular_economy_description: '', total_waste_hazardous: '', total_waste_non_hazardous: '',
+            waste_recycled: '', mass_flow_materials: '', contract_type: '', gender_composition: '', employees_abroad: '', employee_turnover: '',
+            work_accidents: '', work_related_deaths: '', salary_below_minimum: '', gender_pay_gap: '', collective_bargaining_coverage: '',
+            avg_training_hours: '', corruption_bribery_cases: '',
+          });
         } else {
           console.error("Error fetching Basismodul data:", error);
         }
       }
     };
     fetchCompanyBasismodulData();
-  }, [COMPANY_ID]);
+  }, [COMPANY_ID, currentYear]); // Added currentYear to dependency array
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -167,23 +177,12 @@ function CompanyFigures() {
     }
 
     try {
-      const response = await axios.get(`/api/company-basismodul-data/${COMPANY_ID}/`);
-      if (response.data) {
-        await axios.put(`/api/company-basismodul-data/${COMPANY_ID}/`, { company: COMPANY_ID, ...formData });
-        alert('Basismodul data updated successfully!');
-      } else {
-        await axios.post(`/api/company-basismodul-data/`, { company: COMPANY_ID, ...formData });
-        alert('Basismodul data created successfully!');
-      }
+      // Use POST method which leverages update_or_create in the backend
+      await axios.post(`/api/company-basismodul-data/${COMPANY_ID}/${currentYear}/`, { company: COMPANY_ID, year: currentYear, ...formData });
+      alert('Basismodul data saved successfully!');
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-         // Data does not exist, so create it
-         await axios.post(`/api/company-basismodul-data/`, { company: COMPANY_ID, ...formData });
-         alert('Basismodul data created successfully!');
-      } else {
-        console.error("Error submitting Basismodul data:", error);
-        alert('Error saving Basismodul data.');
-      }
+      console.error("Error submitting Basismodul data:", error);
+      alert('Error saving Basismodul data.');
     }
   };
 

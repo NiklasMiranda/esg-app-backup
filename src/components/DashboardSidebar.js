@@ -1,7 +1,9 @@
-import React from 'react';
-import { FaTachometerAlt, FaBuilding, FaChartBar } from 'react-icons/fa'; // Icons for Dashboard, Company Figures, ESG Calculator
+import React, { useState } from 'react';
+import { FaTachometerAlt, FaBuilding, FaChartBar, FaChevronDown } from 'react-icons/fa'; // Icons for Dashboard, Company Figures, ESG Calculator
 
 function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }) {
+  const [isCompanyInfoExpanded, setIsCompanyInfoExpanded] = useState(false);
+
   const navigateToView = (viewName) => {
     onNavigate(viewName);
     // Potentially close sidebar here if on mobile, or handle within App.js
@@ -23,13 +25,38 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
           </li>
           <li className="esg-mb-2">
             <button
-              onClick={() => navigateToView('companyFigures')}
+              onClick={() => setIsCompanyInfoExpanded(!isCompanyInfoExpanded)}
               className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
-                activeView === 'companyFigures' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
+                isCompanyInfoExpanded ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
               }`}
             >
-              <FaBuilding className="esg-mr-3" /> Basismodul
+              <FaBuilding className="esg-mr-3" /> Virksomhedsinfo
+              <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isCompanyInfoExpanded ? 'esg-rotate-180' : ''}`} />
             </button>
+            {isCompanyInfoExpanded && (
+              <ul className="esg-pl-8 esg-mt-2">
+                <li className="esg-mb-2">
+                  <button
+                    onClick={() => navigateToView('companyFigures')}
+                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
+                      activeView === 'companyFigures' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
+                    }`}
+                  >
+                    Basismodul
+                  </button>
+                </li>
+                <li className="esg-mb-2">
+                  <button
+                    onClick={() => navigateToView('extendedModule')}
+                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
+                      activeView === 'extendedModule' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
+                    }`}
+                  >
+                    Udvidet modul
+                  </button>
+                </li>
+              </ul>
+            )}
           </li>
           <li className="esg-mb-2">
             <button
