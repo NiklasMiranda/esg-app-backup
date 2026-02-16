@@ -69,7 +69,6 @@ function CompanyFigures({ currentYear }) {
     corruption_bribery_cases: '',
   });
 
-  const [errors, setErrors] = useState({});
   const [isGeneralInfoExpanded, setIsGeneralInfoExpanded] = useState(true); // New state
   const [isInitiativesExpanded, setIsInitiativesExpanded] = useState(false); // New state
   const [isEnergyConsumptionExpanded, setIsEnergyConsumptionExpanded] = useState(false); // New state
@@ -117,11 +116,6 @@ function CompanyFigures({ currentYear }) {
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
     }));
-    // Clear error for the field being changed
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: '',
-    }));
   };
 
   const handleNaceCodeChange = (index, value) => {
@@ -130,10 +124,6 @@ function CompanyFigures({ currentYear }) {
     setFormData((prevData) => ({
       ...prevData,
       nace_sector_codes: newNaceCodes,
-    }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      nace_sector_codes: '',
     }));
   };
 
@@ -150,44 +140,10 @@ function CompanyFigures({ currentYear }) {
       ...prevData,
       nace_sector_codes: newNaceCodes,
     }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      nace_sector_codes: '',
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    const requiredFields = [
-      'basis_for_preparation', 'legal_form', 'balance_sheet_total', 'revenue', 'employees', 'asset_locations',
-      'electricity_renewable', 'electricity_non_renewable', 'fuel_renewable', 'fuel_non_renewable',
-      'scope1_emissions', 'scope2_emissions', 'co2e_intensity', 'water_withdrawal',
-      'total_waste_hazardous', 'total_waste_non_hazardous', 'waste_recycled',
-      'work_accidents', 'work_related_deaths', 'salary_below_minimum',
-      'collective_bargaining_coverage', 'avg_training_hours',
-    ];
-
-    requiredFields.forEach((field) => {
-      if (!formData[field]) {
-        newErrors[field] = 'Dette felt er obligatorisk.';
-      }
-    });
-
-    if (!formData.nace_sector_codes || formData.nace_sector_codes.length === 0) {
-      newErrors.nace_sector_codes = 'Mindst én NACE sektor kode er obligatorisk.';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      alert('Venligst udfyld alle obligatoriske felter.');
-      return;
-    }
 
     try {
       // Use POST method which leverages update_or_create in the backend
@@ -221,10 +177,10 @@ function CompanyFigures({ currentYear }) {
                 name="basis_for_preparation"
                 value={formData.basis_for_preparation}
                 onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border ${errors.basis_for_preparation ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                 placeholder="Indtast grundlag for udarbejdelse"
               />
-              {errors.basis_for_preparation && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.basis_for_preparation}</p>}
+
             </div>
             <div>
               <label htmlFor="legal_form" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -236,10 +192,10 @@ function CompanyFigures({ currentYear }) {
                 name="legal_form"
                 value={formData.legal_form}
                 onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border ${errors.legal_form ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                 placeholder="Indtast juridisk form"
               />
-              {errors.legal_form && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.legal_form}</p>}
+
             </div>
             {/* NACE Sektor Koder */}
             <div> {/* NACE codes block now acts as a single column */}
@@ -260,7 +216,7 @@ function CompanyFigures({ currentYear }) {
                     name={`nace_sector_code_${index}`}
                     value={code}
                     onChange={(e) => handleNaceCodeChange(index, e.target.value)}
-                    className={`esg-shadow esg-appearance-none esg-border ${errors.nace_sector_codes && errors.nace_sector_codes.includes(index) ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline esg-mr-2`}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline esg-mr-2`}
                     placeholder="Indtast NACE kode"
                   />
                   <button
@@ -272,7 +228,7 @@ function CompanyFigures({ currentYear }) {
                   </button>
                 </div>
               ))}
-              {errors.nace_sector_codes && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.nace_sector_codes}</p>}
+
             </div>
             </div>
             <div>
@@ -285,10 +241,10 @@ function CompanyFigures({ currentYear }) {
                 name="balance_sheet_total"
                 value={formData.balance_sheet_total}
                 onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border ${errors.balance_sheet_total ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                 placeholder="Indtast balancesum"
               />
-              {errors.balance_sheet_total && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.balance_sheet_total}</p>}
+
             </div>
             <div>
               <label htmlFor="revenue" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -300,10 +256,10 @@ function CompanyFigures({ currentYear }) {
                 name="revenue"
                 value={formData.revenue}
                 onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border ${errors.revenue ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                 placeholder="Indtast omsætning"
               />
-              {errors.revenue && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.revenue}</p>}
+
             </div>
             <div>
               <label htmlFor="employees" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -315,10 +271,10 @@ function CompanyFigures({ currentYear }) {
                 name="employees"
                 value={formData.employees}
                 onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border ${errors.employees ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                 placeholder="Indtast antal ansatte"
               />
-              {errors.employees && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.employees}</p>}
+
             </div>
             <div> {/* Textarea now acts as a single column */}
               <label htmlFor="asset_locations" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -330,10 +286,10 @@ function CompanyFigures({ currentYear }) {
                 value={formData.asset_locations}
                 onChange={handleChange}
                 rows="3"
-                className={`esg-shadow esg-appearance-none esg-border ${errors.asset_locations ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                 placeholder="Indtast adresser og geolokation"
               ></textarea>
-              {errors.asset_locations && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.asset_locations}</p>}
+
             </div>
             <div> {/* Textarea now acts as a single column */}
               <label htmlFor="confidentiality_exclusions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -407,10 +363,10 @@ function CompanyFigures({ currentYear }) {
                   name="electricity_renewable"
                   value={formData.electricity_renewable}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.electricity_renewable ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast vedvarende elektricitet"
                 />
-                {errors.electricity_renewable && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.electricity_renewable}</p>}
+
               </div>
               <div>
                 <label htmlFor="electricity_non_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -422,10 +378,10 @@ function CompanyFigures({ currentYear }) {
                   name="electricity_non_renewable"
                   value={formData.electricity_non_renewable}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.electricity_non_renewable ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast ikke-vedvarende elektricitet"
                 />
-                {errors.electricity_non_renewable && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.electricity_non_renewable}</p>}
+
               </div>
               <div>
                 <label htmlFor="fuel_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -437,10 +393,10 @@ function CompanyFigures({ currentYear }) {
                   name="fuel_renewable"
                   value={formData.fuel_renewable}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.fuel_renewable ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast vedvarende brændstoffer"
                 />
-                {errors.fuel_renewable && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.fuel_renewable}</p>}
+
               </div>
               <div>
                 <label htmlFor="fuel_non_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -452,10 +408,10 @@ function CompanyFigures({ currentYear }) {
                   name="fuel_non_renewable"
                   value={formData.fuel_non_renewable}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.fuel_non_renewable ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast ikke-vedvarende brændstoffer"
                 />
-                {errors.fuel_non_renewable && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.fuel_non_renewable}</p>}
+
               </div>
             </div>
           </div>
@@ -479,10 +435,10 @@ function CompanyFigures({ currentYear }) {
                   name="scope1_emissions"
                   value={formData.scope1_emissions}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.scope1_emissions ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast Scope 1 udledninger"
                 />
-                {errors.scope1_emissions && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.scope1_emissions}</p>}
+
               </div>
               <div>
                 <label htmlFor="scope2_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -494,10 +450,10 @@ function CompanyFigures({ currentYear }) {
                   name="scope2_emissions"
                   value={formData.scope2_emissions}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.scope2_emissions ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast Scope 2 udledninger"
                 />
-                {errors.scope2_emissions && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.scope2_emissions}</p>}
+
               </div>
               <div>
                 <label htmlFor="co2e_intensity" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -509,10 +465,10 @@ function CompanyFigures({ currentYear }) {
                   name="co2e_intensity"
                   value={formData.co2e_intensity}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.co2e_intensity ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast CO₂e-intensitet"
                 />
-                {errors.co2e_intensity && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.co2e_intensity}</p>}
+
               </div>
               <div>
                 <label htmlFor="scope3_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -614,10 +570,10 @@ function CompanyFigures({ currentYear }) {
                   name="water_withdrawal"
                   value={formData.water_withdrawal}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.water_withdrawal ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast udtagning af vand"
                 />
-                {errors.water_withdrawal && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.water_withdrawal}</p>}
+
               </div>
               <div>
                 <label htmlFor="water_consumption" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -684,10 +640,10 @@ function CompanyFigures({ currentYear }) {
                   name="total_waste_hazardous"
                   value={formData.total_waste_hazardous}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.total_waste_hazardous ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast farligt affald"
                 />
-                {errors.total_waste_hazardous && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.total_waste_hazardous}</p>}
+
               </div>
               <div>
                 <label htmlFor="total_waste_non_hazardous" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -699,10 +655,10 @@ function CompanyFigures({ currentYear }) {
                   name="total_waste_non_hazardous"
                   value={formData.total_waste_non_hazardous}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.total_waste_non_hazardous ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast ikke-farligt affald"
                 />
-                {errors.total_waste_non_hazardous && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.total_waste_non_hazardous}</p>}
+
               </div>
               <div>
                 <label htmlFor="waste_recycled" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -714,10 +670,10 @@ function CompanyFigures({ currentYear }) {
                   name="waste_recycled"
                   value={formData.waste_recycled}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.waste_recycled ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast genbrugt/genanvendt affald"
                 />
-                {errors.waste_recycled && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.waste_recycled}</p>}
+
               </div>
               <div className="md:esg-col-span-2">
                 <label htmlFor="mass_flow_materials" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -823,10 +779,10 @@ function CompanyFigures({ currentYear }) {
                   name="work_accidents"
                   value={formData.work_accidents}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.work_accidents ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast antal arbejdsulykker"
                 />
-                {errors.work_accidents && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.work_accidents}</p>}
+
               </div>
               <div>
                 <label htmlFor="work_related_deaths" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -838,10 +794,10 @@ function CompanyFigures({ currentYear }) {
                   name="work_related_deaths"
                   value={formData.work_related_deaths}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.work_related_deaths ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast antal arbejdsrelaterede dødsfald"
                 />
-                {errors.work_related_deaths && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.work_related_deaths}</p>}
+
               </div>
             </div>
           </div>
@@ -864,14 +820,14 @@ function CompanyFigures({ currentYear }) {
                   name="salary_below_minimum"
                   value={formData.salary_below_minimum}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.salary_below_minimum ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                 >
                   <option value="">Vælg</option>
                   <option value="over">Over minimumsløn</option>
                   <option value="under">Under minimumsløn</option>
                   <option value="equal">Minimumsløn</option>
                 </select>
-                {errors.salary_below_minimum && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.salary_below_minimum}</p>}
+
               </div>
               <div>
                 <label htmlFor="gender_pay_gap" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -897,10 +853,10 @@ function CompanyFigures({ currentYear }) {
                   name="collective_bargaining_coverage"
                   value={formData.collective_bargaining_coverage}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.collective_bargaining_coverage ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast procent"
                 />
-                {errors.collective_bargaining_coverage && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.collective_bargaining_coverage}</p>}
+
               </div>
               <div>
                 <label htmlFor="avg_training_hours" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
@@ -912,10 +868,10 @@ function CompanyFigures({ currentYear }) {
                   name="avg_training_hours"
                   value={formData.avg_training_hours}
                   onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border ${errors.avg_training_hours ? 'esg-border-red-500' : ''} esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
                   placeholder="Indtast timer"
                 />
-                {errors.avg_training_hours && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.avg_training_hours}</p>}
+
               </div>
             </div>
           </div>

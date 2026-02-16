@@ -52,7 +52,6 @@ function ExtendedModule({ currentYear }) {
     gender_top_management_ratio: '',
   });
 
-  const [errors, setErrors] = useState({});
   const COMPANY_ID = 1; // Assuming a single company for now, or fetch dynamically
 
   useEffect(() => {
@@ -87,48 +86,10 @@ function ExtendedModule({ currentYear }) {
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
     }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: '',
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    const requiredFields = [
-      // Example: add required fields here based on your backend validation
-      // 'strategy_sustainability_elements',
-      // 'existing_practices_policies',
-      // 'future_initiatives_targets',
-      // 'highest_management_level',
-      // 'co2e_reduction_target',
-      // 'co2e_baseline_year',
-      // 'co2e_reduction_actions',
-      // 'climate_transition_plan',
-      // 'climate_risks_description',
-      // 'exposure_vulnerability',
-      // 'climate_risks_time_horizon',
-      // 'confirmed_hr_incidents_own_workforce',
-      // 'gender_top_management_ratio',
-    ];
-
-    requiredFields.forEach((field) => {
-      if (!formData[field]) {
-        newErrors[field] = 'Dette felt er obligatorisk.';
-      }
-    });
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      alert('Venligst udfyld alle obligatoriske felter.');
-      return;
-    }
 
     try {
       // Use POST method which leverages update_or_create in the backend
