@@ -8,7 +8,7 @@ import CircularProgress from './components/CircularProgress';
 import StepDVAInfo from './components/StepDVAInfo';
 import { categoryDescriptions, questionDescriptions } from './data/descriptions';
 import StepESGInfo from './components/StepESGInfo';
-import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi, logoutUser, fetchPdfReport } from './api';
+import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi, logoutUser, fetchPdfReport, fetchAvailableYears, createEmptyCompanyBasismodulData } from './api';
 import Login from './components/Login'; // Import the Login component
 import LandingPage from './components/LandingPage'; // Import the LandingPage component
 import Header from './components/Header'; // Import the Header component
@@ -46,7 +46,7 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
     const [userCompanyId, setUserCompanyId] = useState(null);
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // Set current year to actual current year
-    const [availableYears, setAvailableYears] = useState([currentYear]); // Initialize with current year
+    const [availableYears, setAvailableYears] = useState([]); // Initialize as empty, will be fetched from API
     const [showLandingPage, setShowLandingPage] = useState(true);
 
     const [showAddYearInput, setShowAddYearInput] = useState(false);
@@ -133,7 +133,7 @@ function App() {
       setAddYearError(''); // Clear error on input change
     }, []);
 
-    const handleYearInputConfirm = useCallback(() => {
+    const handleYearInputConfirm = useCallback(async () => {
       const year = parseInt(newYearValue, 10);
       const currentActualYear = new Date().getFullYear(); // Get current actual year
 
@@ -161,7 +161,16 @@ function App() {
       setShowAddYearInput(false); // Hide input
       setNewYearValue('');
       setAddYearError('');
-    }, [newYearValue, availableYears, setCurrentYear]);
+
+      // Persist the new year in the backend by creating an empty entry
+      try {
+        await createEmptyCompanyBasismodulData(userCompanyId, year);
+        console.log(`Successfully created empty data for new year ${year}.`);
+      } catch (error) {
+        console.error(`Error persisting new year ${year} in backend:`, error);
+        // Optionally, handle error: maybe revert UI state or show a message
+      }
+    }, [newYearValue, availableYears, setCurrentYear, userCompanyId]); // Add userCompanyId to dependencies
 
     const handleYearInputCancel = useCallback(() => {
       setShowAddYearInput(false);
@@ -188,6 +197,41 @@ function App() {
       }
     }, [isLoggedIn, userCompanyId]);
 
+    useEffect(() => {
+      const getAvailableYears = async () => {
+        console.log("DEBUG: getAvailableYears effect triggered. isLoggedIn:", isLoggedIn, "userCompanyId:", userCompanyId);
+        if (isLoggedIn && userCompanyId) {
+          try {
+            console.log("DEBUG: Calling fetchAvailableYears for companyId:", userCompanyId);
+            const years = await fetchAvailableYears(userCompanyId);
+            console.log("DEBUG: fetchAvailableYears returned years:", years);
+            if (years.length > 0) {
+              const sortedYears = years.sort((a, b) => a - b);
+              setAvailableYears(sortedYears);
+              console.log("DEBUG: setAvailableYears called with:", sortedYears);
+              if (!sortedYears.includes(currentYear)) {
+                setCurrentYear(sortedYears[sortedYears.length - 1]);
+                console.log("DEBUG: setCurrentYear called with (new):", sortedYears[sortedYears.length - 1]);
+              } else {
+                console.log("DEBUG: currentYear already in sortedYears:", currentYear);
+              }
+            } else {
+              const actualCurrentYear = new Date().getFullYear();
+              setAvailableYears([actualCurrentYear]);
+              setCurrentYear(actualCurrentYear);
+              console.log("DEBUG: No years from API, setting to current actual year:", actualCurrentYear);
+            }
+          } catch (error) {
+            console.error("DEBUG: Error fetching available years:", error);
+            const actualCurrentYear = new Date().getFullYear();
+            setAvailableYears([actualCurrentYear]);
+            setCurrentYear(actualCurrentYear);
+            console.log("DEBUG: Error fallback: setting to current actual year:", actualCurrentYear);
+          }
+        }
+      };
+      getAvailableYears();
+    }, [isLoggedIn, userCompanyId]); // Dependencies: runs when login status or company ID changes
 
     useEffect(() => {
       const loadAllData = async () => {

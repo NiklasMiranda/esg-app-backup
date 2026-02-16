@@ -193,6 +193,30 @@ class CompanyExtendedModuleDataViewSet(viewsets.ModelViewSet):
         serializer.save()
 
 
+from django.db.models import F # Import F for querying distinct years
+
+class CompanyAvailableYearsView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, company_id, *args, **kwargs):
+        # Get distinct years from CompanyBasismodulData
+        basismodul_years = CompanyBasismodulData.objects.filter(company_id=company_id).values_list('year', flat=True).distinct()
+        
+        # Get distinct years from CompanyExtendedModuleData
+        extended_module_years = CompanyExtendedModuleData.objects.filter(company_id=company_id).values_list('year', flat=True).distinct()
+
+        # Get distinct years from Answer model (for DVA/IA answers)
+        answer_years = Answer.objects.filter(company_id=company_id).values_list('year', flat=True).distinct()
+
+        # Combine and sort unique years
+        all_years = sorted(list(set(list(basismodul_years) + list(extended_module_years) + list(answer_years))))
+
+        if not all_years:
+            return Response({"detail": "No data found for this company for any year."}, status=status.HTTP_404_NOT_FOUND)
+            
+        return Response(all_years, status=status.HTTP_200_OK)
+
+
 class PDFReportView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated] # Ensure only authenticated users can generate reports
 

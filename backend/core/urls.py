@@ -11,7 +11,8 @@ from .views import (
     CalculationResultsView,
     PDFReportView,
     CompanyBasismodulDataViewSet, # New import
-    CompanyExtendedModuleDataViewSet # New import
+    CompanyExtendedModuleDataViewSet, # New import
+    CompanyAvailableYearsView # New import
 )
 
 router = DefaultRouter()
@@ -26,6 +27,7 @@ urlpatterns = [
     path('user-answers/<int:company_id>/<int:year>/', UserAnswersView.as_view(), name='user-answers'),
     path('calculation-results/<int:company_id>/<int:year>/', CalculationResultsView.as_view(), name='calculation-results'),
     path('pdf-report/<int:company_id>/<int:year>/', PDFReportView.as_view(), name='pdf-report'),
+    path('company-data/available-years/<int:company_id>/', CompanyAvailableYearsView.as_view(), name='company-available-years'),
     path('company-basismodul-data/<int:company_id>/<int:year>/', CompanyBasismodulDataViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'post': 'create'}), name='company-basismodul-data-detail'),
     path('company-extended-module-data/<int:company_id>/<int:year>/', CompanyExtendedModuleDataViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'post': 'create'}), name='company-extended-module-data-detail'),
 ] + router.urls

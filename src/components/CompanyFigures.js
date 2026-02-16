@@ -243,8 +243,15 @@ function CompanyFigures({ currentYear }) {
             </div>
             {/* NACE Sektor Koder */}
             <div> {/* NACE codes block now acts as a single column */}
-              <label className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+              <label className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2 esg-flex esg-items-center esg-justify-between">
                 NACE sektor kode(r):
+                <button
+                  type="button"
+                  onClick={addNaceCode}
+                  className="esg-bg-green-500 hover:esg-bg-green-700 esg-text-white esg-font-bold esg-py-1 esg-px-2 esg-rounded esg-text-sm"
+                >
+                  +
+                </button>
               </label>
               {formData.nace_sector_codes.map((code, index) => (
                 <div key={index} className="esg-flex esg-items-center esg-mb-2">
@@ -265,15 +272,8 @@ function CompanyFigures({ currentYear }) {
                   </button>
                 </div>
               ))}
-            </div>
-              <button
-                type="button"
-                onClick={addNaceCode}
-                className="esg-bg-green-500 hover:esg-bg-green-700 esg-text-white esg-font-bold esg-py-1 esg-px-2 esg-rounded"
-              >
-                Tilføj NACE kode
-              </button>
               {errors.nace_sector_codes && <p className="esg-text-red-500 esg-text-xs esg-italic">{errors.nace_sector_codes}</p>}
+            </div>
             </div>
             <div>
               <label htmlFor="balance_sheet_total" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
