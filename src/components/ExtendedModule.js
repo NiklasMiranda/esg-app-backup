@@ -193,7 +193,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="strategy_sustainability_elements" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Centrale elementer fra virksomhedens strategi, der er relateret til/påvirker bæredygtighedsspørgsmål (C1):
+                Centrale elementer fra virksomhedens strategi, der er relateret til/påvirker bæredygtighedsspørgsmål (C1) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="strategy_sustainability_elements"
@@ -209,7 +209,7 @@ function ExtendedModule({ currentYear }) {
             {/* C2 */}
             <div className="md:esg-col-span-2">
               <label htmlFor="existing_practices_policies" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Beskrivelse af eksisterende praksisser/politikker/handlinger (C2):
+                Beskrivelse af eksisterende praksisser/politikker/handlinger (C2) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="existing_practices_policies"
@@ -223,7 +223,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="future_initiatives_targets" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Beskrivelse af fremtidige initiativer/målsætninger (C2):
+                Beskrivelse af fremtidige initiativer/målsætninger (C2) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="future_initiatives_targets"
@@ -237,7 +237,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="highest_management_level" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Angivelse af højeste ledelsesniveau i virksomheden, der er ansvarlig for implementering (C2):
+                Angivelse af højeste ledelsesniveau i virksomheden, der er ansvarlig for implementering (C2) (obligatorisk hvis relevant):
               </label>
               <input
                 type="text"
@@ -267,13 +267,13 @@ function ExtendedModule({ currentYear }) {
                 className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
               />
               <label htmlFor="scope3_co2e_relevant" className="esg-text-gray-700lg esg-font-bold">
-                Vurdér, om Scope 3 CO₂e-udledning er relevant at oplyse om for netop din virksomhed:
+                Vurdér, om Scope 3 CO₂e-udledning er relevant at oplyse om for netop din virksomhed (obligatorisk hvis relevant):
               </label>
             </div>
             {formData.scope3_co2e_relevant && (
               <div className="md:esg-col-span-2">
                 <label htmlFor="scope3_co2e_emissions" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                  Scope 3 CO₂e-udledninger (obligatorisk hvis relevant):
+                  Scope 3 CO₂e-udledninger (obligatorisk hvis relevant) (obligatorisk hvis relevant):
                 </label>
                 <input
                   type="number"
@@ -290,7 +290,7 @@ function ExtendedModule({ currentYear }) {
             {/* C3 */}
             <div>
               <label htmlFor="co2e_reduction_target" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                CO₂e-reduktionsmål (C3):
+                CO₂e-reduktionsmål (C3) (obligatorisk hvis relevant):
               </label>
               <input
                 type="text"
@@ -304,7 +304,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div>
               <label htmlFor="co2e_baseline_year" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                CO₂e-udledning i baselineår (C3):
+                CO₂e-udledning i baselineår (C3) (obligatorisk hvis relevant):
               </label>
               <input
                 type="number"
@@ -318,7 +318,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="co2e_reduction_actions" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Liste med de handlinger, der skal bidrage til at nå CO₂e-reduktionsmålene (C3):
+                Liste med de handlinger, der skal bidrage til at nå CO₂e-reduktionsmålene (C3) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="co2e_reduction_actions"
@@ -332,7 +332,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="climate_transition_plan" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Omstillingsplan for modvirkning af klimaforandringer (C3):
+                Omstillingsplan for modvirkning af klimaforandringer (C3) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="climate_transition_plan"
@@ -348,7 +348,7 @@ function ExtendedModule({ currentYear }) {
             {/* C4 */}
             <div className="md:esg-col-span-2">
               <label htmlFor="climate_risks_description" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Beskrivelse af klimarelaterede risici og/eller klimarelaterede omstillingsrisici (C4):
+                Beskrivelse af klimarelaterede risici og/eller klimarelaterede omstillingsrisici (C4) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="climate_risks_description"
@@ -362,7 +362,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="exposure_vulnerability" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Eksponering og sårbarhed for virksomhedens aktiver, aktiviteter og værdikæde (C4):
+                Eksponering og sårbarhed for virksomhedens aktiver, aktiviteter og værdikæde (C4) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="exposure_vulnerability"
@@ -376,7 +376,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="climate_risks_time_horizon" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Tidshorisont for, hvornår de klimarelaterede risici og omstillingsrisici forventes at få negativ indflydelse på virksomheden (C4):
+                Tidshorisont for, hvornår de klimarelaterede risici og omstillingsrisici forventes at få negativ indflydelse på virksomheden (C4) (obligatorisk hvis relevant):
               </label>
               <input
                 type="text"
@@ -425,7 +425,7 @@ function ExtendedModule({ currentYear }) {
             {/* C5 */}
             <div>
               <label htmlFor="gender_management_ratio" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Forholdet mellem kvinder og mænd på ledelsesniveau (C5):
+                Forholdet mellem kvinder og mænd på ledelsesniveau (C5) (valgfri):
               </label>
               <input
                 type="text"
@@ -439,7 +439,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div>
               <label htmlFor="independent_workers" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Antal selvstændige, som arbejder for din virksomhed (C5):
+                Antal selvstændige, som arbejder for din virksomhed (C5) (valgfri):
               </label>
               <input
                 type="number"
@@ -453,7 +453,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div>
               <label htmlFor="temporary_workers" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Antal vikarer, som arbejder for din virksomhed (C5):
+                Antal vikarer, som arbejder for din virksomhed (C5) (valgfri):
               </label>
               <input
                 type="number"
@@ -511,7 +511,7 @@ function ExtendedModule({ currentYear }) {
             </div>
             <div className="md:esg-col-span-2">
               <label htmlFor="confirmed_hr_incidents_value_chain" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Bekræftede negative menneskerettighedshændelser i din virksomheds værdikæde (C7):
+                Bekræftede negative menneskerettighedshændelser i din virksomheds værdikæde (C7) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="confirmed_hr_incidents_value_chain"
@@ -533,7 +533,7 @@ function ExtendedModule({ currentYear }) {
             {/* C8 */}
             <div className="md:esg-col-span-2">
               <label htmlFor="revenue_selected_sectors" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Indtægter fra udvalgte sektorer (C8):
+                Indtægter fra udvalgte sektorer (C8) (obligatorisk hvis relevant):
               </label>
               <textarea
                 id="revenue_selected_sectors"
@@ -555,14 +555,14 @@ function ExtendedModule({ currentYear }) {
                 className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
               />
               <label htmlFor="eu_benchmarks_exceedance" className="esg-block esg-text-gray-700lg esg-font-bold">
-                Overskridelse af EU-benchmarks i overensstemmelse med Parisaftalen (C8):
+                Overskridelse af EU-benchmarks i overensstemmelse med Parisaftalen (C8) (obligatorisk hvis relevant):
               </label>
             </div>
 
             {/* C9 */}
             <div className="md:esg-col-span-2">
               <label htmlFor="gender_top_management_ratio" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
-                Forholdet mellem kvinder og mænd i det øverste ledelsesorgan (C9):
+                Forholdet mellem kvinder og mænd i det øverste ledelsesorgan (C9) (obligatorisk hvis relevant):
               </label>
               <input
                 type="text"
