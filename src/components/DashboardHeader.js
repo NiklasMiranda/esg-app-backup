@@ -25,7 +25,7 @@ function DashboardHeader({ isLoggedIn, onLogout, newTotalCompletionPercentage, o
         <div className="esg-relative">
           <button
             onClick={handleDropdownToggle}
-            className="esg-flex esg-items-center esg-text-white esg-px-4 esg-pt-2.5 esg-pb-1.5 esg-rounded-md hover:esg-bg-blue-700 focus:esg-outline-none"
+            className="esg-flex esg-items-center esg-text-white esg-py-2 esg-px-4 esg-rounded-md hover:esg-bg-blue-700 focus:esg-outline-none"
           >
             <span className="esg-mr-2">{userCompanyName || 'Din Virksomhed'}</span> {/* Company Name */}
             <svg
@@ -42,7 +42,7 @@ function DashboardHeader({ isLoggedIn, onLogout, newTotalCompletionPercentage, o
             <div className="esg-absolute esg-right-0 esg-mt-2 esg-w-48 esg-bg-white esg-rounded-md esg-shadow-lg esg-z-30">
               <button
                 onClick={onLogout}
-                className="esg-block esg-w-full esg-text-left esg-px-4 esg-py-2 esg-text-gray-800 hover:esg-bg-gray-100"
+                className="esg-block esg-w-full esg-text-left esg-px-4 esg-py-2 esg-text-gray-800 hover:esg-bg-gray-100 esg-flex esg-items-center"
               >
                 Logout
               </button>

@@ -4,7 +4,7 @@ import ESGLogo from '../assets/images/ESGScore logo.png'; // Import the logo ima
 
 function Header({ isLoggedIn, onLogout, onNavigateToLogin, onNavigateToHome }) {
   return (
-    <header className="esg-w-full esg-mx-auto esg-bg-gray-400 esg-p-4 esg-text-gray-800 esg-shadow-md esg-rounded-full esg-bg-opacity-10 esg-backdrop-blur-sm esg-mt-8 esg-border esg-border-gray-400">
+    <header className="esg-w-full esg-mx-auto esg-bg-black esg-p-4 esg-text-gray-800 esg-shadow-md esg-rounded-full esg-bg-opacity-10 esg-backdrop-blur-sm esg-mt-8 esg-border esg-border-gray-400">
       <div className="esg-container esg-mx-auto esg-flex esg-justify-between esg-items-center">
         <div className="esg-flex esg-items-center">
           <div className="esg-flex esg-items-center esg-cursor-pointer" onClick={onNavigateToHome}>

@@ -13,7 +13,7 @@ function LandingPage() {
         <div className="esg-absolute esg-inset-0 esg-z-0">
           <Grainient
             color1="#0b3954"
-            color2="#000000"
+            color2="#bd822e"
             color3="#0b3954"
             timeSpeed={0.25}
             colorBalance={0}

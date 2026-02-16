@@ -16,7 +16,7 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
           <li className="esg-mb-2">
             <button
               onClick={() => navigateToView('dashboard')}
-              className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
+              className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 align-items-center ${
                 activeView === 'dashboard' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
               }`}
             >
@@ -26,7 +26,7 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
           <li className="esg-mb-2">
             <button
               onClick={() => setIsCompanyInfoExpanded(!isCompanyInfoExpanded)}
-              className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
+              className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 ${
                 isCompanyInfoExpanded ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
               }`}
             >
@@ -38,7 +38,7 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
                 <li className="esg-mb-2">
                   <button
                     onClick={() => navigateToView('companyFigures')}
-                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
+                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 ${
                       activeView === 'companyFigures' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
                     }`}
                   >
@@ -48,7 +48,7 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
                 <li className="esg-mb-2">
                   <button
                     onClick={() => navigateToView('extendedModule')}
-                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
+                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 ${
                       activeView === 'extendedModule' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
                     }`}
                   >
@@ -64,7 +64,7 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
                 onSectionChange('del1'); // Set 'del1' as initial section for ESG Calculator
                 navigateToView('esgCalculator');
               }}
-              className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left ${
+              className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 ${
                 activeView === 'esgCalculator' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
               }`}
             >
