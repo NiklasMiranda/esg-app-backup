@@ -163,6 +163,11 @@ def calculate_esg_results(company_id, year):
         percentage_of_max_contribution = 0
         if max_scores.get(label, 0) > 0:
             percentage_of_max_contribution = (final_scores[label] / max_scores[label]) * 100
+        else: # max_scores[label] is 0, implies no DVA contribution for this sub_category
+            if max_possible_ia_points_for_sub_category > 0:
+                # If there are IA questions, calculate contribution based on IA completion
+                percentage_of_max_contribution = (indicator_points_by_sub_category.get(label, 0) / max_possible_ia_points_for_sub_category) * 100
+            # If max_possible_ia_points_for_sub_category is also 0, then percentage_of_max_contribution remains 0.
 
         polarBarChartData.append({
             "criterion": label,
