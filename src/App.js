@@ -17,6 +17,8 @@ import DashboardSidebar from './components/DashboardSidebar'; // Import the Dash
 import CompanyFigures from './components/CompanyFigures'; // Import the CompanyFigures component
 import ExtendedModule from './components/ExtendedModule'; // Import the ExtendedModule component
 import YearSelector from './components/YearSelector'; // Import the YearSelector component
+import YearlyChartsSection from './components/YearlyChartsSection';
+
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -209,12 +211,11 @@ function App() {
             if (years.length > 0) {
               const sortedYears = years.sort((a, b) => a - b);
               setAvailableYears(sortedYears);
-              console.log("DEBUG: setAvailableYears called with:", sortedYears);
-              if (!sortedYears.includes(currentYear)) {
-                setCurrentYear(sortedYears[sortedYears.length - 1]);
-                console.log("DEBUG: setCurrentYear called with (new):", sortedYears[sortedYears.length - 1]);
-              } else {
-                console.log("DEBUG: currentYear already in sortedYears:", currentYear);
+              const actualCurrentYear = new Date().getFullYear(); // Assuming 2026 based on user context
+              if (sortedYears.includes(actualCurrentYear)) {
+                setCurrentYear(actualCurrentYear);
+              } else if (sortedYears.length > 0) {
+                setCurrentYear(sortedYears[sortedYears.length - 1]); // Fallback to latest year if current year not available
               }
             } else {
               const actualCurrentYear = new Date().getFullYear();
@@ -652,7 +653,15 @@ function App() {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg esg-p-4">
             <h1 className="esg-text-3xl esg-font-bold esg-mb-4">Velkommen til dit Dashboard</h1>
-            <p className="esg-text-gray-700">Her kan du se en oversigt over dine ESG-data.</p>
+            <p className="esg-text-gray-700 esg-mb-6">Her kan du se en oversigt over dine ESG-data.</p>
+            <YearlyChartsSection
+              availableYears={availableYears}
+              currentYear={currentYear}
+              onSelectYear={setCurrentYear}
+              calculationResults={calculationResults}
+              criterionColors={criterionColors}
+              iaQuestions={iaQuestions}
+            />
           </div>
         );
       } else if (activeView === 'companyFigures') {
