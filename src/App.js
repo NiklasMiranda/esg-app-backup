@@ -16,6 +16,7 @@ import DashboardHeader from './components/DashboardHeader'; // Import the Dashbo
 import DashboardSidebar from './components/DashboardSidebar'; // Import the DashboardSidebar component
 import CompanyFigures from './components/CompanyFigures'; // Import the CompanyFigures component
 import ExtendedModule from './components/ExtendedModule'; // Import the ExtendedModule component
+import YearSelector from './components/YearSelector'; // Import the YearSelector component
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
 const iaQuestionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];
@@ -657,12 +658,36 @@ function App() {
       } else if (activeView === 'companyFigures') {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
+            <YearSelector
+              availableYears={availableYears}
+              currentYear={currentYear}
+              onSelectYear={setCurrentYear}
+              onAddNewYear={onAddNewYear}
+              showAddYearInput={showAddYearInput}
+              newYearValue={newYearValue}
+              handleYearInputChange={handleYearInputChange}
+              handleYearInputConfirm={handleYearInputConfirm}
+              handleYearInputCancel={handleYearInputCancel}
+              addYearError={addYearError}
+            />
             <CompanyFigures currentYear={currentYear} />
           </div>
         );
       } else if (activeView === 'extendedModule') {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
+            <YearSelector
+              availableYears={availableYears}
+              currentYear={currentYear}
+              onSelectYear={setCurrentYear}
+              onAddNewYear={onAddNewYear}
+              showAddYearInput={showAddYearInput}
+              newYearValue={newYearValue}
+              handleYearInputChange={handleYearInputChange}
+              handleYearInputConfirm={handleYearInputConfirm}
+              handleYearInputCancel={handleYearInputCancel}
+              addYearError={addYearError}
+            />
             <ExtendedModule currentYear={currentYear} />
           </div>
         );
