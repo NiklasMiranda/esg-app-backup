@@ -71,17 +71,17 @@ function CompanyFigures({ currentYear }) {
   });
 
   const [isGeneralInfoExpanded, setIsGeneralInfoExpanded] = useState(true); // New state
-  const [isInitiativesExpanded, setIsInitiativesExpanded] = useState(false); // New state
-  const [isEnergyConsumptionExpanded, setIsEnergyConsumptionExpanded] = useState(false); // New state
-  const [isCo2EmissionsExpanded, setIsCo2EmissionsExpanded] = useState(false); // New state
-  const [isPollutionExpanded, setIsPollutionExpanded] = useState(false); // New state
-  const [isBiodiversityExpanded, setIsBiodiversityExpanded] = useState(false); // New state
-  const [isWaterExpanded, setIsWaterExpanded] = useState(false); // New state
-  const [isResourcesWasteExpanded, setIsResourcesWasteExpanded] = useState(false); // New state
-  const [isWorkforceExpanded, setIsWorkforceExpanded] = useState(false); // New state
-  const [isHealthSafetyExpanded, setIsHealthSafetyExpanded] = useState(false); // New state
-  const [isCompensationExpanded, setIsCompensationExpanded] = useState(false); // New state
-  const [isGovernanceExpanded, setIsGovernanceExpanded] = useState(false); // New state
+  const [isInitiativesExpanded, setIsInitiativesExpanded] = useState(true); // New state
+  const [isEnergyConsumptionExpanded, setIsEnergyConsumptionExpanded] = useState(true); // New state
+  const [isCo2EmissionsExpanded, setIsCo2EmissionsExpanded] = useState(true); // New state
+  const [isPollutionExpanded, setIsPollutionExpanded] = useState(true); // New state
+  const [isBiodiversityExpanded, setIsBiodiversityExpanded] = useState(true); // New state
+  const [isWaterExpanded, setIsWaterExpanded] = useState(true); // New state
+  const [isResourcesWasteExpanded, setIsResourcesWasteExpanded] = useState(true); // New state
+  const [isWorkforceExpanded, setIsWorkforceExpanded] = useState(true); // New state
+  const [isHealthSafetyExpanded, setIsHealthSafetyExpanded] = useState(true); // New state
+  const [isCompensationExpanded, setIsCompensationExpanded] = useState(true); // New state
+  const [isGovernanceExpanded, setIsGovernanceExpanded] = useState(true); // New state
 
   const COMPANY_ID = 1; // Assuming a single company for now, or fetch dynamically
 
@@ -197,159 +197,154 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">1. Generelle oplysninger (B1)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isGeneralInfoExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isGeneralInfoExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
-            <div>
-              <label htmlFor="basis_for_preparation" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Grundlag for udarbejdelse:
-              </label>
-              <input
-                type="text"
-                id="basis_for_preparation"
-                name="basis_for_preparation"
-                value={formData.basis_for_preparation}
-                onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                placeholder="Indtast grundlag for udarbejdelse"
-              />
-
-            </div>
-            <div>
-              <label htmlFor="legal_form" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Virksomhedens juridiske form:
-              </label>
-              <input
-                type="text"
-                id="legal_form"
-                name="legal_form"
-                value={formData.legal_form}
-                onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                placeholder="Indtast juridisk form"
-              />
-
-            </div>
-            {/* NACE Sektor Koder */}
-            <div> {/* NACE codes block now acts as a single column */}
-              <label className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2 esg-flex esg-items-center esg-justify-between">
-                NACE sektor kode(r):
-                <button
-                  type="button"
-                  onClick={addNaceCode}
-                  className="esg-bg-green-500 hover:esg-bg-green-700 esg-text-white esg-font-bold esg-py-1 esg-px-2 esg-rounded esg-text-sm"
-                >
-                  +
-                </button>
-              </label>
-              {formData.nace_sector_codes.map((code, index) => (
-                <div key={index} className="esg-flex esg-items-center esg-mb-2">
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isGeneralInfoExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
+                <div>
+                  <label htmlFor="basis_for_preparation" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Grundlag for udarbejdelse:
+                  </label>
                   <input
                     type="text"
-                    name={`nace_sector_code_${index}`}
-                    value={code}
-                    onChange={(e) => handleNaceCodeChange(index, e.target.value)}
-                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline esg-mr-2`}
-                    placeholder="Indtast NACE kode"
+                    id="basis_for_preparation"
+                    name="basis_for_preparation"
+                    value={formData.basis_for_preparation}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast grundlag for udarbejdelse"
                   />
-                  <button
-                    type="button"
-                    onClick={() => removeNaceCode(index)}
-                    className="esg-bg-red-500 hover:esg-bg-red-700 esg-text-white esg-font-bold esg-py-1 esg-px-2 esg-rounded"
-                  >
-                    -
-                  </button>
                 </div>
-              ))}
-
-            </div>
-            </div>
-            <div>
-              <label htmlFor="balance_sheet_total" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Balancesum (DKK):
-              </label>
-              <input
-                type="number"
-                id="balance_sheet_total"
-                name="balance_sheet_total"
-                value={formData.balance_sheet_total}
-                onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                placeholder="Indtast balancesum"
-              />
-
-            </div>
-            <div>
-              <label htmlFor="revenue" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Omsætning (DKK):
-              </label>
-              <input
-                type="number"
-                id="revenue"
-                name="revenue"
-                value={formData.revenue}
-                onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                placeholder="Indtast omsætning"
-              />
-
-            </div>
-            <div>
-              <label htmlFor="employees" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Antal ansatte:
-              </label>
-              <input
-                type="number"
-                id="employees"
-                name="employees"
-                value={formData.employees}
-                onChange={handleChange}
-                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                placeholder="Indtast antal ansatte"
-              />
-
-            </div>
-            <div> {/* Textarea now acts as a single column */}
-              <label htmlFor="asset_locations" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Adresser og geolokation på væsentlige aktiver og anlæg:
-              </label>
-              <textarea
-                id="asset_locations"
-                name="asset_locations"
-                value={formData.asset_locations}
-                onChange={handleChange}
-                rows="3"
-                className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                placeholder="Indtast adresser og geolokation"
-              ></textarea>
-
-            </div>
-            <div> {/* Textarea now acts as a single column */}
-              <label htmlFor="confidentiality_exclusions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Eventuelle udeladelser grundet fortrolighed (valgfri):
-              </label>
-              <textarea
-                id="confidentiality_exclusions"
-                name="confidentiality_exclusions"
-                value={formData.confidentiality_exclusions}
-                onChange={handleChange}
-                rows="3"
-                className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                placeholder="Indtast udeladelser"
-              ></textarea>
-            </div>
-            <div> {/* Textarea now acts as a single column */}
-              <label htmlFor="esg_certificate_description" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Kort beskrivelse af din virksomheds eventuelle ESG-certifikat eller miljømærker (valgfri):
-              </label>
-              <textarea
-                id="esg_certificate_description"
-                name="esg_certificate_description"
-                value={formData.esg_certificate_description}
-                onChange={handleChange}
-                rows="3"
-                className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                placeholder="Indtast beskrivelse"
-              ></textarea>
+                <div>
+                  <label htmlFor="legal_form" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Virksomhedens juridiske form:
+                  </label>
+                  <input
+                    type="text"
+                    id="legal_form"
+                    name="legal_form"
+                    value={formData.legal_form}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast juridisk form"
+                  />
+                </div>
+                {/* NACE Sektor Koder */}
+                <div> {/* NACE codes block now acts as a single column */}
+                  <label className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2 esg-flex esg-items-center esg-justify-between">
+                    NACE sektor kode(r):
+                    <button
+                      type="button"
+                      onClick={addNaceCode}
+                      className="esg-bg-green-500 hover:esg-bg-green-700 esg-text-white esg-font-bold esg-py-1 esg-px-2 esg-rounded esg-text-sm"
+                    >
+                      +
+                    </button>
+                  </label>
+                  {formData.nace_sector_codes.map((code, index) => (
+                    <div key={index} className="esg-flex esg-items-center esg-mb-2">
+                      <input
+                        type="text"
+                        name={`nace_sector_code_${index}`}
+                        value={code}
+                        onChange={(e) => handleNaceCodeChange(index, e.target.value)}
+                        className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline esg-mr-2`}
+                        placeholder="Indtast NACE kode"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeNaceCode(index)}
+                        className="esg-bg-red-500 hover:esg-bg-red-700 esg-text-white esg-font-bold esg-py-1 esg-px-2 esg-rounded"
+                      >
+                        -
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <label htmlFor="balance_sheet_total" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Balancesum (DKK):
+                  </label>
+                  <input
+                    type="number"
+                    id="balance_sheet_total"
+                    name="balance_sheet_total"
+                    value={formData.balance_sheet_total}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast balancesum"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="revenue" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Omsætning (DKK):
+                  </label>
+                  <input
+                    type="number"
+                    id="revenue"
+                    name="revenue"
+                    value={formData.revenue}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast omsætning"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="employees" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Antal ansatte:
+                  </label>
+                  <input
+                    type="number"
+                    id="employees"
+                    name="employees"
+                    value={formData.employees}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast antal ansatte"
+                  />
+                </div>
+                <div className="md:esg-col-span-3"> {/* Textarea now acts as a single column */}
+                  <label htmlFor="asset_locations" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Adresser og geolokation på væsentlige aktiver og anlæg:
+                  </label>
+                  <textarea
+                    id="asset_locations"
+                    name="asset_locations"
+                    value={formData.asset_locations}
+                    onChange={handleChange}
+                    rows="3"
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast adresser og geolokation"
+                  ></textarea>
+                </div>
+                <div className="md:esg-col-span-3"> {/* Textarea now acts as a single column */}
+                  <label htmlFor="confidentiality_exclusions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Eventuelle udeladelser grundet fortrolighed (valgfri):
+                  </label>
+                  <textarea
+                    id="confidentiality_exclusions"
+                    name="confidentiality_exclusions"
+                    value={formData.confidentiality_exclusions}
+                    onChange={handleChange}
+                    rows="3"
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast udeladelser"
+                  ></textarea>
+                </div>
+                <div className="md:esg-col-span-3"> {/* Textarea now acts as a single column */}
+                  <label htmlFor="esg_certificate_description" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Kort beskrivelse af din virksomheds eventuelle ESG-certifikat eller miljømærker (valgfri):
+                  </label>
+                  <textarea
+                    id="esg_certificate_description"
+                    name="esg_certificate_description"
+                    value={formData.esg_certificate_description}
+                    onChange={handleChange}
+                    rows="3"
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast beskrivelse"
+                  ></textarea>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -360,8 +355,9 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">2. Indsatser, politikker og fremtidige initiativer (B2)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isInitiativesExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isInitiativesExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-flex esg-items-center esg-mb-4">
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isInitiativesExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-flex esg-items-center esg-mb-4">
               <input
                 type="checkbox"
                 id="has_initiatives"
@@ -377,14 +373,17 @@ function CompanyFigures({ currentYear }) {
           </div>
         </div>
 
+        </div>
+
         {/* E-Data: Energiforbrug (B3) */}
         <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg esg-shadow-sm">
           <div className="esg-p-4 esg-cursor-pointer esg-flex esg-justify-between esg-items-center esg-bg-gray-50 hover:esg-bg-gray-100 esg-rounded-t-lg" onClick={() => setIsEnergyConsumptionExpanded(!isEnergyConsumptionExpanded)}>
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">3. E-Data: Energiforbrug (B3)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isEnergyConsumptionExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isEnergyConsumptionExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isEnergyConsumptionExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
               <div>
                 <label htmlFor="electricity_renewable" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                   Elektricitet: Vedvarende:
@@ -448,6 +447,7 @@ function CompanyFigures({ currentYear }) {
             </div>
           </div>
         </div>
+        </div>
 
         {/* E-Data: CO₂e-udledninger (B3) - continued */}
         <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg esg-shadow-sm">
@@ -455,69 +455,69 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">4. E-Data: CO₂e-udledninger (B3)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isCo2EmissionsExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCo2EmissionsExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
-              <div>
-                <label htmlFor="scope1_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Scope 1 CO₂e udledninger:
-                </label>
-                <input
-                  type="number"
-                  id="scope1_emissions"
-                  name="scope1_emissions"
-                  value={formData.scope1_emissions}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast Scope 1 udledninger"
-                />
-
-              </div>
-              <div>
-                <label htmlFor="scope2_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Scope 2 CO₂e udledninger:
-                </label>
-                <input
-                  type="number"
-                  id="scope2_emissions"
-                  name="scope2_emissions"
-                  value={formData.scope2_emissions}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast Scope 2 udledninger"
-                />
-
-              </div>
-              <div>
-                <label htmlFor="co2e_intensity" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  CO₂e-intensitet:
-                </label>
-                <input
-                  type="number"
-                  id="co2e_intensity"
-                  name="co2e_intensity"
-                  value={formData.co2e_intensity}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast CO₂e-intensitet"
-                />
-
-              </div>
-              <div>
-                <label htmlFor="scope3_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Scope 3 CO₂e udledninger (valgfri):
-                </label>
-                <input
-                  type="number"
-                  id="scope3_emissions"
-                  name="scope3_emissions"
-                  value={formData.scope3_emissions}
-                  onChange={handleChange}
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast Scope 3 udledninger"
-                />
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCo2EmissionsExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
+                <div>
+                  <label htmlFor="scope1_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Scope 1 CO₂e udledninger:
+                  </label>
+                  <input
+                    type="number"
+                    id="scope1_emissions"
+                    name="scope1_emissions"
+                    value={formData.scope1_emissions}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast Scope 1 udledninger"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="scope2_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Scope 2 CO₂e udledninger:
+                  </label>
+                  <input
+                    type="number"
+                    id="scope2_emissions"
+                    name="scope2_emissions"
+                    value={formData.scope2_emissions}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast Scope 2 udledninger"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="co2e_intensity" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    CO₂e-intensitet:
+                  </label>
+                  <input
+                    type="number"
+                    id="co2e_intensity"
+                    name="co2e_intensity"
+                    value={formData.co2e_intensity}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast CO₂e-intensitet"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="scope3_emissions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Scope 3 CO₂e udledninger (valgfri):
+                  </label>
+                  <input
+                    type="number"
+                    id="scope3_emissions"
+                    name="scope3_emissions"
+                    value={formData.scope3_emissions}
+                    onChange={handleChange}
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast Scope 3 udledninger"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+        </div>
+
         </div>
 
         {/* E-Data: Forurening af luft, vand og jord (B4) */}
@@ -526,22 +526,27 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">5. E-Data: Forurening af luft, vand og jord (B4)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isPollutionExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isPollutionExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="md:esg-col-span-2">
-              <label htmlFor="pollution_reporting" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                Rapportering om forurening (obligatorisk hvis relevant):
-              </label>
-              <textarea
-                id="pollution_reporting"
-                name="pollution_reporting"
-                value={formData.pollution_reporting}
-                onChange={handleChange}
-                rows="3"
-                className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                placeholder="Indtast oplysninger om forurening"
-              ></textarea>
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isPollutionExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 esg-gap-4">
+                <div className="md:esg-col-span-1">
+                  <label htmlFor="pollution_reporting" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Rapportering om forurening (obligatorisk hvis relevant):
+                  </label>
+                  <textarea
+                    id="pollution_reporting"
+                    name="pollution_reporting"
+                    value={formData.pollution_reporting}
+                    onChange={handleChange}
+                    rows="3"
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast oplysninger om forurening"
+                  ></textarea>
+                </div>
+              </div>
             </div>
-          </div>
+        </div>
+
         </div>
 
         {/* E-Data: Biodiversitet (B5) */}
@@ -550,38 +555,41 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">6. E-Data: Biodiversitet (B5)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isBiodiversityExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isBiodiversityExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-              <div>
-                <label htmlFor="biodiversity_sensitive_areas" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Opgørelse af virksomhedens områder i nærheden af eller i 'biodiversitetsfølsomme områder’ (obligatorisk hvis relevant):
-                </label>
-                <textarea
-                  id="biodiversity_sensitive_areas"
-                  name="biodiversity_sensitive_areas"
-                  value={formData.biodiversity_sensitive_areas}
-                  onChange={handleChange}
-                  rows="3"
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast oplysninger om biodiversitetsfølsomme områder"
-                ></textarea>
-              </div>
-              <div>
-                <label htmlFor="land_area_usage" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Virksomhedens arealforbrug (valgfri):
-                </label>
-                <input
-                  type="number"
-                  id="land_area_usage"
-                  name="land_area_usage"
-                  value={formData.land_area_usage}
-                  onChange={handleChange}
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast arealforbrug"
-                />
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isBiodiversityExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+                <div>
+                  <label htmlFor="biodiversity_sensitive_areas" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Opgørelse af virksomhedens områder i nærheden af eller i 'biodiversitetsfølsomme områder’ (obligatorisk hvis relevant):
+                  </label>
+                  <textarea
+                    id="biodiversity_sensitive_areas"
+                    name="biodiversity_sensitive_areas"
+                    value={formData.biodiversity_sensitive_areas}
+                    onChange={handleChange}
+                    rows="3"
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast oplysninger om biodiversitetsfølsomme områder"
+                  ></textarea>
+                </div>
+                <div>
+                  <label htmlFor="land_area_usage" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Virksomhedens arealforbrug (valgfri):
+                  </label>
+                  <input
+                    type="number"
+                    id="land_area_usage"
+                    name="land_area_usage"
+                    value={formData.land_area_usage}
+                    onChange={handleChange}
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast arealforbrug"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+        </div>
+
         </div>
 
         {/* E-Data: Vand (B6) */}
@@ -590,8 +598,9 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">7. E-Data: Vand (B6)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isWaterExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isWaterExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isWaterExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
               <div>
                 <label htmlFor="water_withdrawal" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                   Udtagning af vand:
@@ -625,104 +634,106 @@ function CompanyFigures({ currentYear }) {
           </div>
         </div>
 
+        </div>
+
         {/* E-Data: Ressourceforbrug, cirkulær økonomi og affaldshåndtering (B7) */}
         <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg esg-shadow-sm">
           <div className="esg-p-4 esg-cursor-pointer esg-flex esg-justify-between esg-items-center esg-bg-gray-50 hover:esg-bg-gray-100 esg-rounded-t-lg" onClick={() => setIsResourcesWasteExpanded(!isResourcesWasteExpanded)}>
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">8. E-Data: Ressourceforbrug, cirkulær økonomi og affaldshåndtering (B7)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isResourcesWasteExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isResourcesWasteExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
-              <div className="esg-flex esg-items-center esg-mb-4 md:esg-col-span-3">
-                <input
-                  type="checkbox"
-                  id="uses_circular_economy_principles"
-                  name="uses_circular_economy_principles"
-                  checked={formData.uses_circular_economy_principles || false}
-                  onChange={handleChange}
-                  className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
-                />
-                <label htmlFor="uses_circular_economy_principles" className="esg-text-gray-700 esg-text-md esg-font-bold">
-                  Anvendelse af principper fra cirkulær økonomi (JA/NEJ):
-                </label>
-              </div>
-              {formData.uses_circular_economy_principles && (
-                <div className="md:esg-col-span-3 esg-mb-4">
-                  <label htmlFor="circular_economy_description" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                    Beskrivelse af, hvordan der arbejdes med principper fra cirkulær økonomi:
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isResourcesWasteExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
+                <div className="esg-flex esg-items-center esg-mb-4 md:esg-col-span-3">
+                  <input
+                    type="checkbox"
+                    id="uses_circular_economy_principles"
+                    name="uses_circular_economy_principles"
+                    checked={formData.uses_circular_economy_principles || false}
+                    onChange={handleChange}
+                    className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
+                  />
+                  <label htmlFor="uses_circular_economy_principles" className="esg-text-gray-700 esg-text-md esg-font-bold">
+                    Anvendelse af principper fra cirkulær økonomi (JA/NEJ):
+                  </label>
+                </div>
+                {formData.uses_circular_economy_principles && (
+                  <div className="md:esg-col-span-3 esg-mb-4">
+                    <label htmlFor="circular_economy_description" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                      Beskrivelse af, hvordan der arbejdes med principper fra cirkulær økonomi:
+                    </label>
+                    <textarea
+                      id="circular_economy_description"
+                      name="circular_economy_description"
+                      value={formData.circular_economy_description}
+                      onChange={handleChange}
+                      rows="3"
+                      className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                      placeholder="Beskriv jeres arbejde med cirkulær økonomi"
+                    ></textarea>
+                  </div>
+                )}
+                <div>
+                  <label htmlFor="total_waste_hazardous" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Total mængde farligt affald årligt:
+                  </label>
+                  <input
+                    type="number"
+                    id="total_waste_hazardous"
+                    name="total_waste_hazardous"
+                    value={formData.total_waste_hazardous}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast farligt affald"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="total_waste_non_hazardous" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Total mængde ikke-farligt affald årligt:
+                  </label>
+                  <input
+                    type="number"
+                    id="total_waste_non_hazardous"
+                    name="total_waste_non_hazardous"
+                    value={formData.total_waste_non_hazardous}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast ikke-farligt affald"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="waste_recycled" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Total mængde affald, der sendes til genbrug eller genanvendelse:
+                  </label>
+                  <input
+                    type="number"
+                    id="waste_recycled"
+                    name="waste_recycled"
+                    value={formData.waste_recycled}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast genbrugt/genanvendt affald"
+                  />
+                </div>
+                <div className="md:esg-col-span-3">
+                  <label htmlFor="mass_flow_materials" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Årlige masse-flow for virksomhedens centrale materialer (obligatorisk hvis relevant):
                   </label>
                   <textarea
-                    id="circular_economy_description"
-                    name="circular_economy_description"
-                    value={formData.circular_economy_description}
+                    id="mass_flow_materials"
+                    name="mass_flow_materials"
+                    value={formData.mass_flow_materials}
                     onChange={handleChange}
                     rows="3"
                     className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                    placeholder="Beskriv jeres arbejde med cirkulær økonomi"
+                    placeholder="Indtast masse-flow for materialer"
                   ></textarea>
                 </div>
-              )}
-              <div>
-                <label htmlFor="total_waste_hazardous" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Total mængde farligt affald årligt:
-                </label>
-                <input
-                  type="number"
-                  id="total_waste_hazardous"
-                  name="total_waste_hazardous"
-                  value={formData.total_waste_hazardous}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast farligt affald"
-                />
-
-              </div>
-              <div>
-                <label htmlFor="total_waste_non_hazardous" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Total mængde ikke-farligt affald årligt:
-                </label>
-                <input
-                  type="number"
-                  id="total_waste_non_hazardous"
-                  name="total_waste_non_hazardous"
-                  value={formData.total_waste_non_hazardous}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast ikke-farligt affald"
-                />
-
-              </div>
-              <div>
-                <label htmlFor="waste_recycled" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Total mængde affald, der sendes til genbrug eller genanvendelse:
-                </label>
-                <input
-                  type="number"
-                  id="waste_recycled"
-                  name="waste_recycled"
-                  value={formData.waste_recycled}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast genbrugt/genanvendt affald"
-                />
-
-              </div>
-              <div className="md:esg-col-span-2">
-                <label htmlFor="mass_flow_materials" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Årlige masse-flow for virksomhedens centrale materialer (obligatorisk hvis relevant):
-                </label>
-                <textarea
-                  id="mass_flow_materials"
-                  name="mass_flow_materials"
-                  value={formData.mass_flow_materials}
-                  onChange={handleChange}
-                  rows="3"
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast masse-flow for materialer"
-                ></textarea>
               </div>
             </div>
-          </div>
+        </div>
+
         </div>
 
         {/* S-Data: Egen arbejdsstyrke (B8) */}
@@ -731,66 +742,69 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">9. S-Data: Egen arbejdsstyrke (B8)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isWorkforceExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isWorkforceExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
-              <div>
-                <label htmlFor="contract_type" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Kontrakttype:
-                </label>
-                <input
-                  type="text"
-                  id="contract_type"
-                  name="contract_type"
-                  value={formData.contract_type}
-                  onChange={handleChange}
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast kontrakttype"
-                />
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isWorkforceExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
+                <div>
+                  <label htmlFor="contract_type" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Kontrakttype:
+                  </label>
+                  <input
+                    type="text"
+                    id="contract_type"
+                    name="contract_type"
+                    value={formData.contract_type}
+                    onChange={handleChange}
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast kontrakttype"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="gender_composition" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Kønssammensætning:
+                  </label>
+                  <input
+                    type="text"
+                    id="gender_composition"
+                    name="gender_composition"
+                    value={formData.gender_composition}
+                    onChange={handleChange}
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast kønssammensætning"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="employee_turnover" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Medarbejderomsætning (oplyses kun ved mere end 50 ansatte, valgfri):
+                  </label>
+                  <input
+                    type="number"
+                    id="employee_turnover"
+                    name="employee_turnover"
+                    value={formData.employee_turnover}
+                    onChange={handleChange}
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast medarbejderomsætning"
+                  />
+                </div>
+                <div className="md:esg-col-span-3">
+                  <label htmlFor="employees_abroad" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Ansættelseskontrakter i andre lande udover Danmark (obligatorisk hvis relevant):
+                  </label>
+                  <textarea
+                    id="employees_abroad"
+                    name="employees_abroad"
+                    value={formData.employees_abroad}
+                    onChange={handleChange}
+                    rows="3"
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast oplysninger om ansættelseskontrakter i udlandet"
+                  ></textarea>
+                </div>
               </div>
-              <div>
-                <label htmlFor="gender_composition" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Kønssammensætning:
-                </label>
-                <input
-                  type="text"
-                  id="gender_composition"
-                  name="gender_composition"
-                  value={formData.gender_composition}
-                  onChange={handleChange}
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast kønssammensætning"
-                />
-              </div>
-              <div>
-                <label htmlFor="employee_turnover" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Medarbejderomsætning (oplyses kun ved mere end 50 ansatte, valgfri):
-                </label>
-                <input
-                  type="number"
-                  id="employee_turnover"
-                  name="employee_turnover"
-                  value={formData.employee_turnover}
-                  onChange={handleChange}
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast medarbejderomsætning"
-                />
-              </div>
-              <div className="md:esg-col-span-3">
-                <label htmlFor="employees_abroad" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Ansættelseskontrakter i andre lande udover Danmark (obligatorisk hvis relevant):
-                </label>
-                <textarea
-                  id="employees_abroad"
-                  name="employees_abroad"
-                  value={formData.employees_abroad}
-                  onChange={handleChange}
-                  rows="3"
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast oplysninger om ansættelseskontrakter i udlandet"
-                ></textarea>
-              </div>
-            </div>
           </div>
+        </div>
+
         </div>
 
         {/* S-Data: Sundhed og sikkerhed (B9) */}
@@ -799,40 +813,41 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">10. S-Data: Sundhed og sikkerhed (B9)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isHealthSafetyExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isHealthSafetyExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-              <div>
-                <label htmlFor="work_accidents" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Egen arbejdsstyrke: Registrerede arbejdsulykker:
-                </label>
-                <input
-                  type="number"
-                  id="work_accidents"
-                  name="work_accidents"
-                  value={formData.work_accidents}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast antal arbejdsulykker"
-                />
-
-              </div>
-              <div>
-                <label htmlFor="work_related_deaths" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Egen arbejdsstyrke: Arbejdsrelaterede dødsfald:
-                </label>
-                <input
-                  type="number"
-                  id="work_related_deaths"
-                  name="work_related_deaths"
-                  value={formData.work_related_deaths}
-                  onChange={handleChange}
-                  className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                  placeholder="Indtast antal arbejdsrelaterede dødsfald"
-                />
-
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isHealthSafetyExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+                <div>
+                  <label htmlFor="work_accidents" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Egen arbejdsstyrke: Registrerede arbejdsulykker:
+                  </label>
+                  <input
+                    type="number"
+                    id="work_accidents"
+                    name="work_accidents"
+                    value={formData.work_accidents}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast antal arbejdsulykker"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="work_related_deaths" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Egen arbejdsstyrke: Arbejdsrelaterede dødsfald:
+                  </label>
+                  <input
+                    type="number"
+                    id="work_related_deaths"
+                    name="work_related_deaths"
+                    value={formData.work_related_deaths}
+                    onChange={handleChange}
+                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
+                    placeholder="Indtast antal arbejdsrelaterede dødsfald"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+        </div>
+
         </div>
 
         {/* S-Data: Vederlag, overenskomster og uddannelse (B10) */}
@@ -841,8 +856,9 @@ function CompanyFigures({ currentYear }) {
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">11. S-Data: Vederlag, overenskomster og uddannelse (B10)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isCompensationExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCompensationExpanded ? 'esg-max-h-[5000px] esg-p-4 esg-opacity-100' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCompensationExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
               <div>
                 <label htmlFor="salary_below_minimum" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                   Oplysning om aflønning over/under minimumsløn:
@@ -909,30 +925,35 @@ function CompanyFigures({ currentYear }) {
           </div>
         </div>
 
+        </div>
+
         {/* G-Data: Virksomhedsledelse (B11) */}
         <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg esg-shadow-sm">
           <div className="esg-p-4 esg-cursor-pointer esg-flex esg-justify-between esg-items-center esg-bg-gray-50 hover:esg-bg-gray-100 esg-rounded-t-lg" onClick={() => setIsGovernanceExpanded(!isGovernanceExpanded)}>
             <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">12. G-Data: Virksomhedsledelse (B11)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isGovernanceExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
-          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isGovernanceExpanded ? 'esg-max-h-[5000px] esg-p-4' : 'esg-max-h-0 esg-p-0 esg-opacity-0'}`}>
-            <div className="esg-grid esg-grid-cols-1 esg-gap-4">
-              <div>
-                <label htmlFor="corruption_bribery_cases" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                  Antal domme og bøder i relation til korruption & bestikkelse (obligatorisk hvis relevant):
-                </label>
-                <input
-                  type="number"
-                  id="corruption_bribery_cases"
-                  name="corruption_bribery_cases"
-                  value={formData.corruption_bribery_cases}
-                  onChange={handleChange}
-                  className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
-                  placeholder="Indtast antal sager"
-                />
+          <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isGovernanceExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
+            <div className="esg-p-4">
+              <div className="esg-grid esg-grid-cols-1 esg-gap-4">
+                <div>
+                  <label htmlFor="corruption_bribery_cases" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
+                    Antal domme og bøder i relation til korruption & bestikkelse (obligatorisk hvis relevant):
+                  </label>
+                  <input
+                    type="number"
+                    id="corruption_bribery_cases"
+                    name="corruption_bribery_cases"
+                    value={formData.corruption_bribery_cases}
+                    onChange={handleChange}
+                    className="esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline"
+                    placeholder="Indtast antal sager"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+        </div>
+
         </div>
 
         <button
