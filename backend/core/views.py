@@ -23,6 +23,7 @@ from .serializers import (
 from .services import calculate_esg_results
 
 class CompanyBasismodulDataViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = CompanyBasismodulData.objects.all()
     serializer_class = CompanyBasismodulDataSerializer
     lookup_field = 'company_id' # We'll use company_id for the primary lookup
@@ -69,35 +70,11 @@ class CompanyBasismodulDataViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def partial_update(self, request, *args, **kwargs):
-        company_id = self.kwargs.get('company_id')
-        year = self.kwargs.get('year')
-        data = request.data.copy()
-
-        # Ensure the Company exists first
-        company_instance = get_object_or_404(Company, id=company_id)
-
-        if not company_id or not year:
-            return Response(
-                {"detail": "company_id and year must be provided in the URL."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        data['company'] = company_instance.id # Use the ID from the fetched instance
-        data['year'] = year
-
-        serializer = self.get_serializer(data=data, partial=True)
+        instance = self.get_object() # Get the existing object
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-
-        instance, created = CompanyBasismodulData.objects.update_or_create(
-            company=company_instance, # Use the actual Company instance
-            year=year,
-            defaults=serializer.validated_data
-        )
-
-        headers = self.get_success_headers(serializer.data)
-        if created:
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
         # Update logic is similar to create, but for an existing instance

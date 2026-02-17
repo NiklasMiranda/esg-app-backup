@@ -1,12 +1,12 @@
 // new-esg-app/src/api.js
 
-const DJANGO_API_BASE_URL = 'http://127.0.0.1:8000/api/';
+export const DJANGO_API_BASE_URL = 'http://127.0.0.1:8000/api/';
 
 // Helper to get auth token
 const getAuthToken = () => localStorage.getItem('authToken');
 
 // Helper to create authorization header
-const createAuthHeader = () => {
+export const createAuthHeader = () => {
   const token = getAuthToken();
   console.log('createAuthHeader: Retrieved Token:', token); // More descriptive log
   const headers = token ? { 'Authorization': `Token ${token}` } : {};

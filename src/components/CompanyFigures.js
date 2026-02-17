@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaChevronDown } from 'react-icons/fa';
+import { DJANGO_API_BASE_URL, createAuthHeader } from '../api';
 
 function CompanyFigures({ currentYear }) {
   const [formData, setFormData] = useState({
@@ -87,7 +88,9 @@ function CompanyFigures({ currentYear }) {
   useEffect(() => {
     const fetchCompanyBasismodulData = async () => {
       try {
-        const response = await axios.get(`/api/company-basismodul-data/${COMPANY_ID}/${currentYear}/`);
+        const response = await axios.get(`${DJANGO_API_BASE_URL}company-basismodul-data/${COMPANY_ID}/${currentYear}/`, {
+            headers: createAuthHeader(),
+        });
         setFormData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -112,9 +115,22 @@ function CompanyFigures({ currentYear }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    let newValue = value;
+
+    if (type === 'checkbox') {
+      newValue = checked;
+    } else if (type === 'number') {
+      newValue = value === '' ? null : Number(value);
+      if (isNaN(newValue)) {
+        newValue = null; // Ensure NaN values are treated as null
+      }
+    } else if (value === '') {
+      newValue = null; // For other types, empty string can still be null if nullable
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: newValue,
     }));
   };
 
@@ -146,11 +162,27 @@ function CompanyFigures({ currentYear }) {
     e.preventDefault();
 
     try {
-      // Use POST method which leverages update_or_create in the backend
-      await axios.post(`/api/company-basismodul-data/${COMPANY_ID}/${currentYear}/`, { company: COMPANY_ID, year: currentYear, ...formData });
+      const method = formData.id ? 'patch' : 'post';
+      
+      // Fjern company og year fra payload - de er allerede i URL'en
+      const { company, year, ...dataToSend } = formData;
+      
+      const response = await axios[method](
+        `${DJANGO_API_BASE_URL}company-basismodul-data/${COMPANY_ID}/${currentYear}/`,
+        dataToSend, // Send kun selve form data, ikke company/year
+        { headers: createAuthHeader() }
+      );
+      
       alert('Basismodul data saved successfully!');
+      
+      // Opdater formData med response data (inkl. id hvis det var POST)
+      setFormData(response.data);
+      
     } catch (error) {
       console.error("Error submitting Basismodul data:", error);
+      if (error.response?.data) {
+        console.error("Server error details:", error.response.data);
+      }
       alert('Error saving Basismodul data.');
     }
   };
