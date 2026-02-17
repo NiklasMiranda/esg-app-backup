@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import CustomPolarChart from './CustomPolarChart';
+import DVAWeightingChart from './DVAWeightingChart';
 
 import groupTitles from '../data/groupTitles';
 
-function YearlyChartsSection({ availableYears = [], currentYear, onSelectYear, calculationResults, criterionColors, iaQuestions }) {
+function YearlyChartsSection({ availableYears = [], currentYear, onSelectYear, calculationResults, criterionColors, iaQuestions, answers, dvaQuestions }) {
   // Ensure calculationResults and iaQuestions are never undefined for useMemo dependencies
   const safeCalculationResults = calculationResults || {};
   const safeIaQuestions = iaQuestions || [];
@@ -52,23 +53,31 @@ function YearlyChartsSection({ availableYears = [], currentYear, onSelectYear, c
           Ingen data tilgængelig for {currentYear}.
         </div>
       ) : (
-        <div className="esg-flex esg-justify-center"> {/* Use flexbox to center the chart */}
-          <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md esg-w-full esg-max-w-xl"> {/* Adjust max-w to control width */}
-            <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-center">Din ESGScore</h3>
-            <div className="esg-w-full esg-h-164 esg-mx-auto">
-              {polarBarChartData && Object.keys(polarBarChartData).length > 0 ? (
-                <CustomPolarChart
-                  data={polarBarChartData}
-                  totalScore={totalScore}
-                  esgLevel={esgLevel}
-                  criterionColors={criterionColors}
-                />
-              ) : (
-                <div className="esg-text-center esg-py-10 esg-text-gray-500">Ingen Polar Chart data tilgængelig.</div>
-              )}
+        <>
+          <div className="esg-flex esg-justify-center esg-mb-16"> {/* Added esg-mb-6 */}
+            <div className="esg-bg-white esg-p-6 esg-rounded-lg esg-shadow-md esg-w-full esg-max-w-xl"> {/* Adjust max-w to control width */}
+              <h3 className="esg-text-xl esg-font-semibold esg-mb-4 esg-text-center">Din ESGScore</h3>
+              <div className="esg-w-full esg-h-164 esg-mx-auto">
+                {polarBarChartData && Object.keys(polarBarChartData).length > 0 ? (
+                  <CustomPolarChart
+                    data={polarBarChartData}
+                    totalScore={totalScore}
+                    esgLevel={esgLevel}
+                    criterionColors={criterionColors}
+                  />
+                ) : (
+                  <div className="esg-text-center esg-py-10 esg-text-gray-500">Ingen Polar Chart data tilgængelig.</div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+          <DVAWeightingChart
+            dvaQuestions={dvaQuestions}
+            answers={answers}
+            criterionColors={criterionColors}
+            className="esg-mb-6" /* Added esg-mb-6 here */
+          />
+        </>
       )}
     </div>
   );

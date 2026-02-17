@@ -661,6 +661,8 @@ function App() {
               calculationResults={calculationResults}
               criterionColors={criterionColors}
               iaQuestions={iaQuestions}
+              answers={answers}
+              dvaQuestions={dvaQuestions}
             />
           </div>
         );
