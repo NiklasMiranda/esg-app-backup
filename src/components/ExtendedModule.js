@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaChevronDown } from 'react-icons/fa';
+import { DJANGO_API_BASE_URL, createAuthHeader } from '../api';
 
 function ExtendedModule({ currentYear }) {
   const [formData, setFormData] = useState({
+    id: null, // Add id field for tracking existing data
     // Generelle oplysninger (C1)
     products_services_groups: '',
     markets: '',
@@ -69,13 +71,15 @@ function ExtendedModule({ currentYear }) {
   useEffect(() => {
     const fetchCompanyExtendedModulData = async () => {
       try {
-        const response = await axios.get(`/api/company-extended-module-data/${COMPANY_ID}/${currentYear}/`);
+        const response = await axios.get(`${DJANGO_API_BASE_URL}company-extended-module-data/${COMPANY_ID}/${currentYear}/`, {
+            headers: createAuthHeader(),
+        });
         setFormData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 404) {
           console.log(`No existing Extended Module data for company ${COMPANY_ID} for year ${currentYear}. Starting with empty form.`);
           setFormData({ // Reset form data to empty when no data is found for the year
-            products_services_groups: '', markets: '', business_relations: '', strategy_sustainability_elements: '',
+            id: null, products_services_groups: '', markets: '', business_relations: '', strategy_sustainability_elements: '',
             existing_practices_policies: '', future_initiatives_targets: '', highest_management_level: '',
             scope3_co2e_relevant: null, scope3_co2e_emissions: '', co2e_reduction_target: '', co2e_baseline_year: '',
             co2e_reduction_actions: '', climate_transition_plan: '', climate_risks_description: '', exposure_vulnerability: '',
@@ -94,9 +98,22 @@ function ExtendedModule({ currentYear }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    let newValue = value;
+
+    if (type === 'checkbox') {
+      newValue = checked;
+    } else if (type === 'number') {
+      newValue = value === '' ? null : Number(value);
+      if (isNaN(newValue)) {
+        newValue = null; // Ensure NaN values are treated as null
+      }
+    } else if (value === '') {
+      newValue = null; // For other types, empty string can still be null if nullable
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: newValue,
     }));
   };
 
@@ -104,11 +121,31 @@ function ExtendedModule({ currentYear }) {
     e.preventDefault();
 
     try {
-      // Use POST method which leverages update_or_create in the backend
-      await axios.post(`/api/company-extended-module-data/${COMPANY_ID}/${currentYear}/`, { company: COMPANY_ID, year: currentYear, ...formData });
+      const method = formData.id ? 'patch' : 'post';
+      
+      // Extract company, year, and id from payload - company and year are in the URL, id is for method selection
+      const { company, year, id, ...dataToSend } = formData;
+      
+      const response = await axios[method](
+        `${DJANGO_API_BASE_URL}company-extended-module-data/${COMPANY_ID}/${currentYear}/`,
+        dataToSend, // Send only the form data, not company/year/id
+        { headers: createAuthHeader() }
+      );
+      
       alert('Udvidet modul data saved successfully!');
+      
+      // Update formData with response data, ensuring id is captured for subsequent PATCH requests
+      setFormData(prevData => ({
+          ...prevData,
+          ...response.data, // Apply all returned data
+          id: response.data.id || prevData.id // Explicitly set id from response if available, or keep existing
+      }));
+      
     } catch (error) {
       console.error("Error submitting Udvidet modul data:", error);
+      if (error.response?.data) {
+        console.error("Server error details:", error.response.data);
+      }
       alert('Error saving Udvidet modul data.');
     }
   };
