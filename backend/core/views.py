@@ -1,8 +1,9 @@
-from rest_framework import viewsets, generics, status, mixins
+from rest_framework import viewsets, generics, status, mixins, views
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated # Import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse # Import HttpResponse
+from django.http import HttpResponse, Http404 # Import HttpResponse, Http404
 from django.template.loader import get_template # Import get_template
 from xhtml2pdf import pisa # Import the pisa library
 
@@ -50,10 +51,30 @@ class CompanyBasismodulDataViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(self.request, obj)
         return obj
 
-    def create(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         company_id = self.kwargs.get('company_id')
         year = self.kwargs.get('year')
-        data = request.data.copy() # Make a mutable copy
+
+        # Ensure the Company exists first
+        company_instance = get_object_or_404(Company, id=company_id)
+
+        try:
+            # Try to get the specific CompanyBasismodulData instance
+            instance = self.get_queryset().get(company=company_instance, year=year)
+        except CompanyBasismodulData.DoesNotExist:
+            # If not found, create a new unsaved instance
+            instance = CompanyBasismodulData(company=company_instance, year=year)
+            
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def partial_update(self, request, *args, **kwargs):
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+        data = request.data.copy()
+
+        # Ensure the Company exists first
+        company_instance = get_object_or_404(Company, id=company_id)
 
         if not company_id or not year:
             return Response(
@@ -61,15 +82,14 @@ class CompanyBasismodulDataViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        data['company'] = company_id
+        data['company'] = company_instance.id # Use the ID from the fetched instance
         data['year'] = year
 
-        serializer = self.get_serializer(data=data)
+        serializer = self.get_serializer(data=data, partial=True)
         serializer.is_valid(raise_exception=True)
 
-        # Use update_or_create for handling existing data for the same company and year
         instance, created = CompanyBasismodulData.objects.update_or_create(
-            company_id=company_id,
+            company=company_instance, # Use the actual Company instance
             year=year,
             defaults=serializer.validated_data
         )
@@ -77,7 +97,7 @@ class CompanyBasismodulDataViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         if created:
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers) # Return 200 for update via POST
+        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
 
     def update(self, request, *args, **kwargs):
         # Update logic is similar to create, but for an existing instance
@@ -136,10 +156,30 @@ class CompanyExtendedModuleDataViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(self.request, obj)
         return obj
 
-    def create(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         company_id = self.kwargs.get('company_id')
         year = self.kwargs.get('year')
-        data = request.data.copy() # Make a mutable copy
+
+        # Ensure the Company exists first
+        company_instance = get_object_or_404(Company, id=company_id)
+
+        try:
+            # Try to get the specific CompanyExtendedModuleData instance
+            instance = self.get_queryset().get(company=company_instance, year=year)
+        except CompanyExtendedModuleData.DoesNotExist:
+            # If not found, create a new unsaved instance
+            instance = CompanyExtendedModuleData(company=company_instance, year=year)
+            
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def partial_update(self, request, *args, **kwargs):
+        company_id = self.kwargs.get('company_id')
+        year = self.kwargs.get('year')
+        data = request.data.copy()
+
+        # Ensure the Company exists first
+        company_instance = get_object_or_404(Company, id=company_id)
 
         if not company_id or not year:
             return Response(
@@ -147,15 +187,14 @@ class CompanyExtendedModuleDataViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        data['company'] = company_id
+        data['company'] = company_instance.id # Use the ID from the fetched instance
         data['year'] = year
 
-        serializer = self.get_serializer(data=data)
+        serializer = self.get_serializer(data=data, partial=True)
         serializer.is_valid(raise_exception=True)
 
-        # Use update_or_create for handling existing data for the same company and year
         instance, created = CompanyExtendedModuleData.objects.update_or_create(
-            company_id=company_id,
+            company=company_instance, # Use the actual Company instance
             year=year,
             defaults=serializer.validated_data
         )
@@ -163,7 +202,7 @@ class CompanyExtendedModuleDataViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         if created:
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers) # Return 200 for update via POST
+        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
 
     def update(self, request, *args, **kwargs):
         # Update logic is similar to create, but for an existing instance
@@ -347,3 +386,7 @@ class CalculationResultsView(generics.RetrieveAPIView):
         
         serializer = self.get_serializer(results)
         return Response(serializer.data)
+
+class TestView(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response({"message": "Test view reached!"}, status=status.HTTP_200_OK)

@@ -657,13 +657,13 @@ function App() {
       } else if (activeView === 'companyFigures') {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
-            <CompanyFigures />
+            <CompanyFigures currentYear={currentYear} />
           </div>
         );
       } else if (activeView === 'extendedModule') {
         mainContent = (
           <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
-            <ExtendedModule />
+            <ExtendedModule currentYear={currentYear} />
           </div>
         );
       } else if (activeView === 'esgCalculator') {
