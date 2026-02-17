@@ -86,6 +86,18 @@ function CompanyFigures({ currentYear }) {
 
   useEffect(() => {
     const fetchCompanyBasismodulData = async () => {
+      // Always reset form data when currentYear changes, before attempting to fetch
+      setFormData({ 
+        legal_form: '', nace_sector_codes: [], balance_sheet_total: '', revenue: '', employees: '', asset_locations: '',
+        confidentiality_exclusions: '', esg_certificate_description: '', has_initiatives: null, electricity_renewable: '', electricity_non_renewable: '',
+        fuel_renewable: '', fuel_non_renewable: '', scope1_emissions: '', scope2_emissions: '', co2e_intensity: '', scope3_emissions: '',
+        pollution_reporting: '', biodiversity_sensitive_areas: '', land_area_usage: '', water_withdrawal: '', water_consumption: '',
+        uses_circular_economy_principles: null, circular_economy_description: '', total_waste_hazardous: '', total_waste_non_hazardous: '',
+        waste_recycled: '', mass_flow_materials: '', contract_type: '', gender_composition: '', employees_abroad: '', employee_turnover: '',
+        work_accidents: '', work_related_deaths: '', salary_below_minimum: '', gender_pay_gap: '', collective_bargaining_coverage: '',
+        avg_training_hours: '', corruption_bribery_cases: '',
+      });
+
       try {
         const response = await axios.get(`${DJANGO_API_BASE_URL}company-basismodul-data/${COMPANY_ID}/${currentYear}/`, {
             headers: createAuthHeader(),
@@ -93,17 +105,7 @@ function CompanyFigures({ currentYear }) {
         setFormData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.log(`No existing Basismodul data for company ${COMPANY_ID} for year ${currentYear}. Starting with empty form.`);
-          setFormData({ // Reset form data to empty when no data is found for the year
-            legal_form: '', nace_sector_codes: [], balance_sheet_total: '', revenue: '', employees: '', asset_locations: '',
-            confidentiality_exclusions: '', esg_certificate_description: '', has_initiatives: null, electricity_renewable: '', electricity_non_renewable: '',
-            fuel_renewable: '', fuel_non_renewable: '', scope1_emissions: '', scope2_emissions: '', co2e_intensity: '', scope3_emissions: '',
-            pollution_reporting: '', biodiversity_sensitive_areas: '', land_area_usage: '', water_withdrawal: '', water_consumption: '',
-            uses_circular_economy_principles: null, circular_economy_description: '', total_waste_hazardous: '', total_waste_non_hazardous: '',
-            waste_recycled: '', mass_flow_materials: '', contract_type: '', gender_composition: '', employees_abroad: '', employee_turnover: '',
-            work_accidents: '', work_related_deaths: '', salary_below_minimum: '', gender_pay_gap: '', collective_bargaining_coverage: '',
-            avg_training_hours: '', corruption_bribery_cases: '',
-          });
+          console.log(`No existing Basismodul data for company ${COMPANY_ID} for year ${currentYear}. Form already reset.`);
         } else {
           console.error("Error fetching Basismodul data:", error);
         }

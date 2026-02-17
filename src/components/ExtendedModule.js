@@ -70,6 +70,18 @@ function ExtendedModule({ currentYear }) {
 
   useEffect(() => {
     const fetchCompanyExtendedModulData = async () => {
+      // Always reset form data when currentYear changes, before attempting to fetch
+      setFormData({ 
+        id: null, products_services_groups: '', markets: '', business_relations: '', strategy_sustainability_elements: '',
+        existing_practices_policies: '', future_initiatives_targets: '', highest_management_level: '',
+        scope3_co2e_relevant: null, scope3_co2e_emissions: '', co2e_reduction_target: '', co2e_baseline_year: '',
+        co2e_reduction_actions: '', climate_transition_plan: '', climate_risks_description: '', exposure_vulnerability: '',
+        climate_risks_time_horizon: '', climate_adaptation: null, financial_impact_climate_risks: '',
+        gender_management_ratio: '', independent_workers: '', temporary_workers: '', code_of_conduct_hr_policy: null,
+        grievance_mechanism: null, confirmed_hr_incidents_own_workforce: '', confirmed_hr_incidents_value_chain: '',
+        revenue_selected_sectors: '', eu_benchmarks_exceedance: null, gender_top_management_ratio: '',
+      });
+
       try {
         const response = await axios.get(`${DJANGO_API_BASE_URL}company-extended-module-data/${COMPANY_ID}/${currentYear}/`, {
             headers: createAuthHeader(),
@@ -77,17 +89,7 @@ function ExtendedModule({ currentYear }) {
         setFormData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.log(`No existing Extended Module data for company ${COMPANY_ID} for year ${currentYear}. Starting with empty form.`);
-          setFormData({ // Reset form data to empty when no data is found for the year
-            id: null, products_services_groups: '', markets: '', business_relations: '', strategy_sustainability_elements: '',
-            existing_practices_policies: '', future_initiatives_targets: '', highest_management_level: '',
-            scope3_co2e_relevant: null, scope3_co2e_emissions: '', co2e_reduction_target: '', co2e_baseline_year: '',
-            co2e_reduction_actions: '', climate_transition_plan: '', climate_risks_description: '', exposure_vulnerability: '',
-            climate_risks_time_horizon: '', climate_adaptation: null, financial_impact_climate_risks: '',
-            gender_management_ratio: '', independent_workers: '', temporary_workers: '', code_of_conduct_hr_policy: null,
-            grievance_mechanism: null, confirmed_hr_incidents_own_workforce: '', confirmed_hr_incidents_value_chain: '',
-            revenue_selected_sectors: '', eu_benchmarks_exceedance: null, gender_top_management_ratio: '',
-          });
+          console.log(`No existing Extended Module data for company ${COMPANY_ID} for year ${currentYear}. Form already reset.`);
         } else {
           console.error("Error fetching Extended Module data:", error);
         }
