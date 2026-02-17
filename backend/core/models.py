@@ -116,7 +116,6 @@ class CompanyBasismodulData(models.Model):
     year = models.PositiveIntegerField(help_text="The reporting year for this Basismodul data.")
 
     # Generelle oplysninger (B1)
-    basis_for_preparation = models.CharField(max_length=255, verbose_name="Grundlag for udarbejdelse", blank=True, null=True)
     legal_form = models.CharField(max_length=100, verbose_name="Virksomhedens juridiske form", blank=True, null=True)
     nace_sector_codes = models.JSONField(default=list, verbose_name="NACE sektor kode(r)", blank=True, null=True) # Stores a list of codes
     balance_sheet_total = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Balancesum", blank=True, null=True)

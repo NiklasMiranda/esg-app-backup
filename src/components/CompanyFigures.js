@@ -6,7 +6,6 @@ import { DJANGO_API_BASE_URL, createAuthHeader } from '../api';
 function CompanyFigures({ currentYear }) {
   const [formData, setFormData] = useState({
     // Generelle oplysninger (B1)
-    basis_for_preparation: '',
     legal_form: '',
     nace_sector_codes: [],
     balance_sheet_total: '',
@@ -96,7 +95,7 @@ function CompanyFigures({ currentYear }) {
         if (error.response && error.response.status === 404) {
           console.log(`No existing Basismodul data for company ${COMPANY_ID} for year ${currentYear}. Starting with empty form.`);
           setFormData({ // Reset form data to empty when no data is found for the year
-            basis_for_preparation: '', legal_form: '', nace_sector_codes: [], balance_sheet_total: '', revenue: '', employees: '', asset_locations: '',
+            legal_form: '', nace_sector_codes: [], balance_sheet_total: '', revenue: '', employees: '', asset_locations: '',
             confidentiality_exclusions: '', esg_certificate_description: '', has_initiatives: null, electricity_renewable: '', electricity_non_renewable: '',
             fuel_renewable: '', fuel_non_renewable: '', scope1_emissions: '', scope2_emissions: '', co2e_intensity: '', scope3_emissions: '',
             pollution_reporting: '', biodiversity_sensitive_areas: '', land_area_usage: '', water_withdrawal: '', water_consumption: '',
@@ -194,26 +193,13 @@ function CompanyFigures({ currentYear }) {
         {/* Generelle oplysninger (B1) */}
         <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg esg-shadow-sm">
           <div className="esg-p-4 esg-cursor-pointer esg-flex esg-justify-between esg-items-center esg-bg-gray-50 hover:esg-bg-gray-100 esg-rounded-t-lg" onClick={() => setIsGeneralInfoExpanded(!isGeneralInfoExpanded)}>
-            <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">1. Generelle oplysninger (B1)</h3>
+            <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">1. Generelle oplysninger: Grundlag for udarbejdelse (B1)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isGeneralInfoExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isGeneralInfoExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
               <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
-                <div>
-                  <label htmlFor="basis_for_preparation" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                    Grundlag for udarbejdelse:
-                  </label>
-                  <input
-                    type="text"
-                    id="basis_for_preparation"
-                    name="basis_for_preparation"
-                    value={formData.basis_for_preparation}
-                    onChange={handleChange}
-                    className={`esg-shadow esg-appearance-none esg-border esg-rounded esg-w-full esg-py-2 esg-px-3 esg-text-gray-700 esg-leading-tight focus:esg-outline-none focus:esg-shadow-outline`}
-                    placeholder="Indtast grundlag for udarbejdelse"
-                  />
-                </div>
+                {/* Row 1: Legal Form & NACE Sector Codes (2 columns) */}
                 <div>
                   <label htmlFor="legal_form" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                     Virksomhedens juridiske form:
@@ -260,6 +246,11 @@ function CompanyFigures({ currentYear }) {
                     </div>
                   ))}
                 </div>
+                {/* Add an empty div to push the next items to the next row, if only 2 items in 3-col grid */}
+                <div className="md:esg-col-span-1"></div>
+
+
+                {/* Row 2: Balance Sheet Total, Revenue, Employees (3 columns) */}
                 <div>
                   <label htmlFor="balance_sheet_total" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                     Balancesum (DKK):
@@ -302,7 +293,9 @@ function CompanyFigures({ currentYear }) {
                     placeholder="Indtast antal ansatte"
                   />
                 </div>
-                <div className="md:esg-col-span-3"> {/* Textarea now acts as a single column */}
+
+                {/* Row 3: Textareas (three columns) */}
+                <div> {/* Removed md:esg-col-span-3 */}
                   <label htmlFor="asset_locations" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                     Adresser og geolokation på væsentlige aktiver og anlæg:
                   </label>
@@ -316,7 +309,7 @@ function CompanyFigures({ currentYear }) {
                     placeholder="Indtast adresser og geolokation"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-3"> {/* Textarea now acts as a single column */}
+                <div> {/* Removed md:esg-col-span-3 */}
                   <label htmlFor="confidentiality_exclusions" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                     Eventuelle udeladelser grundet fortrolighed (valgfri):
                   </label>
@@ -330,7 +323,7 @@ function CompanyFigures({ currentYear }) {
                     placeholder="Indtast udeladelser"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-3"> {/* Textarea now acts as a single column */}
+                <div> {/* Removed md:esg-col-span-3 */}
                   <label htmlFor="esg_certificate_description" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
                     Kort beskrivelse af din virksomheds eventuelle ESG-certifikat eller miljømærker (valgfri):
                   </label>
@@ -352,7 +345,7 @@ function CompanyFigures({ currentYear }) {
         {/* Indsatser, politikker og fremtidige initiativer (B2) */}
         <div className="esg-mb-8 esg-border esg-border-gray-200 esg-rounded-lg esg-shadow-sm">
           <div className="esg-p-4 esg-cursor-pointer esg-flex esg-justify-between esg-items-center esg-bg-gray-50 hover:esg-bg-gray-100 esg-rounded-t-lg" onClick={() => setIsInitiativesExpanded(!isInitiativesExpanded)}>
-            <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">2. Indsatser, politikker og fremtidige initiativer (B2)</h3>
+            <h3 className="esg-text-xl esg-font-semibold esg-text-gray-700">2. Generelle oplysninger: Indsatser, politikker og fremtidige initiativer (B2)</h3>
             <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isInitiativesExpanded ? 'esg-rotate-180' : ''}`} />
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isInitiativesExpanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
@@ -531,7 +524,7 @@ function CompanyFigures({ currentYear }) {
               <div className="esg-grid esg-grid-cols-1 esg-gap-4">
                 <div className="md:esg-col-span-1">
                   <label htmlFor="pollution_reporting" className="esg-block esg-text-gray-700 esg-text-md esg-font-bold esg-mb-2">
-                    Rapportering om forurening (obligatorisk hvis relevant):
+                    Rapportering om forurening (Kun et oplysningskrav, hvis din virksomhed i forvejen rapporterer om forurening som følge af lovkrav eller på frivillig basis):
                   </label>
                   <textarea
                     id="pollution_reporting"
