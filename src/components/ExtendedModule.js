@@ -125,8 +125,8 @@ function ExtendedModule({ currentYear }) {
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory1Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
-              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-                <div className="md:esg-col-span-2">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-4 esg-gap-4">
+                <div>
                   <label htmlFor="products_services_groups" className="esg-block esg-text-gray-700 esg-text-lg esg-font-bold esg-mb-2">
                     Væsentlige grupper af produkter og/eller tjenesteydelser:
                   </label>
@@ -140,7 +140,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv produkter og tjenesteydelser"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="markets" className="esg-block esg-text-gray-700 esg-text-lg esg-font-bold esg-mb-2">
                     Væsentlige markeder:
                   </label>
@@ -154,7 +154,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv væsentlige markeder"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="business_relations" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Primære forretningsforbindelser:
                   </label>
@@ -168,7 +168,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv primære forretningsforbindelser"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="strategy_sustainability_elements" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Centrale elementer fra virksomhedens strategi, der er relateret til/påvirker bæredygtighedsspørgsmål (obligatorisk hvis relevant):
                   </label>
@@ -195,8 +195,8 @@ function ExtendedModule({ currentYear }) {
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory2Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
-              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-                <div className="md:esg-col-span-2">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
+                <div>
                   <label htmlFor="existing_practices_policies" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Beskrivelse af eksisterende praksisser/politikker/handlinger (obligatorisk hvis relevant):
                   </label>
@@ -210,7 +210,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv eksisterende praksisser"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="future_initiatives_targets" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Beskrivelse af fremtidige initiativer/målsætninger (obligatorisk hvis relevant):
                   </label>
@@ -224,7 +224,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv fremtidige initiativer"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="highest_management_level" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Angivelse af højeste ledelsesniveau i virksomheden, der er ansvarlig for implementering (obligatorisk hvis relevant):
                   </label>
@@ -251,7 +251,7 @@ function ExtendedModule({ currentYear }) {
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory3Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
-              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+              <div className="esg-grid esg-grid-cols-1 esg-gap-4">
                 <div className="md:esg-col-span-2 esg-flex esg-items-center">
                   <input
                     type="checkbox"
@@ -323,7 +323,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Indtast baselineår"
                   />
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="co2e_reduction_actions" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Liste med de handlinger, der skal bidrage til at nå CO₂e-reduktionsmålene (obligatorisk hvis relevant):
                   </label>
@@ -337,7 +337,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv handlinger"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="climate_transition_plan" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Omstillingsplan for modvirkning af klimaforandringer (obligatorisk hvis relevant):
                   </label>
@@ -364,8 +364,8 @@ function ExtendedModule({ currentYear }) {
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory5Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
-              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-                <div className="md:esg-col-span-2">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 lg:esg-grid-cols-5 esg-gap-4">
+                <div>
                   <label htmlFor="climate_risks_description" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Beskrivelse af klimarelaterede risici og/eller klimarelaterede omstillingsrisici (obligatorisk hvis relevant):
                   </label>
@@ -379,7 +379,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv klimarisici"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="exposure_vulnerability" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Eksponering og sårbarhed for virksomhedens aktiver, aktiviteter og værdikæde (obligatorisk hvis relevant):
                   </label>
@@ -393,7 +393,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv eksponering og sårbarhed"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="climate_risks_time_horizon" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Tidshorisont for, hvornår de klimarelaterede risici og omstillingsrisici forventes at få negativ indflydelse på virksomheden (obligatorisk hvis relevant):
                   </label>
@@ -407,20 +407,22 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Angiv tidshorisont"
                   />
                 </div>
-                <div className="md:esg-col-span-2 esg-flex esg-items-center">
-                  <input
-                    type="checkbox"
-                    id="climate_adaptation"
-                    name="climate_adaptation"
-                    checked={formData.climate_adaptation || false}
-                    onChange={handleChange}
-                    className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
-                  />
-                  <label htmlFor="climate_adaptation" className="esg-block esg-text-gray-700lg esg-font-bold">
-                    Oplysning om klimatilpasning (JA/NEJ):
-                  </label>
+                <div>
+                  <div className="esg-flex esg-items-center">
+                    <input
+                      type="checkbox"
+                      id="climate_adaptation"
+                      name="climate_adaptation"
+                      checked={formData.climate_adaptation || false}
+                      onChange={handleChange}
+                      className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
+                    />
+                    <label htmlFor="climate_adaptation" className="esg-block esg-text-gray-700lg esg-font-bold">
+                      Oplysning om klimatilpasning (JA/NEJ):
+                    </label>
+                  </div>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="financial_impact_climate_risks" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Potentiel negativ påvirkning på virksomhedens finansielle præstation og forretningsdrift fra de oplistede klimarisici (valgfri):
                   </label>
@@ -447,7 +449,7 @@ function ExtendedModule({ currentYear }) {
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory6Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
-              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
+              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-3 esg-gap-4">
                 <div>
                   <label htmlFor="gender_management_ratio" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Forholdet mellem kvinder og mænd på ledelsesniveau (valgfri):
@@ -504,31 +506,35 @@ function ExtendedModule({ currentYear }) {
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory7Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
               <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-                <div className="md:esg-col-span-2 esg-flex esg-items-center">
-                  <input
-                    type="checkbox"
-                    id="code_of_conduct_hr_policy"
-                    name="code_of_conduct_hr_policy"
-                    checked={formData.code_of_conduct_hr_policy || false}
-                    onChange={handleChange}
-                    className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
-                  />
-                  <label htmlFor="code_of_conduct_hr_policy" className="esg-block esg-text-gray-700lg esg-font-bold">
-                    Oplysning om ”code of conduct” eller menneskerettighedspolitik for din virksomheds egen arbejdsstyrke (JA/NEJ):
-                  </label>
+                <div>
+                  <div className="esg-flex esg-items-center">
+                    <input
+                      type="checkbox"
+                      id="code_of_conduct_hr_policy"
+                      name="code_of_conduct_hr_policy"
+                      checked={formData.code_of_conduct_hr_policy || false}
+                      onChange={handleChange}
+                      className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
+                    />
+                    <label htmlFor="code_of_conduct_hr_policy" className="esg-block esg-text-gray-700lg esg-font-bold">
+                      Oplysning om ”code of conduct” eller menneskerettighedspolitik for din virksomheds egen arbejdsstyrke (JA/NEJ):
+                    </label>
+                  </div>
                 </div>
-                <div className="md:esg-col-span-2 esg-flex esg-items-center">
-                  <input
-                    type="checkbox"
-                    id="grievance_mechanism"
-                    name="grievance_mechanism"
-                    checked={formData.grievance_mechanism || false}
-                    onChange={handleChange}
-                    className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
-                  />
-                  <label htmlFor="grievance_mechanism" className="esg-block esg-text-gray-700lg esg-font-bold">
-                    Oplysning om klagemekanisme for virksomhedens egne ansatte (JA/NEJ):
-                  </label>
+                <div>
+                  <div className="esg-flex esg-items-center">
+                    <input
+                      type="checkbox"
+                      id="grievance_mechanism"
+                      name="grievance_mechanism"
+                      checked={formData.grievance_mechanism || false}
+                      onChange={handleChange}
+                      className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
+                    />
+                    <label htmlFor="grievance_mechanism" className="esg-block esg-text-gray-700lg esg-font-bold">
+                      Oplysning om klagemekanisme for virksomhedens egne ansatte (JA/NEJ):
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -544,7 +550,7 @@ function ExtendedModule({ currentYear }) {
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory8Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
               <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="confirmed_hr_incidents_own_workforce" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Bekræftede negative menneskerettighedshændelser for din virksomheds egen arbejdsstyrke:
                   </label>
@@ -558,7 +564,7 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv hændelser"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="confirmed_hr_incidents_value_chain" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Bekræftede negative menneskerettighedshændelser i din virksomheds værdikæde (obligatorisk hvis relevant):
                   </label>
@@ -586,7 +592,7 @@ function ExtendedModule({ currentYear }) {
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory9Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
               <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-                <div className="md:esg-col-span-2">
+                <div>
                   <label htmlFor="revenue_selected_sectors" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Indtægter fra udvalgte sektorer (obligatorisk hvis relevant):
                   </label>
@@ -600,18 +606,20 @@ function ExtendedModule({ currentYear }) {
                     placeholder="Beskriv indtægter fra udvalgte sektorer"
                   ></textarea>
                 </div>
-                <div className="md:esg-col-span-2 esg-flex esg-items-center">
-                  <input
-                    type="checkbox"
-                    id="eu_benchmarks_exceedance"
-                    name="eu_benchmarks_exceedance"
-                    checked={formData.eu_benchmarks_exceedance || false}
-                    onChange={handleChange}
-                    className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
-                  />
-                  <label htmlFor="eu_benchmarks_exceedance" className="esg-block esg-text-gray-700lg esg-font-bold">
-                    Overskridelse af EU-benchmarks i overensstemmelse med Parisaftalen (obligatorisk hvis relevant):
-                  </label>
+                <div>
+                  <div className="esg-flex esg-items-center">
+                    <input
+                      type="checkbox"
+                      id="eu_benchmarks_exceedance"
+                      name="eu_benchmarks_exceedance"
+                      checked={formData.eu_benchmarks_exceedance || false}
+                      onChange={handleChange}
+                      className="esg-mr-2 esg-h-4 esg-w-4 esg-text-blue-600 esg-border-gray-300 esg-rounded focus:esg-ring-blue-500"
+                    />
+                    <label htmlFor="eu_benchmarks_exceedance" className="esg-block esg-text-gray-700lg esg-font-bold">
+                      Overskridelse af EU-benchmarks i overensstemmelse med Parisaftalen (obligatorisk hvis relevant):
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -626,8 +634,8 @@ function ExtendedModule({ currentYear }) {
           </div>
           <div className={`esg-transition-[max-height,opacity] esg-duration-500 esg-ease-in-out esg-overflow-hidden ${isCategory10Expanded ? 'esg-max-h-[5000px] esg-opacity-100' : 'esg-max-h-0 esg-opacity-0'}`}>
             <div className="esg-p-4">
-              <div className="esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
-                <div className="md:esg-col-span-2">
+              <div className="esg-grid esg-grid-cols-1 esg-gap-4">
+                <div>
                   <label htmlFor="gender_top_management_ratio" className="esg-block esg-text-gray-700lg esg-font-bold esg-mb-2">
                     Forholdet mellem kvinder og mænd i det øverste ledelsesorgan (obligatorisk hvis relevant):
                   </label>
