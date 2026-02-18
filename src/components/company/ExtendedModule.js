@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaChevronDown } from 'react-icons/fa';
-import { DJANGO_API_BASE_URL, createAuthHeader } from '../api';
+import { DJANGO_API_BASE_URL, createAuthHeader } from '../../api';
 
 function ExtendedModule({ currentYear }) {
   const [formData, setFormData] = useState({

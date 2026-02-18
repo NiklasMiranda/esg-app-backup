@@ -20,7 +20,7 @@ function YearSelector({
   const baseButtonFlex = 'esg-flex-grow esg-basis-0 esg-py-2 esg-px-3 esg-text-sm esg-flex esg-items-center esg-justify-center esg-gap-1';
 
   return (
-    <div className={`esg-flex esg-items-center esg-border-b-[1px] ${inactiveBorderColor} esg-relative esg-mb-4 esg-mb-0`}>
+    <div className={`esg-flex esg-items-center esg-border-b-[1px] ${inactiveBorderColor} esg-relative esg-mb-0`}>
       <div className="esg-flex esg-flex-grow">
         {availableYears.map((year, index) => {
           const isActive = year === currentYear;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // Added useState
-import ESGLogo from '../assets/images/ESGScore logo.png';
-import CircularProgress from './CircularProgress';
+import ESGLogo from '../../assets/images/ESGScore logo.png';
+import CircularProgress from '../charts/CircularProgress';
 import { HiMenu, HiX } from 'react-icons/hi'; // Added HiX icon
 
 function DashboardHeader({ isLoggedIn, onLogout, newTotalCompletionPercentage, onToggleNav, userCompanyName, isNavOpen }) { // Added onToggleNav, userCompanyName, isNavOpen

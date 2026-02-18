@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
 
-import InfoIcon from './InfoIcon';
-import Drawer from './Drawer';
-import CustomPolarChart from './CustomPolarChart';
-import NivoLikeMarimekkoChart from './NivoLikeMarimekkoChart';
-import groupTitles from '../data/groupTitles';
-import { categoryDescriptions } from '../data/descriptions'; // Ensure this is imported
+import InfoIcon from '../layout/InfoIcon';
+import Drawer from '../layout/Drawer';
+import CustomPolarChart from '../charts/CustomPolarChart';
+import NivoLikeMarimekkoChart from '../charts/NivoLikeMarimekkoChart';
+import groupTitles from '../../data/groupTitles';
+import { categoryDescriptions } from '../../data/descriptions'; // Ensure this is imported
 
 function StepInitiativanalyse({ activeIaGroup, iaAnswers, onIaAnswerChange, onNext, onPrev, isFirst, isLast, onShowResults, polarBarChartData, totalScore, esgLevel, criterionColors, marimekkoData, iaQuestions }) {
   console.log('DEBUG StepInitiativanalyse: iaQuestions prop:', iaQuestions);

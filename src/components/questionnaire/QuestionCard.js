@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoIcon from './InfoIcon';
+import InfoIcon from '../layout/InfoIcon';
 
 
 function QuestionCard({ question, answer, onAnswerChange, onInfoClick, showPoints }) {

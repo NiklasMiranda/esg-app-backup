@@ -1,8 +1,8 @@
 import React from 'react';
-import CircularProgress from './CircularProgress';
-import groupTitles from '../data/groupTitles';
+import CircularProgress from '../charts/CircularProgress';
+import groupTitles from '../../data/groupTitles';
 import { LuWeight, LuFileText } from "react-icons/lu";
-import YearSelector from './YearSelector'; // Import YearSelector
+import YearSelector from '../layout/YearSelector'; // Import YearSelector
 
 function ESGCalculatorNav({
   activeGroup,
@@ -50,7 +50,7 @@ function ESGCalculatorNav({
   console.log('isIAActive (INITIATIVANALYSE):', isIAActive);
 
   return (
-    <nav className="esg-bg-[#f4f4f4] esg-text-gray-800 esg-shadow-md esg-mb-0">
+    <nav className="esg-bg-[#f4f4f4] esg-text-gray-800 esg-shadow-md">
       {/* Year Selection */}
       <YearSelector
         availableYears={availableYears}

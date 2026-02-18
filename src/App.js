@@ -1,23 +1,23 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import ESGCalculatorNav from './components/ESGCalculatorNav';
-import StepDVA from './components/StepDVA';
-import StepResultsDVA from './components/StepResultsDVA';
-import StepInitiativanalyse from './components/StepInitiativanalyse';
-import Del2Results from './components/Del2Results';
-import CircularProgress from './components/CircularProgress';
-import StepDVAInfo from './components/StepDVAInfo';
+import ESGCalculatorNav from './components/calculator/ESGCalculatorNav';
+import StepDVA from './components/calculator/StepDVA';
+import StepResultsDVA from './components/calculator/StepResultsDVA';
+import StepInitiativanalyse from './components/calculator/StepInitiativanalyse';
+import Del2Results from './components/calculator/Del2Results';
+import CircularProgress from './components/charts/CircularProgress';
+import StepDVAInfo from './components/calculator/StepDVAInfo';
 import { categoryDescriptions, questionDescriptions } from './data/descriptions';
-import StepESGInfo from './components/StepESGInfo';
+import StepESGInfo from './components/calculator/StepESGInfo';
 import { fetchUserData, saveUserData, fetchDvaQuestionsFromApi, fetchIaQuestionsFromApi, fetchCalculationResultsFromApi, logoutUser, fetchPdfReport, fetchAvailableYears, createEmptyCompanyBasismodulData } from './api';
-import Login from './components/Login'; // Import the Login component
-import LandingPage from './components/LandingPage'; // Import the LandingPage component
-import Header from './components/Header'; // Import the Header component
-import DashboardHeader from './components/DashboardHeader'; // Import the DashboardHeader component
-import DashboardSidebar from './components/DashboardSidebar'; // Import the DashboardSidebar component
-import CompanyFigures from './components/CompanyFigures'; // Import the CompanyFigures component
-import ExtendedModule from './components/ExtendedModule'; // Import the ExtendedModule component
-import YearSelector from './components/YearSelector'; // Import the YearSelector component
-import YearlyChartsSection from './components/YearlyChartsSection';
+import Login from './components/pages/Login'; // Import the Login component
+import LandingPage from './components/pages/LandingPage'; // Import the LandingPage component
+import Header from './components/layout/Header'; // Import the Header component
+import DashboardHeader from './components/layout/DashboardHeader'; // Import the DashboardHeader component
+import DashboardSidebar from './components/layout/DashboardSidebar'; // Import the DashboardSidebar component
+import CompanyFigures from './components/company/CompanyFigures'; // Import the CompanyFigures component
+import ExtendedModule from './components/company/ExtendedModule'; // Import the ExtendedModule component
+import YearSelector from './components/layout/YearSelector'; // Import the YearSelector component
+import YearlyChartsSection from './components/charts/YearlyChartsSection';
 
 
 const questionGroups = ['E1', 'E2', 'E3', 'E4', 'E5', 'S1', 'S2', 'S3', 'S4', 'G1'];

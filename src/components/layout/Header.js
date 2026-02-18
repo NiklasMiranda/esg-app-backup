@@ -1,5 +1,5 @@
 import React from 'react';
-import ESGLogo from '../assets/images/ESGScore logo.png'; // Import the logo image
+import ESGLogo from '../../assets/images/ESGScore logo.png'; // Import the logo image
 // FaCalculator is no longer needed, so it can be removed if not used elsewhere in this component.
 
 function Header({ isLoggedIn, onLogout, onNavigateToLogin, onNavigateToHome }) {

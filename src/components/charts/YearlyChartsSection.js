@@ -3,7 +3,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import CustomPolarChart from './CustomPolarChart';
 import DVAWeightingChart from './DVAWeightingChart';
 
-import groupTitles from '../data/groupTitles';
+import groupTitles from '../../data/groupTitles';
 
 function YearlyChartsSection({ availableYears = [], currentYear, onSelectYear, calculationResults, criterionColors, iaQuestions, answers, dvaQuestions }) {
   // Ensure calculationResults and iaQuestions are never undefined for useMemo dependencies

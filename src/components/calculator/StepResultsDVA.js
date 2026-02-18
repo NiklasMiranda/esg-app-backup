@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import groupTitles from '../data/groupTitles';
+import groupTitles from '../../data/groupTitles';
 
 const axisLabels = ["Ikke relevant", "Lav", "Middel", "Moderat", "Høj", "Meget høj"];
 

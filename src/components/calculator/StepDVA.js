@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { categoryDescriptions, questionDescriptions } from '../data/descriptions';
-import QuestionCard from './QuestionCard';
-import Modal from './Modal';
-import InfoIcon from './InfoIcon';
-import CircularProgress from './CircularProgress';
-import Drawer from './Drawer';
-import AnswerRatioGraph from './AnswerRatioGraph';
+import { categoryDescriptions, questionDescriptions } from '../../data/descriptions';
+import QuestionCard from '../questionnaire/QuestionCard';
+import Modal from '../layout/Modal';
+import InfoIcon from '../layout/InfoIcon';
+import CircularProgress from '../charts/CircularProgress';
+import Drawer from '../layout/Drawer';
+import AnswerRatioGraph from '../charts/AnswerRatioGraph';
 
 
 function StepDVA({ group, onNext, onPrev, isLast, answers, onAnswerChange, dvaQuestions }) {

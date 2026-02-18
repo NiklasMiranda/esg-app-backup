@@ -1,9 +1,9 @@
 import React from 'react';
-import Grainient from './Grainient'; // Import the Grainient component
-import esgMockup from '../assets/images/ESGScore mockup.webp'; // Import the image
-import BeforeAfterSlider from './BeforeAfterSlider'; // Import the new BeforeAfterSlider component
-import beforeImage from '../assets/images/ESG-resultat før bæredygtighedsindsats.webp';
-import afterImage from '../assets/images/ESG-resultat efter bæredygtighedsindsats.webp';
+import Grainient from '../layout/Grainient'; // Import the Grainient component
+import esgMockup from '../../assets/images/ESGScore mockup.webp'; // Import the image
+import BeforeAfterSlider from '../layout/BeforeAfterSlider'; // Import the new BeforeAfterSlider component
+import beforeImage from '../../assets/images/ESG-resultat før bæredygtighedsindsats.webp';
+import afterImage from '../../assets/images/ESG-resultat efter bæredygtighedsindsats.webp';
 
 function LandingPage() {
   return (

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import CustomPolarChart from './CustomPolarChart';
-import groupTitles from '../data/groupTitles';
+import CustomPolarChart from '../charts/CustomPolarChart';
+import groupTitles from '../../data/groupTitles';
 import html2canvas from 'html2canvas';
 
 // 1. Modtag onCapture som en prop

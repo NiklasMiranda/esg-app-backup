@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
-import '../styles/Grainient.css'; // Assuming Grainient.css will be placed here
+import '../../styles/Grainient.css'; // Assuming Grainient.css will be placed here
 
 
 const hexToRgb = (hex) => { // Removed type annotation
