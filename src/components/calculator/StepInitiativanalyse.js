@@ -56,8 +56,8 @@ function DocumentationSidebar({ companyId, year, topic, documents, onUploadSucce
       {/* Progress Section */}
       <div className="esg-mb-6">
         <div className="esg-flex esg-justify-between esg-items-center esg-mb-1">
-          <span className="esg-text-sm esg-font-medium esg-text-gray-700">Dokumentationsgrad</span>
-          <span className="esg-text-sm esg-font-medium esg-text-blue-700">{Math.round(progressPercentage)}%</span>
+          <span className="esg-text-md esg-font-medium esg-text-gray-700">Dokumentationsgrad</span>
+          <span className="esg-text-md esg-font-medium esg-text-blue-700">{Math.round(progressPercentage)}%</span>
         </div>
         <div className="esg-w-full esg-bg-gray-200 esg-rounded-full esg-h-2.5">
           <div className="esg-bg-blue-600 esg-h-2.5 esg-rounded-full esg-transition-all esg-duration-500" style={{ width: `${progressPercentage}%` }}></div>
@@ -68,19 +68,19 @@ function DocumentationSidebar({ companyId, year, topic, documents, onUploadSucce
       <div className="esg-mb-6">
         <label className={`esg-flex esg-flex-col esg-items-center esg-px-4 esg-py-4 esg-bg-gray-50 esg-text-blue-600 esg-rounded-lg esg-border-2 esg-border-dashed esg-border-blue-300 esg-cursor-pointer hover:esg-bg-blue-50 esg-transition-colors ${isUploading ? 'esg-opacity-50 esg-cursor-not-allowed' : ''}`}>
           <FaFileUpload className="esg-w-6 esg-h-6 esg-mb-1" />
-          <span className="esg-text-sm esg-font-bold">{isUploading ? 'Uploader...' : 'Upload dokument'}</span>
+          <span className="esg-text-md esg-font-bold">{isUploading ? 'Uploader...' : 'Upload dokument'}</span>
           <input type='file' className="esg-hidden" onChange={handleFileChange} disabled={isUploading} />
         </label>
       </div>
 
       {/* Uploaded (Pending) Documentation */}
       <div className="esg-mb-6">
-        <h3 className="esg-text-sm esg-font-bold esg-text-gray-500 esg-uppercase esg-mb-3">Uploadet dokumentation</h3>
+        <h3 className="esg-text-md esg-font-bold esg-text-gray-500 esg-uppercase esg-mb-3">Uploadet dokumentation</h3>
         <ul className="esg-space-y-2">
           {pendingDocs.length === 0 ? (
-            <li className="esg-text-xs esg-text-gray-400 esg-italic">Ingen nye dokumenter</li>
+            <li className="esg-text-md esg-text-gray-400 esg-italic">Ingen nye dokumenter</li>
           ) : pendingDocs.map(doc => (
-            <li key={doc.id} className="esg-flex esg-items-center esg-justify-between esg-p-2 esg-bg-gray-50 esg-rounded esg-text-xs">
+            <li key={doc.id} className="esg-flex esg-items-center esg-justify-between esg-p-2 esg-bg-gray-50 esg-rounded esg-text-md">
               <span className="esg-truncate esg-max-w-[150px]" title={doc.file.split('/').pop()}>{doc.file.split('/').pop()}</span>
               <FaHourglassHalf className="esg-text-yellow-500" />
             </li>
@@ -90,18 +90,18 @@ function DocumentationSidebar({ companyId, year, topic, documents, onUploadSucce
 
       {/* Checked Documentation */}
       <div>
-        <h3 className="esg-text-sm esg-font-bold esg-text-gray-500 esg-uppercase esg-mb-3">Tjekket dokumentation</h3>
+        <h3 className="esg-text-md esg-font-bold esg-text-gray-500 esg-uppercase esg-mb-3">Tjekket dokumentation</h3>
         <ul className="esg-space-y-2">
           {checkedDocs.length === 0 ? (
-            <li className="esg-text-xs esg-text-gray-400 esg-italic">Ingen behandlede dokumenter</li>
+            <li className="esg-text-md esg-text-gray-400 esg-italic">Ingen behandlede dokumenter</li>
           ) : checkedDocs.map(doc => (
-            <li key={doc.id} className="esg-flex esg-flex-col esg-p-2 esg-bg-gray-50 esg-rounded esg-text-xs">
+            <li key={doc.id} className="esg-flex esg-flex-col esg-p-2 esg-bg-gray-50 esg-rounded esg-text-md">
               <div className="esg-flex esg-items-center esg-justify-between">
                 <span className="esg-truncate esg-max-w-[150px]" title={doc.file.split('/').pop()}>{doc.file.split('/').pop()}</span>
                 {getStatusIcon(doc.status)}
               </div>
               {doc.admin_comment && (
-                <p className="esg-mt-1 esg-text-[10px] esg-text-red-600 esg-italic">"{doc.admin_comment}"</p>
+                <p className="esg-mt-1 esg-text-sm esg-text-red-600 esg-italic">"{doc.admin_comment}"</p>
               )}
             </li>
           ))}
@@ -219,7 +219,7 @@ function StepInitiativanalyse({
           {Object.entries(groupedQuestionsByTopic).map(([topic, questions]) => (
             <div key={topic} className="esg-mb-6 esg-border esg-border-gray-100 esg-rounded-lg">
               <button
-                className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-3 esg-text-sm esg-font-bold esg-bg-gray-50 esg-rounded-t-lg"
+                className="esg-flex esg-justify-between esg-items-center esg-w-full esg-p-3 esg-text-lg esg-font-bold esg-bg-gray-50 esg-rounded-t-lg"
                 onClick={() => toggleSection(topic)}
               >
                 <span>{topic}</span>
@@ -238,8 +238,8 @@ function StepInitiativanalyse({
                       <div key={q.id} className="esg-bg-white esg-p-4 esg-rounded-lg esg-border esg-border-gray-50 esg-shadow-sm hover:esg-shadow-md esg-transition-shadow">
                         <div className="esg-flex esg-justify-between esg-items-start esg-mb-3">
                           <div className="esg-flex-1">
-                            <p className="esg-text-[10px] esg-text-gray-400 esg-font-bold">{q.number}</p>
-                            <p className="esg-text-sm esg-leading-snug">{q.text}</p>
+                            <p className="esg-text-sm esg-text-gray-400 esg-font-bold">{q.number}</p>
+                            <p className="esg-text-md esg-leading-snug">{q.text}</p>
                           </div>
                           <input
                             type="checkbox"
@@ -253,11 +253,11 @@ function StepInitiativanalyse({
                         {isAnswered && (
                           <div className="esg-mt-4 esg-pt-3 esg-border-t esg-border-gray-50">
                             <div className="esg-flex esg-items-center esg-gap-1 esg-mb-2 esg-text-gray-500">
-                              <FaLink className="esg-text-xs" />
-                              <span className="esg-text-[10px] esg-font-bold esg-uppercase">Knyt dokumentation</span>
+                              <FaLink className="esg-text-md" />
+                              <span className="esg-text-sm esg-font-bold esg-uppercase">Knyt dokumentation</span>
                             </div>
                             <select 
-                                className="esg-w-full esg-text-xs esg-p-2 esg-border esg-rounded esg-bg-white focus:esg-ring-1 focus:esg-ring-blue-500"
+                                className="esg-w-full esg-text-md esg-p-2 esg-border esg-rounded esg-bg-white focus:esg-ring-1 focus:esg-ring-blue-500"
                                 onChange={(e) => handleDocMapping(q.id, parseInt(e.target.value))}
                                 value=""
                                 disabled={isMapping}
@@ -274,7 +274,7 @@ function StepInitiativanalyse({
                             {linkedDocs.length > 0 && (
                                 <div className="esg-flex esg-wrap esg-gap-1 esg-mt-2">
                                     {linkedDocs.map(ld => (
-                                        <span key={ld.id} className="esg-inline-flex esg-items-center esg-px-2 esg-py-1 esg-rounded-full esg-bg-blue-50 esg-text-blue-700 esg-text-[9px]">
+                                        <span key={ld.id} className="esg-inline-flex esg-items-center esg-px-2 esg-py-1 esg-rounded-full esg-bg-blue-50 esg-text-blue-700 esg-text-sm">
                                             {ld.file.split('/').pop()}
                                         </span>
                                     ))}
