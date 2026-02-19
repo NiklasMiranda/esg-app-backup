@@ -86,5 +86,7 @@ class AnswerAdmin(admin.ModelAdmin):
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ('answer', 'file', 'description', 'uploaded_at')
-    search_fields = ('description', 'answer__question__text')
+    list_display = ('file', 'company', 'year', 'topic', 'status', 'uploaded_at')
+    list_filter = ('status', 'company', 'year', 'topic')
+    search_fields = ('file__name', 'company__name', 'topic', 'admin_comment')
+    list_editable = ('status',)

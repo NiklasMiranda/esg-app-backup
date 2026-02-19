@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# ... (keep existing imports and BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,8 +40,19 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken', # Add this line
     'corsheaders', # Add corsheaders
+    'storages',
     'core',
 ]
+
+# Azure Storage settings
+AZURE_ACCOUNT_NAME = os.getenv('AZURE_ACCOUNT_NAME')
+AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
+AZURE_CONTAINER = os.getenv('AZURE_CONTAINER', 'esg-documentation')
+
+if AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY:
+    DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    # Use SAS token if you prefer, but account key is standard for backend
+    AZURE_URL_EXPIRATION_SECS = 3600  # Temporary URLs expire after 1 hour for security
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # Add CorsMiddleware at the top

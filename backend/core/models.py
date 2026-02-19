@@ -88,6 +88,9 @@ class Answer(models.Model):
     is_answered = models.BooleanField(default=False, help_text="For IA questions (i.e., is the initiative implemented?)")
     metric_value = models.CharField(max_length=255, blank=True, help_text="Optional metric/value associated with an IA answer")
 
+    # New: Link to documents
+    documents = models.ManyToManyField('Document', blank=True, related_name='answers')
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -100,15 +103,31 @@ class Answer(models.Model):
         ordering = ['-year', 'question']
 
 
+from .validators import validate_file_security
+
 class Document(models.Model):
-    """A file uploaded to support an answer."""
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='documents')
-    description = models.CharField(max_length=255, blank=True)
-    file = models.FileField(upload_to='documents/%Y/%m/%d/')
+    """A file uploaded to support ESG documentation."""
+    STATUS_CHOICES = (
+        ('pending', 'Ikke-tjekket'),
+        ('incomplete', 'Mangelfuldt'),
+        ('approved', 'Godkendt'),
+    )
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='documents')
+    year = models.PositiveIntegerField(help_text="The reporting year")
+    topic = models.CharField(max_length=255, help_text="e.g., 1.1 CO2 udledninger")
+    
+    file = models.FileField(upload_to='documents/%Y/%m/%d/', validators=[validate_file_security])
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    admin_comment = models.TextField(blank=True, null=True, help_text="Admin feedback if status is incomplete")
+    
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Document for {self.answer}"
+        return f"{self.file.name} ({self.company.name} - {self.year})"
+
+    class Meta:
+        ordering = ['-uploaded_at']
 
 class CompanyBasismodulData(models.Model):
     """Stores detailed company figures for the 'Basismodul'."""

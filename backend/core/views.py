@@ -285,8 +285,50 @@ class AnswerViewSet(viewsets.ModelViewSet):
     serializer_class = AnswerSerializer
 
 class DocumentViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        company_id = self.request.query_params.get('company_id')
+        year = self.request.query_params.get('year')
+        topic = self.request.query_params.get('topic')
+
+        if company_id:
+            queryset = queryset.filter(company_id=company_id)
+        if year:
+            queryset = queryset.filter(year=year)
+        if topic:
+            queryset = queryset.filter(topic=topic)
+        
+        return queryset
+
+    def partial_update(self, request, *args, **kwargs):
+        """Allow admins to update status and admin_comment."""
+        # Optional: Add check for request.user.is_staff if only admins should verify
+        return super().partial_update(request, *args, **kwargs)
+
+class AnswerMappingView(APIView):
+    """
+    Dedicated view to link/unlink documents to an answer.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, answer_id):
+        answer = get_object_or_404(Answer, id=answer_id)
+        document_ids = request.data.get('document_ids', [])
+        
+        if not isinstance(document_ids, list):
+            return Response({"error": "document_ids must be a list"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Clear existing mappings and add new ones (or just add new ones depending on logic)
+        # For our case, we'll replace the current mappings with the provided list
+        documents = Document.objects.filter(id__in=document_ids, company=answer.company)
+        answer.documents.set(documents)
+        
+        serializer = AnswerSerializer(answer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserAnswersView(generics.GenericAPIView,
                       mixins.RetrieveModelMixin,

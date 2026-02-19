@@ -13,6 +13,7 @@ from .views import (
     CompanyBasismodulDataViewSet,
     CompanyExtendedModuleDataViewSet,
     CompanyAvailableYearsView,
+    AnswerMappingView,
     TestView # Add TestView here
 )
 
@@ -32,4 +33,5 @@ urlpatterns = [
     path('calculation-results/<int:company_id>/<int:year>/', CalculationResultsView.as_view(), name='calculation-results'),
     path('pdf-report/<int:company_id>/<int:year>/', PDFReportView.as_view(), name='pdf-report'),
     path('company-data/available-years/<int:company_id>/', CompanyAvailableYearsView.as_view(), name='company-available-years'),
+    path('answers/<int:answer_id>/map-documents/', AnswerMappingView.as_view(), name='answer-mapping'),
 ] + router.urls

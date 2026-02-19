@@ -45,9 +45,37 @@ Følgende trin udgør planen for at refaktorere applikationen til den nye arkite
     *   Bruge Djangos authentication-flow (login/logout).
     *   Hente og sende data via DRF API'et i stedet for fra lokale filer.
     *   Inkludere nye UI-elementer til indtastning af nøgletal og upload af filer.
-7.  **Implementering af Fil-upload:** Bygge funktionaliteten til at uploade filer fra React til en cloud storage-løsning via Django-backend'en.
+7.  **Implementering af Fil-upload:** Bygge funktionaliteten til at uploade filer fra React til Azure Blob Storage via Django-backend'en, inklusiv kobling mellem specifikke svar og dokumenter.
 8.  **Rapport-generering:** Oprette et API-endpoint i Django, der kan generere en PDF-rapport baseret på en brugers data.
 9.  **Oprydning:** Fjerne forældede filer og kode fra den gamle arkitektur (f.eks. `custom-login-upload.php`, statiske datafiler).
+
+## Dokumentupload og Verificeringsworkflow (Initiativanalyse)
+
+For at sikre høj datakvalitet og sporbarhed implementeres et integreret dokumentationssystem i Initiativanalysen. Dette system gør det muligt for admins at verificere ægtheden af kundens svar.
+
+### Frontend Layout (3-søjlet struktur)
+Brugerfladen i Initiativanalysen opdeles i tre sektioner for at give maksimalt overblik:
+1.  **Venstre søjle (Spørgsmål):** Her besvares de enkelte ESG-initiativer. Når et svar afkrydses (Ja), dukker en dropdown-menu frem. Fra denne menu skal brugeren vælge de relevante dokumenter (fra dokumentationsboksen), som underbygger svaret.
+2.  **Midterste søjle (Sticky Dokumentationsboks):** En boks der følger brugeren ved scrolling. Den indeholder:
+    *   **Progress-graf:** En simpel procenttæller, der viser forholdet mellem afkrydsede spørgsmål og spørgsmål med tilknyttet dokumentation.
+    *   **Upload-område:** Mulighed for at uploade nye filer.
+    *   **Fil-oversigt:** Opdelt i "Uploadet dokumentation" (nye filer) og "Tjekket dokumentation" (filer behandlet af en admin).
+3.  **Højre søjle (Grafikker):** De interaktive polar- og marimekko-charts, der viser virksomhedens nuværende score.
+
+### Verificeringsstatus
+Hvert dokument tildeles én af tre statusser af en administrator, som vises med ikoner i brugerfladen:
+*   ⚪ **Ikke-tjekket:** Dokumentet er modtaget, men afventer gennemgang.
+*   🔴 **Mangelfuldt:** Dokumentet understøtter ikke svaret tilstrækkeligt (administratoren kan vedhæfte en kommentar).
+*   🟢 **Godkendt:** Dokumentet er verificeret og bekræfter svarets ægthed.
+
+## Sikkerhed ved Filhåndtering
+
+Beskyttelse af administratorens systemer mod malware og vira er en kernekomponent i løsningen. Følgende sikkerhedslag implementeres:
+
+*   **Malware Scanning:** Integration med **Azure Defender for Storage**, som automatisk scanner alle uploads. Filer markeres som usikre og blokeres i backend, hvis der findes trusler.
+*   **MIME-type Validering:** Vi tjekker filers binære signatur ("magic numbers") i stedet for kun at stole på filendelsen (f.eks. .pdf). Dette forhindrer eksekverbare filer i at blive uploadet som dokumenter.
+*   **Filtype Whitelist:** Systemet tillader kun specifikke, sikre filtyper (f.eks. `.pdf`, `.docx`, `.xlsx`, `.png`, `.jpg`).
+*   **Sikker Download:** Filer serveres med headers (`Content-Disposition: attachment` og `X-Content-Type-Options: nosniff`), der sikrer, at browseren aldrig forsøger at køre filens indhold som kode.
 
 ## Verificerbare ESG Rapporter
 

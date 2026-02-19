@@ -31,15 +31,30 @@ class QuestionSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at'
         ]
 
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = '__all__'
-
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = '__all__'
+        fields = ['id', 'file', 'status', 'admin_comment', 'uploaded_at', 'topic', 'company', 'year']
+        read_only_fields = ['status', 'admin_comment', 'uploaded_at']
+
+class AnswerSerializer(serializers.ModelSerializer):
+    documents = DocumentSerializer(many=True, read_only=True)
+    document_ids = serializers.PrimaryKeyRelatedField(
+        many=True, 
+        queryset=Document.objects.all(), 
+        source='documents', 
+        write_only=True,
+        required=False
+    )
+
+    class Meta:
+        model = Answer
+        fields = [
+            'id', 'company', 'question', 'year', 
+            'boolean_answer', 'is_answered', 'metric_value', 
+            'documents', 'document_ids', 'updated_at'
+        ]
+        read_only_fields = ['id', 'updated_at']
 
 class IaAnswerDetailSerializer(serializers.Serializer):
     is_answered = serializers.BooleanField(required=False, default=False)
