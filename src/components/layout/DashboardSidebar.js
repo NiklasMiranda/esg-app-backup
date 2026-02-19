@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { FaTachometerAlt, FaBuilding, FaChartBar, FaChevronDown } from 'react-icons/fa'; // Icons for Dashboard, Company Figures, ESG Calculator
+import { FaTachometerAlt, FaBuilding, FaChartBar, FaChevronDown, FaFileAlt } from 'react-icons/fa'; // Icons for Dashboard, Company Figures, ESG Calculator
 
 function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }) {
   const [isCompanyInfoExpanded, setIsCompanyInfoExpanded] = useState(false);
+  const [isReportExpanded, setIsReportExpanded] = useState(false);
 
   const navigateToView = (viewName) => {
     onNavigate(viewName);
@@ -70,6 +71,41 @@ function DashboardSidebar({ isNavOpen, onNavigate, activeView, onSectionChange }
             >
               <FaChartBar className="esg-mr-3" /> ESG-beregneren
             </button>
+          </li>
+          <li className="esg-mb-2">
+            <button
+              onClick={() => setIsReportExpanded(!isReportExpanded)}
+              className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 ${
+                isReportExpanded ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
+              }`}
+            >
+              <FaFileAlt className="esg-mr-3" /> ESG-rapport
+              <FaChevronDown className={`esg-ml-auto esg-transition-transform esg-duration-300 ${isReportExpanded ? 'esg-rotate-180' : ''}`} />
+            </button>
+            {isReportExpanded && (
+              <ul className="esg-pl-8 esg-mt-2">
+                <li className="esg-mb-2">
+                  <button
+                    onClick={() => navigateToView('reportMeta')}
+                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 ${
+                      activeView === 'reportMeta' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
+                    }`}
+                  >
+                    Metatekst
+                  </button>
+                </li>
+                <li className="esg-mb-2">
+                  <button
+                    onClick={() => navigateToView('reportGenerate')}
+                    className={`esg-flex esg-items-center esg-px-4 esg-py-2 esg-rounded-md esg-w-full esg-text-left esg-justify-start esg-gap-2 ${
+                      activeView === 'reportGenerate' ? 'esg-bg-blue-700 esg-font-bold' : 'hover:esg-bg-gray-700'
+                    }`}
+                  >
+                    Generer rapport
+                  </button>
+                </li>
+              </ul>
+            )}
           </li>
         </ul>
       </nav>

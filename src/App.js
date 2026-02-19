@@ -727,6 +727,51 @@ function App() {
             </div>
           </div>
         );
+      } else if (activeView === 'reportMeta') {
+        mainContent = (
+          <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
+            <YearSelector
+              availableYears={availableYears}
+              currentYear={currentYear}
+              onSelectYear={setCurrentYear}
+              onAddNewYear={onAddNewYear}
+              showAddYearInput={showAddYearInput}
+              newYearValue={newYearValue}
+              handleYearInputChange={handleYearInputChange}
+              handleYearInputConfirm={handleYearInputConfirm}
+              handleYearInputCancel={handleYearInputCancel}
+              addYearError={addYearError}
+            />
+            <h1 className="esg-text-3xl esg-font-bold esg-mb-4">Metatekst</h1>
+            <p className="esg-text-gray-700">Her kan du indtaste metatekst til din ESG-rapport for {currentYear}.</p>
+            {/* TODO: Add Metatekst component here */}
+          </div>
+        );
+      } else if (activeView === 'reportGenerate') {
+        mainContent = (
+          <div className="esg-flex-1 esg-bg-[#f4f4f4] esg-rounded-lg">
+            <YearSelector
+              availableYears={availableYears}
+              currentYear={currentYear}
+              onSelectYear={setCurrentYear}
+              onAddNewYear={onAddNewYear}
+              showAddYearInput={showAddYearInput}
+              newYearValue={newYearValue}
+              handleYearInputChange={handleYearInputChange}
+              handleYearInputConfirm={handleYearInputConfirm}
+              handleYearInputCancel={handleYearInputCancel}
+              addYearError={addYearError}
+            />
+            <h1 className="esg-text-3xl esg-font-bold esg-mb-4">Generer rapport</h1>
+            <p className="esg-text-gray-700 esg-mb-6">Klik på knappen nedenfor for at generere din ESG-rapport som PDF for {currentYear}.</p>
+            <button 
+              onClick={() => fetchPdfReport(userCompanyId, currentYear)}
+              className="esg-bg-blue-600 hover:esg-bg-blue-700 esg-text-white esg-font-bold esg-py-2 esg-px-4 esg-rounded esg-transition-colors"
+            >
+              Generer PDF Rapport
+            </button>
+          </div>
+        );
       }
 
       content = (
