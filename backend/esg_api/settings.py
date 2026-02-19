@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # ... (keep existing imports and BASE_DIR)
 
@@ -50,9 +57,18 @@ AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
 AZURE_CONTAINER = os.getenv('AZURE_CONTAINER', 'esg-documentation')
 
 if AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY:
-    DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-    # Use SAS token if you prefer, but account key is standard for backend
-    AZURE_URL_EXPIRATION_SECS = 3600  # Temporary URLs expire after 1 hour for security
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    AZURE_URL_EXPIRATION_SECS = 3600
+    print("✅ Azure Blob Storage is CONFIGURED and ACTIVE via STORAGES setting.")
+else:
+    print("⚠️ Azure Storage credentials NOT FOUND. Falling back to local storage.")
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # Add CorsMiddleware at the top

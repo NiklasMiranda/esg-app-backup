@@ -92,8 +92,10 @@ class UserAnswerSerializer(serializers.Serializer):
                 dva_answers[str(answer_obj.question.id)] = 'yes' if answer_obj.boolean_answer else 'no'
             elif answer_obj.question.question_type == 'IA':
                 ia_answers[str(answer_obj.question.id)] = {
+                    'answer_id': answer_obj.id, # Include the ID for mapping
                     'is_answered': answer_obj.is_answered,
-                    'metric_value': answer_obj.metric_value
+                    'metric_value': answer_obj.metric_value,
+                    'documents': DocumentSerializer(answer_obj.documents.all(), many=True).data # Include linked docs
                 }
         return {
             'company_id': instance.id,

@@ -607,6 +607,8 @@ function App() {
             esgLevel={calculationResults.esgLevel}
             criterionColors={criterionColors}
             marimekkoData={calculationResults.marimekkoData}
+            companyId={userCompanyId}
+            year={currentYear}
           />;
         case 'del2Results':
           return <Del2Results

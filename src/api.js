@@ -283,6 +283,70 @@ export const fetchPdfReport = async (companyId, year) => {
 };
 
 /**
+ * Uploads a document to the backend.
+ * @param {FormData} formData - Should contain 'file', 'company', 'year', 'topic'.
+ * @returns {Promise<Object>}
+ */
+export const uploadDocument = async (formData) => {
+  try {
+    const response = await fetch(`${DJANGO_API_BASE_URL}documents/`, {
+      method: 'POST',
+      headers: {
+        ...createAuthHeader(),
+        // Note: Don't set Content-Type, fetch will set it with boundary for FormData
+      },
+      body: formData,
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Upload failed: ${response.statusText} - ${errorText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error uploading document:', error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches documents with optional filtering.
+ */
+export const fetchDocuments = async (params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  try {
+    const response = await fetch(`${DJANGO_API_BASE_URL}documents/?${query}`, {
+      headers: createAuthHeader(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch documents');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+    throw error;
+  }
+};
+
+/**
+ * Maps/links documents to an answer.
+ */
+export const mapDocumentsToAnswer = async (answerId, documentIds) => {
+  try {
+    const response = await fetch(`${DJANGO_API_BASE_URL}answers/${answerId}/map-documents/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...createAuthHeader(),
+      },
+      body: JSON.stringify({ document_ids: documentIds }),
+    });
+    if (!response.ok) throw new Error('Failed to map documents');
+    return await response.json();
+  } catch (error) {
+    console.error('Error mapping documents:', error);
+    throw error;
+  }
+};
+
+/**
  * Creates an empty CompanyBasismodulData entry for a given company and year.
  * This is used to persist a newly added year in the backend even if no answers are immediately provided.
  * @param {number} companyId The ID of the company.
