@@ -301,19 +301,35 @@ function App() {
                     iaAnswers: filteredIaAnswers,
                 };
 
-                await saveUserData(userCompanyId, currentYear, dataToSave);
+                const savedData = await saveUserData(userCompanyId, currentYear, dataToSave);
+                
+                // NEW: Update local state with the returned data from backend (which includes answer_id)
+                if (savedData && savedData.iaAnswers) {
+                    setIaAnswers(prev => {
+                        const updated = { ...prev };
+                        Object.keys(savedData.iaAnswers).forEach(qid => {
+                            updated[qid] = {
+                                ...updated[qid],
+                                answer_id: savedData.iaAnswers[qid].answer_id,
+                                documents: savedData.iaAnswers[qid].documents
+                            };
+                        });
+                        return updated;
+                    });
+                }
+
                 // After saving, re-fetch calculation results to update charts
                 await fetchAndSetCalculationResults(userCompanyId, currentYear);
                 
             } catch (error) {
                 console.error("Failed to save user data:", error);
             }
-        }, 1000);
+        }, 2000);
 
         return () => {
             clearTimeout(handler);
         };
-    }, [answers, iaAnswers, iaQuestions, saveUserData, userCompanyId, currentYear, isLoggedIn, loadingQuestions, fetchAndSetCalculationResults]);
+    }, [answers, iaAnswers, iaQuestions, userCompanyId, currentYear, isLoggedIn, loadingQuestions, fetchAndSetCalculationResults]);
     
     const descriptions = {
       ...categoryDescriptions,
@@ -356,9 +372,7 @@ function App() {
       }));
     };
 
-    const handleIaAnswerChange = (questionId, isSelected) => {
-      // console.log("DEBUG: handleIaAnswerChange called for questionId:", questionId, "with isSelected:", isSelected, "and iaQuestions from scope:", iaQuestions); // Removed debug log
-
+    const handleIaAnswerChange = async (questionId, isSelected, updatedAnswerObject = null) => {
       const isValidIaQuestion = iaQuestions.some(q => q.id.toString() === questionId.toString());
 
       if (!isValidIaQuestion) {
@@ -366,18 +380,45 @@ function App() {
         return;
       }
 
+      // Update local state first
+      let newIaAnswers;
       setIaAnswers(prevIaAnswers => {
-        const newIaAnswers = { ...prevIaAnswers };
-        if (isSelected) {
-          newIaAnswers[questionId] = {
-            is_answered: true,
-            metric_value: prevIaAnswers[questionId]?.metric_value || '',
-          };
+        const updated = { ...prevIaAnswers };
+        if (updatedAnswerObject) {
+            updated[questionId] = updatedAnswerObject;
+        } else if (isSelected) {
+            updated[questionId] = {
+                is_answered: true,
+                metric_value: prevIaAnswers[questionId]?.metric_value || '',
+            };
         } else {
-          delete newIaAnswers[questionId];
+            delete updated[questionId];
         }
-        return newIaAnswers;
+        newIaAnswers = updated;
+        return updated;
       });
+
+      // Immediate save to get the ID if it's a new checkmark
+      if (isSelected && !updatedAnswerObject) {
+          try {
+              const dataToSave = {
+                  dvaAnswers: answers,
+                  iaAnswers: newIaAnswers,
+              };
+              const savedData = await saveUserData(userCompanyId, currentYear, dataToSave);
+              if (savedData && savedData.iaAnswers && savedData.iaAnswers[questionId]) {
+                  setIaAnswers(prev => ({
+                      ...prev,
+                      [questionId]: {
+                          ...prev[questionId],
+                          answer_id: savedData.iaAnswers[questionId].answer_id
+                      }
+                  }));
+              }
+          } catch (error) {
+              console.error("Failed to save IA answer immediately:", error);
+          }
+      }
     };
 
     const handleNextGroup = () => {

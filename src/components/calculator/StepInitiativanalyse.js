@@ -8,6 +8,23 @@ import groupTitles from '../../data/groupTitles';
 import { categoryDescriptions } from '../../data/descriptions';
 import { uploadDocument, fetchDocuments, mapDocumentsToAnswer } from '../../api';
 
+const cleanFilename = (url) => {
+  if (!url || typeof url !== 'string') return '';
+  try {
+    // 1. Find det sidste spørgsmålstegn og fjern alt derefter
+    let base = url.split('?')[0];
+    
+    // 2. Find den sidste skråstreg og tag alt derefter
+    let filename = base.split('/').pop();
+    
+    // 3. Dekod specialtegn (som %20 til mellemrum)
+    return decodeURIComponent(filename);
+  } catch (e) {
+    console.error("Fejl ved rensning af filnavn:", e);
+    return url;
+  }
+};
+
 // --- Sub-component: DocumentationSidebar ---
 function DocumentationSidebar({ companyId, year, topic, documents, onUploadSuccess, progressPercentage }) {
   const [isUploading, setIsUploading] = useState(false);
@@ -81,7 +98,7 @@ function DocumentationSidebar({ companyId, year, topic, documents, onUploadSucce
             <li className="esg-text-md esg-text-gray-400 esg-italic">Ingen nye dokumenter</li>
           ) : pendingDocs.map(doc => (
             <li key={doc.id} className="esg-flex esg-items-center esg-justify-between esg-p-2 esg-bg-gray-50 esg-rounded esg-text-md">
-              <span className="esg-truncate esg-max-w-[150px]" title={doc.file.split('/').pop()}>{doc.file.split('/').pop()}</span>
+              <span className="esg-truncate esg-max-w-[150px]" title={cleanFilename(doc.file)}>{cleanFilename(doc.file)}</span>
               <FaHourglassHalf className="esg-text-yellow-500" />
             </li>
           ))}
@@ -97,7 +114,7 @@ function DocumentationSidebar({ companyId, year, topic, documents, onUploadSucce
           ) : checkedDocs.map(doc => (
             <li key={doc.id} className="esg-flex esg-flex-col esg-p-2 esg-bg-gray-50 esg-rounded esg-text-md">
               <div className="esg-flex esg-items-center esg-justify-between">
-                <span className="esg-truncate esg-max-w-[150px]" title={doc.file.split('/').pop()}>{doc.file.split('/').pop()}</span>
+                <span className="esg-truncate esg-max-w-[150px]" title={cleanFilename(doc.file)}>{cleanFilename(doc.file)}</span>
                 {getStatusIcon(doc.status)}
               </div>
               {doc.admin_comment && (
@@ -145,11 +162,16 @@ function StepInitiativanalyse({
   const refreshDocuments = useCallback(async () => {
     try {
       const docs = await fetchDocuments({ company_id: companyId, year: year });
-      setTopicDocuments(docs);
+      
+      // Filter documents to show all that belong to the current subcategory group (e.g., E1)
+      const groupTopics = Object.keys(groupedQuestionsByTopic);
+      const filteredDocs = docs.filter(d => groupTopics.includes(d.topic) || d.topic === activeIaGroup);
+      
+      setTopicDocuments(filteredDocs);
     } catch (err) {
       console.error("Failed to fetch documents", err);
     }
-  }, [companyId, year]);
+  }, [companyId, year, activeIaGroup, groupedQuestionsByTopic]);
 
   useEffect(() => {
     if (companyId && year) refreshDocuments();
@@ -176,19 +198,14 @@ function StepInitiativanalyse({
   const handleDocMapping = async (questionId, docId) => {
     if (!docId) return;
     const answer = iaAnswers[questionId];
-    if (!answer) {
-        alert("Besvar venligst spørgsmålet først.");
-        return;
-    }
-
+    
     setIsMapping(true);
     try {
-      const answerId = answer.answer_id || answer.id;
+      const answerId = answer?.answer_id || answer?.id;
       if (!answerId) {
-        throw new Error("Svaret er ikke gemt i databasen endnu. Prøv at vente et øjeblik.");
+        throw new Error("Svaret gemmes stadig i databasen. Prøv igen om et øjeblik.");
       }
 
-      // Toggle logic: if docId is already in documents, remove it, else add it
       const currentDocIds = (answer.documents || []).map(d => d.id);
       const newDocIds = currentDocIds.includes(docId)
         ? currentDocIds.filter(id => id !== docId)
@@ -197,7 +214,11 @@ function StepInitiativanalyse({
       const updatedAnswer = await mapDocumentsToAnswer(answerId, newDocIds);
       
       // Update local state via parent's onIaAnswerChange
-      onIaAnswerChange(questionId, true, { ...answer, documents: updatedAnswer.documents });
+      onIaAnswerChange(questionId, true, { 
+        ...answer, 
+        answer_id: answerId,
+        documents: updatedAnswer.documents 
+      });
     } catch (error) {
       alert(`Fejl ved mapping: ${error.message}`);
     } finally {
@@ -229,7 +250,7 @@ function StepInitiativanalyse({
               </button>
               
               {openSections[topic] && (
-                <div className="esg-p-4 esg-space-y-4">
+                <div className="esg-p-4 esg-grid esg-grid-cols-1 md:esg-grid-cols-2 esg-gap-4">
                   {questions.map(q => {
                     const isAnswered = iaAnswers[q.id]?.is_answered || false;
                     const linkedDocs = iaAnswers[q.id]?.documents || [];
@@ -263,10 +284,10 @@ function StepInitiativanalyse({
                                 disabled={isMapping}
                             >
                                 <option value="">Vælg fra uploadet dokumentation...</option>
-                                {topicDocuments.filter(d => d.topic === topic).map(doc => (
+                                {topicDocuments.map(doc => (
                                     <option key={doc.id} value={doc.id}>
                                         {linkedDocs.some(ld => ld.id === doc.id) ? '✓ ' : '+ '} 
-                                        {doc.file.split('/').pop()}
+                                        {cleanFilename(doc.file)}
                                     </option>
                                 ))}
                             </select>
@@ -275,7 +296,7 @@ function StepInitiativanalyse({
                                 <div className="esg-flex esg-wrap esg-gap-1 esg-mt-2">
                                     {linkedDocs.map(ld => (
                                         <span key={ld.id} className="esg-inline-flex esg-items-center esg-px-2 esg-py-1 esg-rounded-full esg-bg-blue-50 esg-text-blue-700 esg-text-sm">
-                                            {ld.file.split('/').pop()}
+                                            {cleanFilename(ld.file)}
                                         </span>
                                     ))}
                                 </div>
