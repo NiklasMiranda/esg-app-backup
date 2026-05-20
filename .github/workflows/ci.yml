@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build containers
+        run: docker compose build
+
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Wait for backend
+        run: sleep 15
+
+      - name: Check backend
+        run: curl --fail http://127.0.0.1:8000/admin/login/
+
+      - name: Stop containers
+        run: docker compose down
