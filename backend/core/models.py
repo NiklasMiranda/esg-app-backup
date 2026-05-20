@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .validators import validate_file_security
 
 class Company(models.Model):
     """Represents a client company."""
@@ -102,8 +103,6 @@ class Answer(models.Model):
         unique_together = ('company', 'question', 'year')
         ordering = ['-year', 'question']
 
-
-from .validators import validate_file_security
 
 class Document(models.Model):
     """A file uploaded to support ESG documentation."""

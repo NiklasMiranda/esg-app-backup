@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - dev_esben
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build containers
+        run: docker compose build
+
+      - name: Create backend .env
+        run: |
+          echo "DEBUG=True" >> backend/.env
+          echo "SECRET_KEY=test-secret-key" >> backend/.env
+          echo "DB_NAME=esgdb" >> backend/.env
+          echo "DB_USER=postgres" >> backend/.env
+          echo "DB_PASSWORD=postgres" >> backend/.env
+          echo "DB_HOST=db" >> backend/.env
+          echo "DB_PORT=5432" >> backend/.env
+
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Wait for backend
+        run: sleep 15
+
+      - name: Check backend
+        run: curl --fail http://127.0.0.1:8000/admin/login/
+
+      - name: Show container logs
+        if: failure()
+        run: docker compose logs
+
+      - name: Stop containers
+        run: docker compose down

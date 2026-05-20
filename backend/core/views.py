@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, Http404 # Import HttpResponse, Http404
 from django.template.loader import get_template # Import get_template
 from xhtml2pdf import pisa # Import the pisa library
+from django.db.models import F # Import F for querying distinct years
 
 from .models import Company, Category, SubCategory, Question, Answer, Document, CompanyBasismodulData, CompanyExtendedModuleData # New Import
 from .serializers import (
@@ -184,8 +185,6 @@ class CompanyExtendedModuleDataViewSet(viewsets.ModelViewSet):
         # This will not be directly called if 'create' method is overridden, but good practice
         serializer.save()
 
-
-from django.db.models import F # Import F for querying distinct years
 
 class CompanyAvailableYearsView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]

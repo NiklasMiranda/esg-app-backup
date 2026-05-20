@@ -12,11 +12,16 @@ CATEGORY_PERCENTAGES = {
 }
 
 def get_esg_level(score):
-  if score < 35: return 'Ikke bestået'
-  elif score < 50: return 'Bronze'
-  elif score < 65: return 'Sølv'
-  elif score < 80: return 'Guld'
-  else: return 'Platin'
+  if score < 35: 
+      return 'Ikke bestået'
+  elif score < 50: 
+      return 'Bronze'
+  elif score < 65: 
+      return 'Sølv'
+  elif score < 80: 
+      return 'Guld'
+  else: 
+      return 'Platin'
 
 def calculate_esg_results(company_id, year):
     try:
