@@ -38,5 +38,9 @@ jobs:
       - name: Check backend
         run: curl --fail http://127.0.0.1:8000/admin/login/
 
+      - name: Show container logs
+        if: failure()
+        run: docker compose logs
+
       - name: Stop containers
         run: docker compose down
