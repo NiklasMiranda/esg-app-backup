@@ -19,6 +19,16 @@ jobs:
       - name: Build containers
         run: docker compose build
 
+      - name: Create backend .env
+        run: |
+          echo "DEBUG=True" >> backend/.env
+          echo "SECRET_KEY=test-secret-key" >> backend/.env
+          echo "DB_NAME=test_db" >> backend/.env
+          echo "DB_USER=test_user" >> backend/.env
+          echo "DB_PASSWORD=test_password" >> backend/.env
+          echo "DB_HOST=db" >> backend/.env
+          echo "DB_PORT=5432" >> backend/.env
+
       - name: Start containers
         run: docker compose up -d
 
