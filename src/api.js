@@ -8,9 +8,7 @@ const getAuthToken = () => localStorage.getItem('authToken');
 // Helper to create authorization header
 export const createAuthHeader = () => {
   const token = getAuthToken();
-  console.log('createAuthHeader: Retrieved Token:', token); // More descriptive log
-  const headers = token ? { 'Authorization': `Token ${token}` } : {};
-  console.log('createAuthHeader: Generated Headers:', headers); // Log the full headers object
+  const headers = token ? { Authorization: `Token ${token}` } : {};
   return headers;
 };
 
@@ -53,7 +51,6 @@ export const logoutUser = async () => {
   const token = getAuthToken(); // Get token before the fetch
   // Check for falsy values (null, undefined, '')
   if (!token || token === '') {
-    console.log('No valid authentication token found. Already logged out or token missing.');
     localStorage.removeItem('authToken'); // Ensure it's cleared locally
     return; // Exit without making a backend call
   }
@@ -70,7 +67,6 @@ export const logoutUser = async () => {
     }
 
     localStorage.removeItem('authToken');
-    console.log('Successfully logged out.');
   } catch (error) {
     console.error('Error logging out:', error);
     throw error;
@@ -84,17 +80,21 @@ export const logoutUser = async () => {
  * @returns {Promise<Object>} A promise that resolves to the user's saved data.
  */
 export const fetchUserData = async (companyId, year) => {
-  console.log(`Fetching user data from Django API for company ${companyId}, year ${year}`);
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}user-answers/${companyId}/${year}/`, {
-      headers: createAuthHeader(),
-    });
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}user-answers/${companyId}/${year}/`,
+      {
+        headers: createAuthHeader(),
+      },
+    );
     if (!response.ok) {
-        if (response.status === 404) {
-            console.warn(`No existing user data found for company ${companyId} and year ${year}. Returning empty answers.`);
-            return { dvaAnswers: {}, iaAnswers: {} };
-        }
-        throw new Error('Network response was not ok: ' + response.statusText);
+      if (response.status === 404) {
+        console.warn(
+          `No existing user data found for company ${companyId} and year ${year}. Returning empty answers.`,
+        );
+        return { dvaAnswers: {}, iaAnswers: {} };
+      }
+      throw new Error('Network response was not ok: ' + response.statusText);
     }
     const data = await response.json();
     return data;
@@ -112,25 +112,28 @@ export const fetchUserData = async (companyId, year) => {
  * @returns {Promise<Object>} A promise that resolves to the server's response.
  */
 export const saveUserData = async (companyId, year, dataToSave) => {
-  console.log(`Saving user data to Django API for company ${companyId}, year ${year}`);
-  console.log("Data being sent:", dataToSave);
   try {
-    const requestBody = JSON.stringify({ company_id: companyId, ...dataToSave });
-    console.log("DEBUG: Request body JSON string:", requestBody);
-    console.log("DEBUG: Attempting fetch PUT request...");
-    const response = await fetch(`${DJANGO_API_BASE_URL}user-answers/${companyId}/${year}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        ...createAuthHeader(),
-      },
-      body: requestBody,
+    const requestBody = JSON.stringify({
+      company_id: companyId,
+      ...dataToSave,
     });
-    console.log("DEBUG: Fetch response received:", response);
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}user-answers/${companyId}/${year}/`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          ...createAuthHeader(),
+        },
+        body: requestBody,
+      },
+    );
 
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Network response was not ok: ${response.statusText} - ${errorText}`);
+      const errorText = await response.text();
+      throw new Error(
+        `Network response was not ok: ${response.statusText} - ${errorText}`,
+      );
     }
 
     return await response.json();
@@ -146,9 +149,12 @@ export const saveUserData = async (companyId, year, dataToSave) => {
  */
 export const fetchDvaQuestionsFromApi = async () => {
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}questions/?question_type=DVA`, {
-      headers: createAuthHeader(),
-    });
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}questions/?question_type=DVA`,
+      {
+        headers: createAuthHeader(),
+      },
+    );
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -166,9 +172,12 @@ export const fetchDvaQuestionsFromApi = async () => {
  */
 export const fetchIaQuestionsFromApi = async () => {
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}questions/?question_type=IA`, {
-      headers: createAuthHeader(),
-    });
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}questions/?question_type=IA`,
+      {
+        headers: createAuthHeader(),
+      },
+    );
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -188,9 +197,12 @@ export const fetchIaQuestionsFromApi = async () => {
  */
 export const fetchCalculationResultsFromApi = async (companyId, year) => {
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}calculation-results/${companyId}/${year}/`, {
-      headers: createAuthHeader(),
-    });
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}calculation-results/${companyId}/${year}/`,
+      {
+        headers: createAuthHeader(),
+      },
+    );
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -208,12 +220,13 @@ export const fetchCalculationResultsFromApi = async (companyId, year) => {
  * @returns {Promise<Array<number>>} A promise that resolves to an array of years.
  */
 export const fetchAvailableYears = async (companyId) => {
-  console.log(`Fetching available years for company ${companyId}`);
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}company-data/available-years/${companyId}/`, {
-      headers: createAuthHeader(),
-    });
-    console.log(`DEBUG: fetchAvailableYears response status: ${response.status}`);
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}company-data/available-years/${companyId}/`,
+      {
+        headers: createAuthHeader(),
+      },
+    );
     if (!response.ok) {
       // If 404, it means no data exists for any year, return an empty array
       if (response.status === 404) {
@@ -223,7 +236,6 @@ export const fetchAvailableYears = async (companyId) => {
       throw new Error('Network response was not ok: ' + response.statusText);
     }
     const data = await response.json();
-    console.log("DEBUG: fetchAvailableYears received data:", data);
     // Assuming data is an array of numbers (years)
     return data;
   } catch (error) {
@@ -231,7 +243,6 @@ export const fetchAvailableYears = async (companyId) => {
     throw error;
   }
 };
-
 
 /**
  * Fetches a PDF report from the Django backend and triggers a download.
@@ -241,13 +252,18 @@ export const fetchAvailableYears = async (companyId) => {
  */
 export const fetchPdfReport = async (companyId, year) => {
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}pdf-report/${companyId}/${year}/`, {
-      headers: createAuthHeader(),
-    });
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}pdf-report/${companyId}/${year}/`,
+      {
+        headers: createAuthHeader(),
+      },
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to generate PDF report: ${response.statusText} - ${errorText}`);
+      throw new Error(
+        `Failed to generate PDF report: ${response.statusText} - ${errorText}`,
+      );
     }
 
     // Get the filename from the Content-Disposition header, if available
@@ -273,9 +289,6 @@ export const fetchPdfReport = async (companyId, year) => {
     // Clean up: remove the link and revoke the blob URL
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
-
-    console.log('PDF report downloaded successfully.');
-
   } catch (error) {
     console.error('Error fetching PDF report:', error);
     throw error;
@@ -330,14 +343,17 @@ export const fetchDocuments = async (params = {}) => {
  */
 export const mapDocumentsToAnswer = async (answerId, documentIds) => {
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}answers/${answerId}/map-documents/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...createAuthHeader(),
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}answers/${answerId}/map-documents/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...createAuthHeader(),
+        },
+        body: JSON.stringify({ document_ids: documentIds }),
       },
-      body: JSON.stringify({ document_ids: documentIds }),
-    });
+    );
     if (!response.ok) throw new Error('Failed to map documents');
     return await response.json();
   } catch (error) {
@@ -354,20 +370,24 @@ export const mapDocumentsToAnswer = async (answerId, documentIds) => {
  * @returns {Promise<Object>} A promise that resolves to the created/updated data.
  */
 export const createEmptyCompanyBasismodulData = async (companyId, year) => {
-  console.log(`Creating empty Basismodul data for company ${companyId}, year ${year}`);
   try {
-    const response = await fetch(`${DJANGO_API_BASE_URL}company-basismodul-data/${companyId}/${year}/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...createAuthHeader(),
+    const response = await fetch(
+      `${DJANGO_API_BASE_URL}company-basismodul-data/${companyId}/${year}/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...createAuthHeader(),
+        },
+        body: JSON.stringify({ company: companyId, year: year }), // Minimal data needed for update_or_create
       },
-      body: JSON.stringify({ company: companyId, year: year }), // Minimal data needed for update_or_create
-    });
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Network response was not ok: ${response.statusText} - ${errorText}`);
+      throw new Error(
+        `Network response was not ok: ${response.statusText} - ${errorText}`,
+      );
     }
 
     return await response.json();

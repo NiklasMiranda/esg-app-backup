@@ -1,0 +1,30 @@
+{
+  "editor.formatOnSave": true,
+
+  // ---------- PYTHON ----------
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+
+  // ---------- JS / TS / REACT ----------
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // ---------- IMPORTS ----------
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
+}
