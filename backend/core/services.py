@@ -1,7 +1,8 @@
 # backend/core/services.py
 
-from .models import Company, Question, Answer, Category, SubCategory
 from django.db.models import Q
+
+from .models import Answer, Category, Company, Question, SubCategory
 
 # These constants are currently hardcoded in frontend/App.js
 # They should ideally be configurable or fetched from backend if dynamic
